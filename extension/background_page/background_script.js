@@ -73,7 +73,7 @@ chrome.runtime.onMessage.addListener(
 
 			try {
 				scraper.run(function () {
-					browser.close();
+					//browser.close();
 					var notification = chrome.notifications.create("scraping-finished", {
 						type: 'basic',
 						iconUrl: 'assets/images/icon128.png',
