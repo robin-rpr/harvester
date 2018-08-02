@@ -18,6 +18,8 @@ Install the extension from [Chrome store] [chrome-store]
  7. Import, Export sitemaps
  8. Depends only on Chrome browser
  9. Now support Restful MySQL DB, see [ArrestDB]
+ 10. Anti-Lazyloading
+ 11. Start scraping from CMD
 
 ### Help
 
@@ -36,6 +38,9 @@ LGPLv3
 ## Changelog
 ### v0.3
  * Now support Restful MySQL DB, see [ArrestDB]
+ * Anti-Lazyloading
+ * Start scraping from CMD
+     - chrome.exe "chrome-extension://[extension_id]/devtools/devtools_scraper_panel.html?run=[sitemap_name]&anti=[true||false]"
 
 ### v0.2
  * Added Element click selector
