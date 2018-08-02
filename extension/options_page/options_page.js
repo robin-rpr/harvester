@@ -23,16 +23,33 @@ $(function () {
 			$(this).popover('hide');
 		});
 
+	$("#mysqlDB")
+		.popover({
+			title: 'Database for scraped data',
+			html: true,
+			content: "Restful MySQL Server.<br />",
+			placement: 'bottom'
+		})
+		.blur(function () {
+			$(this).popover('hide');
+		});
+
+	$("#mysqlSitemap")
+		.popover({
+			title: 'Table for Sitemap',
+			html: true,
+			content: "Sitemap for MySQL Database<br />",
+			placement: 'bottom'
+		})
+		.blur(function () {
+			$(this).popover('hide');
+		});
+
 	// switch between configuration types
 	$("select[name=storageType]").change(function () {
 		var type = $(this).val();
-
-		if (type === 'couchdb') {
-			$(".form-group.couchdb").show();
-		}
-		else {
-			$(".form-group.couchdb").hide();
-		}
+		$(".form-group").not(".controller").hide();
+		$(".form-group." + type).show();
 	});
 
 	// Extension configuration
@@ -40,10 +57,16 @@ $(function () {
 
 	// load previously synced data
 	config.loadConfiguration(function () {
-
-		$("#storageType").val(config.storageType);
-		$("#sitemapDb").val(config.sitemapDb);
-		$("#dataDb").val(config.dataDb);
+		var type = config.storageType;
+		$("#storageType").val(type);
+		
+		if(type === 'mysql'){
+			$("#mysqlDB").val(config.mysqlDB);
+			$("#mysqlSitemap").val(config.mysqlSitemap);
+		}else{
+			$("#dataDb").val(config.dataDb);
+			$("#sitemapDb").val(config.sitemapDb);
+		}
 
 		$("select[name=storageType]").change();
 	});
@@ -54,6 +77,8 @@ $(function () {
 		var sitemapDb = $("#sitemapDb").val();
 		var dataDb = $("#dataDb").val();
 		var storageType = $("#storageType").val();
+		var mysqlDB = $("#mysqlDB").val();
+		var mysqlSitemap = $("#mysqlSitemap").val();
 
 		var newConfig;
 
@@ -64,14 +89,20 @@ $(function () {
 				dataDb: ' '
 			}
 		}
-		else {
+		else if(storageType === 'mysql'){
+			newConfig = {
+				storageType: storageType,
+				mysqlDB: mysqlDB,
+				mysqlSitemap: mysqlSitemap
+			}
+		}else if(storageType === 'couchdb'){
 			newConfig = {
 				storageType: storageType,
 				sitemapDb: sitemapDb,
 				dataDb: dataDb
 			}
 		}
-
+		console.log(newConfig);
 		config.updateConfiguration(newConfig);
 		return false;
 	});

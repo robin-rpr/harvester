@@ -60,7 +60,8 @@ chrome.runtime.onMessage.addListener(
 			var sitemap = new Sitemap(request.sitemap);
 			var queue = new Queue();
 			var browser = new ChromePopupBrowser({
-				pageLoadDelay: request.pageLoadDelay
+				pageLoadDelay: request.pageLoadDelay,
+				scrollToBottom: request.scrollToBottom
 			});
 
 			var scraper = new Scraper({
@@ -73,7 +74,7 @@ chrome.runtime.onMessage.addListener(
 
 			try {
 				scraper.run(function () {
-					//browser.close();
+					browser.close();
 					var notification = chrome.notifications.create("scraping-finished", {
 						type: 'basic',
 						iconUrl: 'assets/images/icon128.png',

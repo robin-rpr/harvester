@@ -17,6 +17,7 @@ Install the extension from [Chrome store] [chrome-store]
  6. Export scraped data as CSV
  7. Import, Export sitemaps
  8. Depends only on Chrome browser
+ 9. Now support Restful MySQL DB, see [ArrestDB]
 
 ### Help
 
@@ -33,6 +34,8 @@ When submitting a bug please attach an exported sitemap if possible.
 LGPLv3
 
 ## Changelog
+### v0.3
+ * Now support Restful MySQL DB, see [ArrestDB]
 
 ### v0.2
  * Added Element click selector
@@ -59,3 +62,4 @@ LGPLv3
  [webscraper.io]: http://webscraper.io/
  [google-groups]: https://groups.google.com/forum/#!forum/web-scraper
  [github-issues]: https://github.com/martinsbalodis/web-scraper-chrome-extension/issues
+ [ArrestDB]: https://github.com/hejiheji001/ArrestDB

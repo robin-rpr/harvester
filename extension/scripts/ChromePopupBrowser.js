@@ -1,6 +1,7 @@
 var ChromePopupBrowser = function (options) {
 
 	this.pageLoadDelay = options.pageLoadDelay;
+	this.scrollToBottom = options.scrollToBottom;
 
 	// @TODO somehow handle the closed window
 };
@@ -40,14 +41,27 @@ ChromePopupBrowser.prototype = {
 		var tabLoadListener = function (tabId, changeInfo, tab) {
 			if(tabId === this.tab.id) {
 				if (changeInfo.status === 'complete') {
-
 					// @TODO check url ? maybe it would be bad because some sites might use redirects
 
 					// remove event listener
 					chrome.tabs.onUpdated.removeListener(tabLoadListener);
 
 					// callback tab is loaded after page load delay
-					setTimeout(callback, this.pageLoadDelay);
+					if(this.scrollToBottom == "true"){
+                        var scrollListenser = function(request, sender, sendResponse) {
+                            if (request.antilazyloading){
+                                chrome.tabs.sendMessage(tab.id, "Anti-LazyLoad finished");
+                                setTimeout(callback, this.pageLoadDelay);
+                            }
+                        }
+
+						chrome.tabs.sendMessage(tab.id, "Anti-LazyLoad running");
+						chrome.runtime.onMessage.addListener(scrollListenser);
+                        chrome.tabs.executeScript(tab.id, {file: 'scrollToBottom.js'});
+                        chrome.tabs.sendMessage(tab.id, {run: true});
+					}else{
+						setTimeout(callback, this.pageLoadDelay);
+					}
 				}
 			}
 		}.bind(this);
@@ -74,7 +88,6 @@ ChromePopupBrowser.prototype = {
 					sitemap: JSON.parse(JSON.stringify(sitemap)),
 					parentSelectorId: parentSelectorId
 				};
-
 				chrome.tabs.sendMessage(tab.id, message, function (data) {
 					console.log("extracted data from web page", data);
 					callback.call(scope, data);

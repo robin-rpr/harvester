@@ -52,6 +52,9 @@
 			"background_page/background_script.js"
 		]
 	},
+	"externally_connectable": {
+	  "matches": ["*://*.jd.com/*", "*://*.jd.hk/*"]
+	},
 	"web_accessible_resources": [
 		"assets/images/icon16.png",
 		"assets/images/icon48.png",
@@ -88,7 +91,8 @@
 				"scripts/Sitemap.js",
 				"scripts/ContentScript.js",
 				"scripts/BackgroundScript.js",
-				"content_script/content_script.js"
+				"content_script/content_script.js",
+				"content_script/scrollToBottom.js"
 			],
 			"css": [
 				"content_script/content_script.css"

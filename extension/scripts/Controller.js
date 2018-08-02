@@ -415,6 +415,7 @@ SitemapController.prototype = {
 				$sitemapListPanel.find("tbody").append($sitemap);
 			});
 			$("#viewport").html($sitemapListPanel);
+			window.runTask();
 		});
 	},
 
@@ -488,8 +489,7 @@ SitemapController.prototype = {
 			if(sitemapExists) {
 				var validator = this.getFormValidator();
 				validator.updateStatus('_id', 'INVALID', 'callback');
-			}
-			else {
+			}else {
 				this.store.createSitemap(sitemap, function (sitemap) {
 					this._editSitemap(sitemap, ['_root']);
 				}.bind(this, sitemap));
@@ -556,7 +556,6 @@ SitemapController.prototype = {
 	 * Callback when sitemap edit button is clicked in sitemap grid
 	 */
 	editSitemap: function (tr) {
-
 		var sitemap = $(tr).data("sitemap");
 		this._editSitemap(sitemap);
 	},
@@ -567,7 +566,6 @@ SitemapController.prototype = {
 		this.showSitemapSelectorList();
 	},
 	showSitemapSelectorList: function () {
-
 		this.setActiveNavigationButton('sitemap-selector-list');
 
 		var sitemap = this.state.currentSitemap;
@@ -835,11 +833,9 @@ SitemapController.prototype = {
 		if(!this.isValidForm()) {
 			return false;
 		}
-
 		// cancel possible element selection
 		this.contentScript.removeCurrentContentSelector().done(function(){
 			sitemap.updateSelector(selector, newSelector);
-
 			this.store.saveSitemap(sitemap, function () {
 				this.showSitemapSelectorList();
 			}.bind(this));
@@ -989,7 +985,6 @@ SitemapController.prototype = {
 		});
 	},
 	showScrapeSitemapConfigPanel: function() {
-
 		this.setActiveNavigationButton('sitemap-scrape');
 		var scrapeConfigPanel = ich.SitemapScrapeConfig();
 		$("#viewport").html(scrapeConfigPanel);
@@ -1001,16 +996,17 @@ SitemapController.prototype = {
 		if(!this.isValidForm()) {
 			return false;
 		}
-
 		var requestInterval = $("input[name=requestInterval]").val();
 		var pageLoadDelay = $("input[name=pageLoadDelay]").val();
+		var scrollToBottom = $("input[name=scrollToBottom]").val();
 
 		var sitemap = this.state.currentSitemap;
 		var request = {
 			scrapeSitemap: true,
 			sitemap: JSON.parse(JSON.stringify(sitemap)),
 			requestInterval: requestInterval,
-			pageLoadDelay: pageLoadDelay
+			pageLoadDelay: pageLoadDelay,
+			scrollToBottom: scrollToBottom
 		};
 
 		// show sitemap scraping panel

@@ -12,6 +12,13 @@
 				<input type="text" class="form-control" name="pageLoadDelay" id="pageLoadDelay" placeholder="Page load delay" value="500">
 			</div>
 		</div>
+		<div class="form-group">
+			<label for="scrollToBottom" class="col-lg-1 control-label">Anti-LazyLoad</label>
+			<div class="col-lg-10">
+				<input type="text" class="form-control" name="scrollToBottom" id="scrollToBottom" placeholder="Anti-LazyLoad" value="true">
+				<p class="help-block">Page slowly scroll to bottom. Then start scrape.</p>
+			</div>
+		</div>
 		<div class="alert alert-success col-lg-10 col-lg-offset-1 hide scraping-in-progress" role="alert">
 			Scraping in progress. Close the popup to stop scraping.<br>
 			When scraping is finished you can browse the data or export it as CSV.

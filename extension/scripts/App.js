@@ -4,7 +4,7 @@ $(function () {
 	$(".alert").alert();
 
 	var store = new StoreDevtools();
-	new SitemapController({
+	window.controller = new SitemapController({
 		store: store,
 		templateDir: 'views/'
 	});
