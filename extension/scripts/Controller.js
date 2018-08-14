@@ -859,6 +859,7 @@ SitemapController.prototype = {
 		var clickPopup = $("#edit-selector [name=clickPopup]").is(":checked");
 		var regex = $("#edit-selector [name=regex]").val();
 		var delay = $("#edit-selector [name=delay]").val();
+		var datafilter = $("#edit-selector [name=datafilter]").val();
 		var extractAttribute = $("#edit-selector [name=extractAttribute]").val();
 		var parentSelectors = $("#edit-selector [name=parentSelectors]").val();
 		var columns = [];
@@ -892,6 +893,7 @@ SitemapController.prototype = {
 			clickPopup: clickPopup,
 			regex: regex,
 			extractAttribute:extractAttribute,
+			datafilter:datafilter,
 			parentSelectors: parentSelectors,
 			columns:columns,
 			delay:delay
@@ -999,6 +1001,8 @@ SitemapController.prototype = {
 		var requestInterval = $("input[name=requestInterval]").val();
 		var pageLoadDelay = $("input[name=pageLoadDelay]").val();
 		var scrollToBottom = $("input[name=scrollToBottom]").val();
+		var distinct = $("input[name=distinct]").val();
+		var nonEmpty = $("input[name=nonEmpty]").val();
 
 		var sitemap = this.state.currentSitemap;
 		var request = {
@@ -1006,7 +1010,9 @@ SitemapController.prototype = {
 			sitemap: JSON.parse(JSON.stringify(sitemap)),
 			requestInterval: requestInterval,
 			pageLoadDelay: pageLoadDelay,
-			scrollToBottom: scrollToBottom
+			scrollToBottom: scrollToBottom,
+			distinct: distinct,
+			nonEmpty: nonEmpty
 		};
 
 		// show sitemap scraping panel
@@ -1338,13 +1344,13 @@ SitemapController.prototype = {
 			parentSelectorIds: parentSelectorIds,
 			selectorId: selectorId
 		};
+
 		chrome.runtime.sendMessage(request, function (response) {
 
 			if (response.length === 0) {
 				return
 			}
 			var dataColumns = Object.keys(response[0]);
-
 			console.log(dataColumns);
 
 			var $dataPreviewPanel = ich.DataPreview({
@@ -1361,9 +1367,15 @@ SitemapController.prototype = {
 				dataColumns.forEach(function (column) {
 					var $td = $("<td></td>");
 					var cellData = row[column];
+
+					if(typeof func == "function"){
+						cellData = func(cellData);
+					}
+
 					if (typeof cellData === 'object') {
 						cellData = JSON.stringify(cellData);
 					}
+
 					$td.text(cellData);
 					$tr.append($td);
 				});

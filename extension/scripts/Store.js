@@ -73,6 +73,10 @@ MySQLDB.prototype = {
         }
         delete data.code;
 
+        if(!data.data){
+            data.data = "[]";
+        }
+
         return new Promise((resolve, reject) => {
             $.ajax({
                 url: `${this.url}/${this.sitemapTable}/${id}`,
@@ -124,10 +128,11 @@ var Store = function (config) {
     }
 };
 
-var StoreScrapeResultWriter = function(db, type, sitemapid) {
+var StoreScrapeResultWriter = function(db, type, sitemapid, distinct) {
     this.db = db;
     this.type = type;
     this.sitemapid = sitemapid;
+    this.distinct = distinct;
 };
 
 StoreScrapeResultWriter.prototype = {
@@ -139,7 +144,7 @@ StoreScrapeResultWriter.prototype = {
             const updateData = async function() {
                 let sitemapid = this.sitemapid;
                 let json = "json";
-                let data = {content: JSON.stringify(docs).replace(/\\n/ig,"").replace(/\\r/ig,""), field: "data"};
+                let data = {content: JSON.stringify(docs).replace(/\\n/ig,"").replace(/\\r/ig,""), field: "data", distinct: this.distinct};
                 let result = await this.db.UPDATE({json, data, sitemapid});
                 return Promise.resolve(result);
             }.bind(this);
@@ -178,12 +183,12 @@ Store.prototype = {
 	 * @param {type} sitemapId
 	 * @returns {undefined}
 	 */
-    initSitemapDataDb: function(sitemapId, callback) {
-		var dbLocation = this.getSitemapDataDbLocation(sitemapId);
+    initSitemapDataDb: function(sitemapId, callback, distinct) {
+        var dbLocation = this.getSitemapDataDbLocation(sitemapId);
 		var store = this;
         if(this.config.storageType == "mysql") {
             var db = store.getSitemapDataDb(sitemapId);
-            var dbWriter = new StoreScrapeResultWriter(db, "mysql", sitemapId);
+            var dbWriter = new StoreScrapeResultWriter(db, "mysql", sitemapId, distinct);
             callback(dbWriter);
         }else{
             PouchDB.destroy(dbLocation, function() {
@@ -199,7 +204,6 @@ Store.prototype = {
         if(!sitemap._id) {
             console.log("cannot save sitemap without an id", sitemap);
         }
-
         if(this.config.storageType == "mysql") {
             const handler = async function(){
                 let data = {
@@ -207,7 +211,9 @@ Store.prototype = {
                     sitemapid: sitemapJson._id,
                     content: JSON.stringify(sitemapJson)
                 };
+
                 let result = await this.mysqlDB.saveOrUpdate(data);
+
                 let sitemap = JSON.parse(result.content);
                 switch (result.code) {
                     case "get_error":
@@ -218,7 +224,6 @@ Store.prototype = {
                 }
                 return Promise.resolve(sitemap);
             }.bind(this);
-
             handler().then(callback);
         }else{
             this.sitemapDb.put(sitemapJson, function(sitemap, err, response) {

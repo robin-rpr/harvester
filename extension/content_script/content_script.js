@@ -17,6 +17,7 @@ chrome.runtime.onMessage.addListener(
 			console.log("received data-preview extraction request", request);
 			var extractor = new DataExtractor(request);
 			var deferredData = extractor.getSingleSelectorData(request.parentSelectorIds, request.selectorId);
+
 			deferredData.done(function(data){
 				console.log("dataextractor data", data);
 				sendResponse(data);

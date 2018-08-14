@@ -3,10 +3,14 @@ window.runTask = function () {
 	if (query.indexOf("run") > -1) {
 		var id = getQueryString("run");
 		var anti = getQueryString("anti");
+		var distinct = getQueryString("distinct");
+		var nonEmpty = getQueryString("nonempty");
 		var dom = $($("#sitemaps").find("td").get().filter(s => s.innerHTML == id));
 		dom.click();
 		controller.showScrapeSitemapConfigPanel();
 		$("#scrollToBottom").val(anti);
+		$("#distinct").val(distinct);
+		$("#nonEmpty").val(nonEmpty);
 		controller.scrapeSitemap();
 	}
 }

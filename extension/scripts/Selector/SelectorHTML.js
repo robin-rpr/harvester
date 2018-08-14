@@ -58,6 +58,6 @@ var SelectorHTML = {
 	},
 
 	getFeatures: function () {
-		return ['multiple', 'regex', 'delay']
+		return ['multiple', 'datafilter', 'regex', 'delay']
 	}
 };

@@ -110,10 +110,11 @@ DataExtractor.prototype = {
 		}
 	},
 
-	getSelectorTreeCommonData: function (selectors, parentSelectorId, parentElement) {
+	getSelectorTreeCommonData: function (selectors, parentSelectorId, parentElement) {//Grouped
 
 		var childSelectors = selectors.getDirectChildSelectors(parentSelectorId);
 		var deferredDataCalls = [];
+
 		childSelectors.forEach(function (selector) {
 			if (!selectors.willReturnMultipleRecords(selector.id)) {
 				deferredDataCalls.push(this.getSelectorCommonData.bind(this,selectors, selector, parentElement));
@@ -122,9 +123,8 @@ DataExtractor.prototype = {
 
 		var deferredResponse = $.Deferred();
 		$.whenCallSequentially(deferredDataCalls).done(function(responses) {
-
 			var commonData = {};
-            responses.forEach(function(data) {
+			responses.forEach(function(data) {
 				commonData = Object.merge(commonData, data);
 			});
 			deferredResponse.resolve(commonData);
@@ -133,11 +133,16 @@ DataExtractor.prototype = {
 		return deferredResponse;
 	},
 
-	getSelectorCommonData: function(selectors, selector, parentElement) {
+	getSelectorCommonData: function(selectors, selector, parentElement) {//TODO
 
 		var d = $.Deferred();
 		var deferredData = selector.getData(parentElement);
 		deferredData.done(function(data) {
+			var func = "";
+
+			if(selector.datafilter){
+				func = new Function("data", "return " + selector.datafilter);
+			}
 
 			if (selector.willReturnElements()) {
 				var newParentElement = data[0];
@@ -147,7 +152,18 @@ DataExtractor.prototype = {
 				});
 			}
 			else {
-				d.resolve(data[0]);
+				if(typeof func === "function"){
+					try{
+						var dt = data[0];
+						var key = Object.keys(dt);
+						key.forEach(k => dt[k] = func(dt[k]))
+						d.resolve(dt);
+					}catch(e){
+						d.resolve(data[0]);
+					}
+				}else{
+					d.resolve(data[0]);
+				}
 			}
 		}.bind(this));
 
@@ -245,7 +261,6 @@ DataExtractor.prototype = {
 						deferredResponse.resolve([]);
 					}
 					else {
-
 						deferredResponse.resolve([commonData]);
 					}
 				}
@@ -259,15 +274,21 @@ DataExtractor.prototype = {
 		return deferredResponse;
 	},
 
-	getData: function () {
+	getData: function () {//TODO
 
 		var selectorTrees = this.findSelectorTrees();
 		var dataDeferredCalls = [];
+		var commonFunc = "";
 
 		selectorTrees.forEach(function (selectorTree) {
-
 			var deferredTreeDataCall = this.getSelectorTreeData.bind(this, selectorTree, this.parentSelectorId, this.parentElement, {});
 			dataDeferredCalls.push(deferredTreeDataCall);
+
+			selectorTree.forEach((selector) => {
+				if(selector.datafilter && selector.willReturnElements()){
+					commonFunc = new Function("data", "return " + selector.datafilter);
+				}
+			});
 		}.bind(this));
 
 		var responseDeferred = $.Deferred();
@@ -276,7 +297,16 @@ DataExtractor.prototype = {
 			responses.forEach(function(dataResults) {
 				results = results.concat(dataResults);
 			}.bind(this));
-			responseDeferred.resolve(results);
+
+			if(typeof commonFunc == "function"){
+				try{
+					responseDeferred.resolve(commonFunc(results));
+				}catch(e){
+					responseDeferred.resolve(results);
+				}
+			}else{
+				responseDeferred.resolve(results);
+			}
 		}.bind(this));
 		return responseDeferred;
 	},

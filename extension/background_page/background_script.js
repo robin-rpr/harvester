@@ -56,12 +56,14 @@ chrome.runtime.onMessage.addListener(
 			store.getSitemapData(new Sitemap(request.sitemap), sendResponse);
 			return true;
 		}
-		else if (request.scrapeSitemap) {
+		else if (request.scrapeSitemap) {//TODO
 			var sitemap = new Sitemap(request.sitemap);
 			var queue = new Queue();
 			var browser = new ChromePopupBrowser({
 				pageLoadDelay: request.pageLoadDelay,
-				scrollToBottom: request.scrollToBottom
+				scrollToBottom: request.scrollToBottom,
+				distinct: request.distinct,
+				nonEmpty: request.nonEmpty
 			});
 
 			var scraper = new Scraper({

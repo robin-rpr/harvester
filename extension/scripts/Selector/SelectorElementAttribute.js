@@ -46,6 +46,6 @@ var SelectorElementAttribute = {
 	},
 
 	getFeatures: function () {
-		return ['multiple', 'extractAttribute', 'delay']
+		return ['multiple', 'extractAttribute', 'datafilter', 'delay']
 	}
 };

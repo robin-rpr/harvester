@@ -77,7 +77,7 @@ var SelectorTable = {
 	},
 
 	getFeatures: function () {
-		return ['multiple', 'columns', 'delay', 'tableDataRowSelector', 'tableHeaderRowSelector']
+		return ['multiple', 'columns', 'datafilter', 'delay', 'tableDataRowSelector', 'tableHeaderRowSelector']
 	},
 
 	getItemCSSSelector: function () {

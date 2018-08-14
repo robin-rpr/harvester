@@ -63,6 +63,6 @@ var SelectorElementScroll = {
 	},
 
 	getFeatures: function () {
-		return ['multiple', 'delay']
+		return ['multiple', 'datafilter', 'delay']
 	}
 };

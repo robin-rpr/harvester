@@ -169,6 +169,6 @@ var SelectorElementClick = {
 	},
 
 	getFeatures: function () {
-		return ['multiple', 'delay', 'clickElementSelector', 'clickType', 'discardInitialElements', 'clickElementUniquenessType']
+		return ['multiple', 'delay', 'clickElementSelector', 'clickType', 'datafilter', 'discardInitialElements', 'clickElementUniquenessType']
 	}
 };
