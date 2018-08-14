@@ -2,10 +2,6 @@ var ChromePopupBrowser = function (options) {
 
 	this.pageLoadDelay = options.pageLoadDelay;
 	this.scrollToBottom = options.scrollToBottom;
-	this.distinct = options.distinct;
-	this.nonEmpty = options.nonEmpty;
-
-	// @TODO somehow handle the closed window
 };
 
 ChromePopupBrowser.prototype = {
@@ -79,8 +75,6 @@ ChromePopupBrowser.prototype = {
 	fetchData: function (url, sitemap, parentSelectorId, callback, scope) {
 
 		var browser = this;
-		var distinct = this.distinct == "true";
-		var nonEmpty = this.nonEmpty == "true";
 
 		this._initPopupWindow(function () {
 			var tab = browser.tab;
@@ -89,8 +83,6 @@ ChromePopupBrowser.prototype = {
 
 				var message = {
 					extractData: true,
-					distinct: distinct,
-					nonEmpty: nonEmpty,
 					sitemap: JSON.parse(JSON.stringify(sitemap)),
 					parentSelectorId: parentSelectorId
 				};

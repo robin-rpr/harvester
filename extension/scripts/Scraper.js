@@ -6,7 +6,6 @@ Scraper = function (options) {
 	this.resultWriter = null; // db instance for scraped data writing
 	this.requestInterval = parseInt(options.requestInterval);
 	this.pageLoadDelay = parseInt(options.pageLoadDelay);
-	this.distinct = options.browser.distinct == "true" ? "PATCH" : "PRESERVE";
 };
 
 Scraper.prototype = {
@@ -39,7 +38,7 @@ Scraper.prototype = {
 		this.store.initSitemapDataDb(this.sitemap._id, function (resultWriter) {
 			scraper.resultWriter = resultWriter;
 			scraper._run();
-		}, this.distinct);
+		});
 	},
 
 	recordCanHaveChildJobs: function (record) {

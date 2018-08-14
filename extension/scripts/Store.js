@@ -128,67 +128,66 @@ var Store = function (config) {
     }
 };
 
-var StoreScrapeResultWriter = function(db, type, sitemapid, distinct) {
+var StoreScrapeResultWriter = function(db, type, sitemapid) {
     this.db = db;
     this.type = type;
     this.sitemapid = sitemapid;
-    this.distinct = distinct;
 };
 
 StoreScrapeResultWriter.prototype = {
     writeDocs: function(docs, callback) {
-		if(docs.length === 0) {
-			callback();
-		}
-		else if(this.type == "mysql") {
+        if(docs.length === 0) {
+            callback();
+        }
+        else if(this.type == "mysql") {
             const updateData = async function() {
                 let sitemapid = this.sitemapid;
                 let json = "json";
-                let data = {content: JSON.stringify(docs).replace(/\\n/ig,"").replace(/\\r/ig,""), field: "data", distinct: this.distinct};
+                let data = {content: JSON.stringify(docs).replace(/\\n/ig,"").replace(/\\r/ig,""), field: "data"};
                 let result = await this.db.UPDATE({json, data, sitemapid});
                 return Promise.resolve(result);
             }.bind(this);
 
             updateData().then(callback);
         }else {
-			this.db.bulkDocs({docs:docs}, function(err, response) {
-				if(err !== null) {
-					console.log("Error while persisting scraped data to db", err);
-				}
-				callback();
-			});
-		}
+            this.db.bulkDocs({docs:docs}, function(err, response) {
+                if(err !== null) {
+                    console.log("Error while persisting scraped data to db", err);
+                }
+                callback();
+            });
+        }
     }
 };
 
 Store.prototype = {
-	sanitizeSitemapDataDbName: function(dbName) {
-		return 'sitemap-data-' + dbName.replace(/[^a-z0-9_\$\(\)\+\-/]/gi, "_");
-	},
-	getSitemapDataDbLocation: function(sitemapId) {
-		var dbName = this.sanitizeSitemapDataDbName(sitemapId);
-		return this.config.dataDb + dbName;
-	},
-	getSitemapDataDb: function(sitemapId) {
-		var dbLocation = this.getSitemapDataDbLocation(sitemapId);
+    sanitizeSitemapDataDbName: function(dbName) {
+        return 'sitemap-data-' + dbName.replace(/[^a-z0-9_\$\(\)\+\-/]/gi, "_");
+    },
+    getSitemapDataDbLocation: function(sitemapId) {
+        var dbName = this.sanitizeSitemapDataDbName(sitemapId);
+        return this.config.dataDb + dbName;
+    },
+    getSitemapDataDb: function(sitemapId) {
+        var dbLocation = this.getSitemapDataDbLocation(sitemapId);
         if(this.config.storageType == "mysql") {
             return new MySQLDB(this.config.mysqlDB, this.config.mysqlSitemap);
         }else{
             return new PouchDB(dbLocation);
         }
     },
-	
-	/**
-	 * creates or clears a sitemap db
-	 * @param {type} sitemapId
-	 * @returns {undefined}
-	 */
-    initSitemapDataDb: function(sitemapId, callback, distinct) {
+    
+    /**
+     * creates or clears a sitemap db
+     * @param {type} sitemapId
+     * @returns {undefined}
+     */
+    initSitemapDataDb: function(sitemapId, callback) {
         var dbLocation = this.getSitemapDataDbLocation(sitemapId);
-		var store = this;
+        var store = this;
         if(this.config.storageType == "mysql") {
             var db = store.getSitemapDataDb(sitemapId);
-            var dbWriter = new StoreScrapeResultWriter(db, "mysql", sitemapId, distinct);
+            var dbWriter = new StoreScrapeResultWriter(db, "mysql", sitemapId);
             callback(dbWriter);
         }else{
             PouchDB.destroy(dbLocation, function() {
@@ -197,7 +196,7 @@ Store.prototype = {
                 callback(dbWriter);
             });
         }
-	},
+    },
 
     createSitemap: function (sitemap, callback) {
         var sitemapJson = JSON.parse(JSON.stringify(sitemap));
@@ -295,7 +294,7 @@ Store.prototype = {
             });
         }
     },
-	// @TODO make this call lighter
+    // @TODO make this call lighter
     sitemapExists: function (sitemapId, callback) {
         this.getAllSitemaps(function (sitemaps) {
             var sitemapFound = false;
@@ -306,5 +305,33 @@ Store.prototype = {
             }
             callback(sitemapFound);
         });
+    },
+    removeDuplicate: async function(sitemapid, distinct){
+        if(distinct != "true"){
+            return Promise.resolve({distinct});
+        }else{
+            distinct = "PATCH";
+
+            const  toSortedJSON = function(obj) {
+                return JSON.stringify(typeof obj == "object" ? Object.keys(obj).sort().reduce((o, key) => (o[key] = toSortedJSON(obj[key]), o), {}) : obj);
+            }
+
+            const uniq = function(xs) {
+                let seen = {};
+                return xs.filter(x => (k = (toSortedJSON || JSON.stringify)(x), !(k in seen) && (seen[k] = 1)));
+            }
+
+            let db = this.getSitemapDataDb(sitemapid);
+            let response = await db.GET({sitemapid});
+
+            let content = JSON.stringify(uniq(JSON.parse(response.data)));
+
+            let json = "json";
+            let field = "data";
+            let data = {content, field, distinct};
+
+            let result = await db.UPDATE({json, data, sitemapid});
+            return Promise.resolve(Object.assign(result, {distinct}));
+        }
     }
 };

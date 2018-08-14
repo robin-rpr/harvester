@@ -61,9 +61,7 @@ chrome.runtime.onMessage.addListener(
 			var queue = new Queue();
 			var browser = new ChromePopupBrowser({
 				pageLoadDelay: request.pageLoadDelay,
-				scrollToBottom: request.scrollToBottom,
-				distinct: request.distinct,
-				nonEmpty: request.nonEmpty
+				scrollToBottom: request.scrollToBottom
 			});
 
 			var scraper = new Scraper({
@@ -75,7 +73,7 @@ chrome.runtime.onMessage.addListener(
 			});
 
 			try {
-				scraper.run(function () {
+				const callback = function(){
 					browser.close();
 					var notification = chrome.notifications.create("scraping-finished", {
 						type: 'basic',
@@ -86,7 +84,13 @@ chrome.runtime.onMessage.addListener(
 						// notification showed
 					});
 					sendResponse();
-				});
+				}
+
+				const finalize = async function(){
+					let result = await store.removeDuplicate(sitemap._id, request.distinct);
+					callback();
+				}
+				scraper.run(finalize);
 			}
 			catch (e) {
 				console.log("Scraper execution cancelled".e);

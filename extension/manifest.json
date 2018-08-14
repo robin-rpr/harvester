@@ -1,9 +1,9 @@
 {
 	"manifest_version": 2,
-	"version": "0.3.3",
+	"version": "0.3.4",
 	"name": "Web Scraper Plus",
 	"short_name": "Web Scraper Plus",
-	"description": "Tool for data extraction from websites. Based on the orginal `Web Scraper`, now support MySQL database, Anti Lazy-Loading, start scraping from CMD/Terminal, preprocess filter and discard duplicate data.",
+	"description": "Tool for data extraction from websites. Based on `Web Scraper`, now support MySQL/Anti Lazy-Loading/CMD/Terminal/JS filter and more",
 	"permissions": ["<all_urls>", "tabs", "notifications", "storage", "unlimitedStorage", "downloads"],
 	"icons": {
 		"16": "assets/images/icon16.png",
