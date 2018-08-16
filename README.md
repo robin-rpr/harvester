@@ -5,9 +5,9 @@ should be traversed and what should be extracted. Using these sitemaps the
 Web Scraper will navigate the site accordingly and extract all data. Scraped 
 data later can be exported as CSV.
 
-Install the extension from [Chrome store] [chrome-store]
+Install the extension from [chrome-store]
 
-#### This tool is forked form [Web Scraper] [Web-Scraper] with many more features
+#### This tool is forked form [Web-Scraper] with many more features
 
 ### New Features
  1. Start scrape from CMD/Terminal
@@ -29,7 +29,7 @@ Install the extension from [Chrome store] [chrome-store]
 
 ### Help
 
- Documentation and tutorials are available on [webscraper.io] [webscraper.io]
+ Documentation and tutorials are available on [webscraper.io]
  
  Submit bugs and suggest features on [github-issues]
  
