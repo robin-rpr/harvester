@@ -1,5 +1,3 @@
-# Forked form [Web Scraper] [Web-Scraper] with many more features
-
 # Web Scraper Plus
 Web Scraper Plus is a chrome browser extension built for data extraction from web 
 pages. Using this extension you can create a plan (sitemap) how a web site 
@@ -8,6 +6,8 @@ Web Scraper will navigate the site accordingly and extract all data. Scraped
 data later can be exported as CSV.
 
 Install the extension from [Chrome store] [chrome-store]
+
+#### This tool is forked form [Web Scraper] [Web-Scraper] with many more features
 
 ### New Features
  1. Start scrape from CMD/Terminal
@@ -39,6 +39,7 @@ When submitting a bug please attach an exported sitemap if possible.
 ## License
 LGPLv3
 
+ [Web-Scraper]: https://github.com/martinsbalodis/web-scraper-chrome-extension
  [chrome-store]: https://chrome.google.com/webstore/detail/pbbfbmlnpackgeofecdfncmmdbodkhma
  [webscraper.io]: http://webscraper.io/
  [github-issues]: https://github.com/hejiheji001/web-scraper-chrome-extension/issues
