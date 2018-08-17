@@ -10,6 +10,13 @@ Sitemap.prototype = {
 		}
 
 		var selectors = this.selectors;
+
+		var rootSelector = selectors.filter(s => s.parentSelectors[0] == "_root")[0];
+		if(rootSelector.customColumns){
+			var columnJSON = JSON.parse(rootSelector.customColumns);
+			this.customColumns = Array.isArray(columnJSON) ? columnJSON : null;
+		}
+
 		this.selectors = new SelectorList(this.selectors);
 	},
 
@@ -168,11 +175,9 @@ Sitemap.prototype = {
 	getDataColumns: function () {
 		var columns = [];
 		this.selectors.forEach(function (selector) {
-
 			columns = columns.concat(selector.getDataColumns());
 		});
-
-		return columns;
+		return this.customColumns || columns;
 	},
 	getDataExportCsvBlob: function (data) {
 

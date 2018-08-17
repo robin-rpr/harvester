@@ -34,6 +34,6 @@ var SelectorElement = {
 	},
 
 	getFeatures: function () {
-		return ['multiple', 'delay']
+		return ['multiple', 'delay', 'datafilter', 'customColumns']
 	}
 };

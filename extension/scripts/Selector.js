@@ -1,5 +1,5 @@
 var Selector = function (selector) {
-	this.updateData(selector);
+	this.updateData(selector);	
 	this.initType();
 };
 

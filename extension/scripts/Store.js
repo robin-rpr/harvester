@@ -331,6 +331,7 @@ Store.prototype = {
             let data = {content, field, distinct};
 
             let result = await db.UPDATE({json, data, sitemapid});
+
             return Promise.resolve(Object.assign(result, {distinct}));
         }
     }

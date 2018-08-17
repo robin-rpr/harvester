@@ -860,6 +860,7 @@ SitemapController.prototype = {
 		var regex = $("#edit-selector [name=regex]").val();
 		var delay = $("#edit-selector [name=delay]").val();
 		var datafilter = $("#edit-selector [name=datafilter]").val();
+		var customColumns = $("#edit-selector [name=customColumns]").val();
 		var extractAttribute = $("#edit-selector [name=extractAttribute]").val();
 		var parentSelectors = $("#edit-selector [name=parentSelectors]").val();
 		var columns = [];
@@ -894,6 +895,7 @@ SitemapController.prototype = {
 			regex: regex,
 			extractAttribute:extractAttribute,
 			datafilter:datafilter,
+			customColumns: customColumns,
 			parentSelectors: parentSelectors,
 			columns:columns,
 			delay:delay
@@ -1035,8 +1037,11 @@ SitemapController.prototype = {
 		this.setActiveNavigationButton('sitemap-browse');
 		var sitemap = this.state.currentSitemap;
 		this.store.getSitemapData(sitemap, function (data) {
-
 			var dataColumns = sitemap.getDataColumns();
+
+			if(sitemap.selectors[0].columns){
+				dataColumns = JSON.parse(sitemap.selectors[0].columns);
+			}
 
 			var dataPanel = ich.SitemapBrowseData({
 				columns: dataColumns

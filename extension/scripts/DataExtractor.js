@@ -179,6 +179,11 @@ DataExtractor.prototype = {
 
 		// if the selector is not an Element selector then its fetched data is the result.
 		if (!selector.willReturnElements()) {
+			var func = "";
+
+			if(selector.datafilter){
+				func = new Function("data", "return " + selector.datafilter);
+			}
 
 			var deferredData = selector.getData(parentElement);
 			deferredData.done(function(selectorData) {
@@ -190,7 +195,16 @@ DataExtractor.prototype = {
 					resultData.push(record);
 				}.bind(this));
 
-				deferredResponse.resolve(resultData);
+				if(typeof func === "function"){
+					try{
+						deferredResponse.resolve(func(resultData));
+					}catch(e){
+						deferredResponse.resolve(resultData);
+					}
+				}else{
+					deferredResponse.resolve(resultData);
+				}
+
 			}.bind(this));
 
 		}
@@ -300,7 +314,8 @@ DataExtractor.prototype = {
 
 			if(typeof commonFunc == "function"){
 				try{
-					responseDeferred.resolve(commonFunc(results));
+					let data = commonFunc(results);
+					responseDeferred.resolve(data);
 				}catch(e){
 					responseDeferred.resolve(results);
 				}
