@@ -15,6 +15,7 @@ Install the extension from [chrome-store]
  3. Anti Lazy-Loading feature on pages
  4. Support user defined JS code for data preprocess (Data Filter)
  5. Remove dulplicate data before the end of every task.
+ 6. Custom columns: Define the columns you want to display, please use this feature together with Data Filter
 
 ### Features(Forked from original work)
 
