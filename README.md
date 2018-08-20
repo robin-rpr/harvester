@@ -12,11 +12,12 @@ Install the extension from [chrome-store]
 ### New Features
  1. Start scraping from CMD/Terminal: 
  
-    ``
-     chrome.exe "chrome-extension://[ExtensionID]/devtools/devtools_scraper_panel.html?run=[sitemapid]&anti=[true|false]&distinct=[true|false]"
-     
-     eg: chrome.exe "chrome-extension://fedhdngpddfjodmnfopokanlgnapnmeb/devtools/devtools_scraper_panel.html?run=test3&anti=false"
-    ``
+```
+chrome.exe "chrome-extension://[ExtensionID]/devtools/devtools_scraper_panel.html?run=[sitemapid]&anti=[true|false]&distinct=[true|false]"
+
+
+eg: chrome.exe "chrome-extension://fedhdngpddfjodmnfopokanlgnapnmeb/devtools/devtools_scraper_panel.html?run=test3&anti=false"
+```
   
  2. Support MySQL database (v5.8+)
  3. Anti Lazy-Loading feature on pages
