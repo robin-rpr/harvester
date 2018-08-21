@@ -13,7 +13,7 @@ Document for new features: [wiki]
 
 ### New Features
  1. Start scraping from CMD/Terminal
- 2. Support MySQL database (v5.8+)
+ 2. Support MySQL database (v5.7+)
  3. Anti Lazy-Loading feature on pages
  4. Support user defined JS code for data preprocess (Data Filter)
  5. Remove dulplicate data before the end of every task.
