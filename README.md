@@ -12,15 +12,7 @@ For use cases: [wiki]
 #### This tool is forked form [Web-Scraper] with many more features
 
 ### New Features
- 1. Start scraping from CMD/Terminal: 
- 
-```
-chrome.exe "chrome-extension://[ExtensionID]/devtools/devtools_scraper_panel.html?run=[sitemapid]&anti=[true|false]&distinct=[true|false]"
-
-
-eg: chrome.exe "chrome-extension://fedhdngpddfjodmnfopokanlgnapnmeb/devtools/devtools_scraper_panel.html?run=test3&anti=false"
-```
-  
+ 1. Start scraping from CMD/Terminal
  2. Support MySQL database (v5.8+)
  3. Anti Lazy-Loading feature on pages
  4. Support user defined JS code for data preprocess (Data Filter)
