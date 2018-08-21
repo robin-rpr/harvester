@@ -7,6 +7,8 @@ data later can be exported as CSV.
 
 Install the extension from [chrome-store]
 
+For use cases: [wiki]
+
 #### This tool is forked form [Web-Scraper] with many more features
 
 ### New Features
@@ -52,3 +54,4 @@ LGPLv3
  [chrome-store]: https://chrome.google.com/webstore/detail/pbbfbmlnpackgeofecdfncmmdbodkhma
  [webscraper.io]: http://webscraper.io/
  [github-issues]: https://github.com/hejiheji001/web-scraper-chrome-extension/issues
+ [wiki]: https://github.com/hejiheji001/web-scraper-chrome-extension/wiki
