@@ -7,7 +7,7 @@ data later can be exported as CSV.
 
 Install the extension from [chrome-store]
 
-For use cases: [wiki]
+Document for new features: [wiki]
 
 #### This tool is forked form [Web-Scraper] with many more features
 
@@ -32,7 +32,7 @@ For use cases: [wiki]
 
 ### Help
 
- Documentation and tutorials are available on [webscraper.io]
+ Basic documentation and tutorials are available on [webscraper.io]
  
  Submit bugs and suggest features on [github-issues]
  
