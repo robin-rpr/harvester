@@ -18,6 +18,7 @@ Document for new features: [wiki]
  4. [Data Filter]: Support user defined JS code for data preprocess and much more
  5. [Distinct]: Remove dulplicate data before the end of every task.
  6. [Custom Columns]: Define the columns you want to display, please use this feature together with [Data Filter]
+ 7. [Easy Scrape]: Create & scrape sitemap in a more easily way
 
 ### Features(Forked from original work)
 
@@ -58,3 +59,5 @@ LGPLv3
 [Distinct]: https://github.com/hejiheji001/web-scraper-chrome-extension/wiki/Distinct
 
 [Custom Columns]: https://github.com/hejiheji001/web-scraper-chrome-extension/wiki/Custom-Columns
+
+[Easy Scrape]: https://github.com/hejiheji001/web-scraper-chrome-extension/wiki/Easy-Scrape
