@@ -7,8 +7,52 @@
 			font-size:12px;
 		}
 	</style>
+	<script src="./assets/jquery-2.0.3.js"></script>
+		<script src="./assets/jquery.whencallsequentially.js"></script>
+		<script src="./assets/base64.js"></script>
+		<script src="./assets/pouchdb-nightly.min.js"></script>
+		<script src="./assets/bootstrap-3.0.0/js/bootstrap.js"></script>
+		<script src="./assets/d3.v3.js" charset="UTF-8"></script>
+		<script src="./assets/sugar-1.4.1.js" charset="UTF-8"></script>
+		<script src="./assets/ICanHaz.js"></script>
+		<script src="./assets/jquery.bootstrapvalidator/bootstrapValidator.js"></script>
+		<script src="./scripts/Config.js"></script>
+		<script src="./scripts/ElementQuery.js"></script>
+		<script src="./scripts/Selector.js"></script>
+		<script src="./scripts/SelectorList.js"></script>
+		<script src="./scripts/Selector/SelectorElement.js"></script>
+		<script src="./scripts/Selector/SelectorLink.js"></script>
+		<script src="./scripts/Selector/SelectorPopupLink.js"></script>
+		<script src="./scripts/Selector/SelectorGroup.js"></script>
+		<script src="./scripts/Selector/SelectorText.js"></script>
+		<script src="./scripts/Selector/SelectorImage.js"></script>
+		<script src="./scripts/Selector/SelectorHTML.js"></script>
+		<script src="./scripts/Selector/SelectorElementAttribute.js"></script>
+		<script src="./scripts/Selector/SelectorTable.js"></script>
+		<script src="./scripts/Selector/SelectorElementScroll.js"></script>
+		<script src="./scripts/Selector/SelectorElementClick.js"></script>
+		<script src="./scripts/Sitemap.js"></script>
+		<script src="./scripts/SelectorGraph.js"></script>
+		<script src="./scripts/SelectorGraphv2.js"></script>
+		<script src="./scripts/Store.js"></script>
+	 	<script src="./scripts/DataExtractor.js"></script>
+		<script src="./scripts/BackgroundScript.js"></script>
+		<script src="./scripts/ContentScript.js"></script>
+		<script src="./assets/css-selector/lib/CssSelector.js"></script>
+		<script src="./scripts/PopupApp.js"></script>
 </head>
 <body>
+	<div class="modal fade data-preview-modal" style="position: absolute; width: 100%; height: 100%; background: black; margin: 0; padding: 0; top: 0; left: 0; opacity: 0.8; display: none;">
+			<h4 class="modal-title" style="font-size: 20px; color: white; margin: 0 auto; text-align: center; top: 40%; position: absolute; left: 40%; opacity: 1; ">Loading</h4>
+	</div>
+<table>
+	<tr><td style="width:30px">ID:</td><td><input style="width:260px" id="_id"></input></td></tr>
+	<tr><td style="width:30px">URL:</td><td><input style="width:260px" id="_url"></input></td></tr>
+</table>
+<button id="grab_link" style="width:98%;margin:1%">Grab Permalink</button>
+		</li>		<button id="grab_list" style="width:98%;margin:1%">Grab Link List</button>
+		<li>		<button id="ungrab" style="width:98%;margin:1%">Un-Grab</button>
+<div id="selectors"/>	
 <p>
 	Open Developer tools where you will find Web Scraper Plus tab:
 	<ul>
@@ -25,6 +69,7 @@
 </p>
 <p>
 	Documentation is available on <a target="_blank" href="http://webscraper.io/">webscraper.io</a>
+	Documentation for new features on <a target="_blank" href="https://github.com/hejiheji001/web-scraper-chrome-extension/wiki">Wiki</a>
 </p>
 </body>
 </html>

@@ -23,10 +23,10 @@ MySQLDB.prototype = {
             });
         });
     },
-    READ: function() {
+    READ: function(field) {
         return new Promise((resolve, reject) => {
             $.ajax({
-                url: `${this.url}/${this.sitemapTable}`,
+                url: `${this.url}/${this.sitemapTable}?field=${field}`,
                 type: "GET",
                 success: function(response){
                     resolve(Object.assign(response, {code: "read"}));
@@ -237,20 +237,19 @@ Store.prototype = {
     },
     deleteSitemap: function (sitemap, callback) {
         sitemap = JSON.parse(JSON.stringify(sitemap));
-
-        if(this.config.storageType == "mysql"){
-            this.mysqlDB.remove(sitemap).then(callback);
-        }else{
-            this.sitemapDb.remove(sitemap, function(err, response){
-                // @TODO handle err
-
-                // delete sitemap data db
-                var dbLocation = this.getSitemapDataDbLocation(sitemap._id);
-                PouchDB.destroy(dbLocation, function() {
-                    callback();
-                }.bind(this));
-            }.bind(this));
-        }
+        var _this = this;
+        this.findSitemap(sitemap._id, function(_sitemap){
+            if(!_sitemap) return;
+            if(_this.config.storageType == "mysql"){
+                _this.mysqlDB.remove(sitemap).then(callback);
+            }else{
+                _this.sitemapDb.remove(_sitemap, function(err, response){
+                    var dbLocation = _this.getSitemapDataDbLocation(_sitemap._id);
+                        PouchDB.destroy(dbLocation, function() {
+                        callback();
+                    }.bind(this));
+            }.bind(this));}
+        });
     },
     getAllSitemaps: function (callback) {
         if(this.config.storageType == "mysql"){
@@ -258,7 +257,7 @@ Store.prototype = {
                 let sitemaps = (response.error ? [] : response).map(r => JSON.parse(r.content)).map(s => chrome.extension ? s : new Sitemap(s));
                 callback(sitemaps);
             }
-            this.mysqlDB.READ().then(setupSitemap);
+            this.mysqlDB.READ("content").then(setupSitemap);
         }else{
             this.sitemapDb.allDocs({include_docs: true}, function(err, response) {
                 var sitemaps = [];
@@ -273,7 +272,32 @@ Store.prototype = {
             });
         }
     },
-
+    findSitemap: function (sitemapId, callback) {
+        this.getAllSitemaps(function (sitemaps) {
+            var sitemapFound = false;
+            for (var i in sitemaps) {
+                if (sitemaps[i]._id === sitemapId) {
+            callback(sitemaps[i]);
+            return;
+                }
+            }
+            callback(sitemapFound);
+        });
+    },
+    findSimilar: function (sitemapId, callback) {
+        this.getAllSitemaps(function (sitemaps) {
+            var sitemapFound = false;
+        var count=0;    
+            for (var i in sitemaps) {
+        var common=sharedStart([sitemaps[i]._id,sitemapId]);
+        if(count<common.length) {
+            count=common.length;
+            sitemapFound=sitemaps[i];
+                }
+            }
+        callback(sitemapFound);
+        });
+    },
     getSitemapData: function (sitemap, callback) {
         if(this.config.storageType == "mysql"){
             var db = this.getSitemapDataDb(sitemap._id);
@@ -336,3 +360,10 @@ Store.prototype = {
         }
     }
 };
+
+function sharedStart(array){
+    var A= array.concat().sort(), 
+    a1= A[0], a2= A[A.length-1], L= a1.length, i= 0;
+    while(i<L && a1.charAt(i)=== a2.charAt(i)) i++;
+    return a1.substring(0, i);
+}

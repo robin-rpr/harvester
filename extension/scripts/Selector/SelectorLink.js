@@ -33,7 +33,7 @@ var SelectorLink = {
 		// extract links one by one
 		var deferredDataExtractionCalls = [];
 		$(elements).each(function (k, element) {
-
+			if(!element.href.match(new RegExp(this.regex))) return;
 			deferredDataExtractionCalls.push(function(element) {
 
 				var deferredData = $.Deferred();
@@ -65,7 +65,7 @@ var SelectorLink = {
 	},
 
 	getFeatures: function () {
-		return ['multiple', 'datafilter', 'delay']
+		return ['multiple', 'datafilter', 'delay', 'regex']
 	},
 
 	getItemCSSSelector: function() {

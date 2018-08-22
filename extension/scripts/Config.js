@@ -7,6 +7,7 @@ Config.prototype = {
 	sitemapDb: '<use loadConfiguration()>',
 	dataDb: '<use loadConfiguration()>',
 	mysqlDB: '<use loadConfiguration()>',
+	defaultSitemap: '<use loadConfiguration()>',
 
 	defaults: {
 		storageType: "local",
@@ -15,6 +16,7 @@ Config.prototype = {
 		// this is where scraped data is stored.
 		// empty for local storage
 		dataDb: "",
+		defaultSitemap:'{"selectors": [{"id": "title","parentSelectors": ["_root"],"type": "SelectorText","multiple": false,"selector": "h1" }, { "id": "photo", "parentSelectors": ["_root"], "type": "SelectorImage", "multiple": false, "selector": "img" }, { "id": "date", "parentSelectors": ["_root"], "type": "SelectorText", "multiple": false,"selector": "time" }, { "id": "descr", "parentSelectors": ["_root"], "type": "SelectorText", "multiple": true, "selector": "p"}]}',
 		mysqlDB: "http://",
 		mysqlSitemap: "sitemap"
 	},
@@ -24,8 +26,9 @@ Config.prototype = {
 	 */
 	loadConfiguration: function (callback) {
 
-		chrome.storage.sync.get(['sitemapDb', 'dataDb', 'storageType', 'mysqlDB'], function (items) {
+		chrome.storage.sync.get(['sitemapDb', 'dataDb', 'storageType', 'mysqlDB', 'defaultSitemap'], function (items) {
 			this.storageType = items.storageType || this.defaults.storageType;
+			this.defaultSitemap= items.defaultSitemap || this.defaults.defaultSitemap;
 			if (this.storageType === 'local') {
 				this.sitemapDb = this.defaults.sitemapDb;
 				this.dataDb = this.defaults.dataDb;

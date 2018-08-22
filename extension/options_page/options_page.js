@@ -67,7 +67,7 @@ $(function () {
 			$("#dataDb").val(config.dataDb);
 			$("#sitemapDb").val(config.sitemapDb);
 		}
-
+		$("#defaultSitemap").val(JSON.stringify(JSON.parse(config.defaultSitemap),null,'\t'));
 		$("select[name=storageType]").change();
 	});
 
@@ -77,6 +77,7 @@ $(function () {
 		var sitemapDb = $("#sitemapDb").val();
 		var dataDb = $("#dataDb").val();
 		var storageType = $("#storageType").val();
+		var defaultSitemap = JSON.stringify(JSON.parse($("#defaultSitemap").val()));
 		var mysqlDB = $("#mysqlDB").val();
 		var mysqlSitemap = $("#mysqlSitemap").val();
 
@@ -86,20 +87,23 @@ $(function () {
 			newConfig = {
 				storageType: storageType,
 				sitemapDb: ' ',
-				dataDb: ' '
+				dataDb: ' ',
+				defaultSitemap: defaultSitemap
 			}
 		}
 		else if(storageType === 'mysql'){
 			newConfig = {
 				storageType: storageType,
 				mysqlDB: mysqlDB,
-				mysqlSitemap: mysqlSitemap
+				mysqlSitemap: mysqlSitemap,
+				defaultSitemap: defaultSitemap
 			}
 		}else if(storageType === 'couchdb'){
 			newConfig = {
 				storageType: storageType,
 				sitemapDb: sitemapDb,
-				dataDb: dataDb
+				dataDb: dataDb,
+				defaultSitemap: defaultSitemap
 			}
 		}
 		console.log(newConfig);
