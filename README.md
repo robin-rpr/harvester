@@ -12,12 +12,12 @@ Document for new features: [wiki]
 #### This tool is forked form [Web-Scraper] with many more features
 
 ### New Features
- 1. Start scraping from CMD/Terminal
- 2. Support MySQL database (v5.7+)
- 3. Anti Lazy-Loading feature on pages
- 4. Support user defined JS code for data preprocess (Data Filter)
- 5. Remove dulplicate data before the end of every task.
- 6. Custom columns: Define the columns you want to display, please use this feature together with Data Filter
+ 1. [CLI Support]: Start scraping from CMD/Terminal
+ 2. [MySQL Support]: Support MySQL database (v5.7+)
+ 3. [Anti Lazy-Loading]: Anti Lazy-Loading feature on pages
+ 4. [Data Filter]: Support user defined JS code for data preprocess and much more
+ 5. [Distinct]: Remove dulplicate data before the end of every task.
+ 6. [Custom Columns]: Define the columns you want to display, please use this feature together with [Data Filter]
 
 ### Features(Forked from original work)
 
@@ -47,3 +47,14 @@ LGPLv3
  [webscraper.io]: http://webscraper.io/
  [github-issues]: https://github.com/hejiheji001/web-scraper-chrome-extension/issues
  [wiki]: https://github.com/hejiheji001/web-scraper-chrome-extension/wiki
+[MySQL Support]: https://github.com/hejiheji001/web-scraper-chrome-extension/wiki/MySQL-Support
+
+[CLI Support]: https://github.com/hejiheji001/web-scraper-chrome-extension/wiki/CLI-Support
+
+[Anti Lazy-Loading]: https://github.com/hejiheji001/web-scraper-chrome-extension/wiki/Anti-Lazy-Loading
+
+[Data Filter]: https://github.com/hejiheji001/web-scraper-chrome-extension/wiki/Data-Filter
+
+[Distinct]: https://github.com/hejiheji001/web-scraper-chrome-extension/wiki/Distinct
+
+[Custom Columns]: https://github.com/hejiheji001/web-scraper-chrome-extension/wiki/Custom-Columns
