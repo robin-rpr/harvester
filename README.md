@@ -18,7 +18,7 @@ Document for new features: [wiki]
  4. [Data Filter]: Support user defined JS code for data preprocess and much more
  5. [Distinct]: Remove dulplicate data before the end of every task.
  6. [Custom Columns]: Define the columns you want to display, please use this feature together with [Data Filter]
- 7. [Easy Scrape]: Create & scrape sitemap in a more easily way
+ 7. [Easy Scrape]: Create & scrape sitemap in a more easily way. (By https://github.com/aagiss)
 
 ### Features(Forked from original work)
 
