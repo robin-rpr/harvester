@@ -305,6 +305,7 @@ function popup_main2(config, store, url, sitemap_id, filter) {
     });
     $('#grab_link').click(function() {
         var _id = 'k' + sitemap_id;
+        showLoading();
         store.findSimilar(_id, function(s) {
             if (s)
                 sitemap = {
@@ -323,6 +324,7 @@ function popup_main2(config, store, url, sitemap_id, filter) {
     });
     $('#grab_list').click(function() {
         var _id = sitemap_id;
+        showLoading();
         store.findSimilar('k' + _id, function(s) {
             sitemap = {
                 selectors: JSON.parse(config.defaultSitemap).selectors

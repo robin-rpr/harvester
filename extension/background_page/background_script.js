@@ -107,7 +107,7 @@ chrome.runtime.onMessage.addListener(
 				scraper.run(finalize);
 			}
 			catch (e) {
-				console.log("Scraper execution cancelled".e);
+				console.log("Scraper execution cancelled", e);
 			}
 
 			return true;
