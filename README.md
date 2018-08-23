@@ -19,6 +19,7 @@ Document for new features: [wiki]
  5. [Distinct]: Remove dulplicate data before the end of every task.
  6. [Custom Columns]: Define the columns you want to display, please use this feature together with [Data Filter]
  7. [Easy Scrape]: Create & scrape sitemap in a more easily way. (By https://github.com/aagiss)
+ 8. Random Interval: Add a random delay between requests. (By https://github.com/Euphorbium)
 
 ### Features(Forked from original work)
 
