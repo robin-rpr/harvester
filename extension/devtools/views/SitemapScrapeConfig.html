@@ -1,3 +1,6 @@
+<style>
+	.blue{color: #428bca;}
+</style>
 <div id="scrape-sitemap-config">
 	<form class="form-horizontal" role="form" id="submit-scrape-sitemap-form">
 		<div class="form-group">
@@ -7,9 +10,10 @@
 			</div>
 		</div>
 		<div class="form-group">
-			<label for="requestIntervalRandomness" class="col-lg-1 control-label">Request interval randomness (ms)</label>
+			<label for="requestIntervalRandomness" class="col-lg-1 control-label">Random interval (ms)</label>
 			<div class="col-lg-10">
 				<input type="text" class="form-control" name="requestIntervalRandomness" id="requestIntervalRandomness" placeholder="Request interval randomness" value="0">
+				<p class="help-block">A <b>Math.random() * RandomInterval</b> will be added to the <b>RequestInterval</b> attribute.</p>
 			</div>
 		</div>
 		<div class="form-group">
@@ -19,9 +23,9 @@
 			</div>
 		</div>
 		<div class="form-group">
-			<label for="scrollToBottom" class="col-lg-1 control-label">Anti-LazyLoad</label>
+			<label for="scrollToBottom" class="col-lg-1 control-label">Anti Lazy-Loading</label>
 			<div class="col-lg-10">
-				<input type="text" class="form-control" name="scrollToBottom" id="scrollToBottom" placeholder="Anti-LazyLoad" value="true">
+				<input type="text" class="form-control" name="scrollToBottom" id="scrollToBottom" placeholder="Anti Lazy-Loading" value="true">
 				<p class="help-block">Page will <b>SLOWLY</b> scroll to bottom in order to force the page load all resources.</p>
 			</div>
 		</div>
