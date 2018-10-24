@@ -293,7 +293,7 @@ DataExtractor.prototype = {
 		var selectorTrees = this.findSelectorTrees();
 		var dataDeferredCalls = [];
 		var commonFunc = "";
-
+		
 		selectorTrees.forEach(function (selectorTree) {
 			var deferredTreeDataCall = this.getSelectorTreeData.bind(this, selectorTree, this.parentSelectorId, this.parentElement, {});
 			dataDeferredCalls.push(deferredTreeDataCall);

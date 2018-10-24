@@ -75,7 +75,8 @@ chrome.runtime.onMessage.addListener(
 			var queue = new Queue();
 			var browser = new ChromePopupBrowser({
 				pageLoadDelay: request.pageLoadDelay,
-				scrollToBottom: request.scrollToBottom
+				scrollToBottom: request.scrollToBottom,
+				urls: sitemap.getStartUrls()
 			});
 
 			var scraper = new Scraper({
@@ -88,7 +89,7 @@ chrome.runtime.onMessage.addListener(
 
 			try {
 				const callback = function(){
-					browser.close();
+					//browser.close();
 					var notification = chrome.notifications.create("scraping-finished", {
 						type: 'basic',
 						iconUrl: 'assets/images/icon128.png',
@@ -100,10 +101,11 @@ chrome.runtime.onMessage.addListener(
 					sendResponse();
 				}
 
-				const finalize = async function(){
-					let result = await store.removeDuplicate(sitemap._id, request.distinct);
+				const finalize = function(finalResult){
+					store.removeDuplicate(sitemap._id, request.distinct, finalResult);
 					callback();
 				}
+
 				scraper.run(finalize);
 			}
 			catch (e) {

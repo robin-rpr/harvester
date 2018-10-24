@@ -1,6 +1,6 @@
 <tr>
 	<td class="id">{{_id}}</td>
-	<td>
+	<td><div style="height:50px;overflow: hidden;">
 		{{#startUrl.push}}
 			{{#startUrl}}
 				{{.}},
@@ -9,6 +9,7 @@
 		{{^startUrl.push}}
 			{{startUrl}}
 		{{/startUrl.push}}
+		</div>
 	</td>
 	<td>
 		<button action="browse-sitemap-data" type="button" class="btn btn-primary btn-xs">Browse</button>

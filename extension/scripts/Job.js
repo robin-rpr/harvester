@@ -54,24 +54,26 @@ Job.prototype = {
 	},
 
 	execute: function (browser, callback, scope) {
-
 		var sitemap = this.scraper.sitemap;
 		var job = this;
 		browser.fetchData(this.url, sitemap, this.parentSelector, function (results) {
 			// merge data with data from initialization
-			for (var i in results) {
-				var result = results[i];
-				for (var key in this.baseData) {
-					if(!(key in result)) {
-						result[key] = this.baseData[key];
+			if(results){
+				for (var i in results) {
+					var result = results[i];
+					for (var key in this.baseData) {
+						if(!(key in result)) {
+							result[key] = this.baseData[key];
+						}
 					}
+					this.dataItems.push(result);
 				}
-				this.dataItems.push(result);
+				console.log(job);
+				callback(job);
 			}
-			console.log(job);
-			callback(job);
 		}.bind(this), this);
 	},
+
 	getResults: function () {
 		return this.dataItems;
 	}

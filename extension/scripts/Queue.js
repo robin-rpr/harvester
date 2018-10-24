@@ -44,6 +44,10 @@ Queue.prototype = {
 		this.scrapedUrls[url] = true;
 	},
 
+	getJobs: function(){
+		return this.jobs;
+	},
+
 	getNextJob: function () {
 
 		// @TODO test this

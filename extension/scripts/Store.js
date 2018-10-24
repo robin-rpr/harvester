@@ -19,7 +19,7 @@ MySQLDB.prototype = {
                         reject(Object.assign(response, {code: "add_error"}));
                     }
                 },
-                error: r => alert(JSON.stringify(r))
+                error: r => console.log(JSON.stringify(r))
             });
         });
     },
@@ -31,7 +31,7 @@ MySQLDB.prototype = {
                 success: function(response){
                     resolve(Object.assign(response, {code: "read"}));
                 },
-                error: r => alert(JSON.stringify(r))
+                error: r => console.log(JSON.stringify(r))
             });
         });
     },
@@ -54,7 +54,7 @@ MySQLDB.prototype = {
                         });
                     }
                 },
-                error: r => alert(JSON.stringify(r))
+                error: r => console.log(JSON.stringify(r))
             });
         });
     },
@@ -87,10 +87,14 @@ MySQLDB.prototype = {
                     if(response.error){
                         reject(Object.assign(data, {code:"update_error", response}));
                     }else{
+                        if(this.browser){
+                            this.browser.sendNotification("Saved to DB");
+                            this.browser.close();
+                        }
                         resolve(Object.assign(data, {code:"update", response}));
                     }
                 },
-                error: r => alert(JSON.stringify(r))
+                error: r => console.log(JSON.stringify(r))
             });
         });
     },
@@ -106,7 +110,7 @@ MySQLDB.prototype = {
                         resolve({code:"delete", response, id});
                     }
                 },
-                error: r => alert(JSON.stringify(r))
+                error: r => console.log(JSON.stringify(r))
             });
         });
     },
@@ -135,26 +139,24 @@ var StoreScrapeResultWriter = function(db, type, sitemapid) {
 };
 
 StoreScrapeResultWriter.prototype = {
+    tempDoc: null,
     writeDocs: function(docs, callback) {
         if(docs.length === 0) {
-            callback();
+            callback(this.tempDoc);
         }
         else if(this.type == "mysql") {
-            const updateData = async function() {
-                let sitemapid = this.sitemapid;
-                let json = "json";
-                let data = {content: JSON.stringify(docs).replace(/\\n/ig,"").replace(/\\r/ig,""), field: "data"};
-                let result = await this.db.UPDATE({json, data, sitemapid});
-                return Promise.resolve(result);
-            }.bind(this);
-
-            updateData().then(callback);
+            if(this.tempDoc){
+                this.tempDoc = this.tempDoc.concat(docs);
+            }else{
+                this.tempDoc = docs;
+            }
+            callback(this.tempDoc);
         }else {
             this.db.bulkDocs({docs:docs}, function(err, response) {
                 if(err !== null) {
                     console.log("Error while persisting scraped data to db", err);
                 }
-                callback();
+                callback(null);
             });
         }
     }
@@ -330,10 +332,8 @@ Store.prototype = {
             callback(sitemapFound);
         });
     },
-    removeDuplicate: async function(sitemapid, distinct){
-        if(distinct != "true"){
-            return Promise.resolve({distinct});
-        }else{
+    removeDuplicate: function(sitemapid, distinct, finalResult){
+        if(distinct == "true"){
             distinct = "PATCH";
 
             const  toSortedJSON = function(obj) {
@@ -345,18 +345,27 @@ Store.prototype = {
                 return xs.filter(x => (k = (toSortedJSON || JSON.stringify)(x), !(k in seen) && (seen[k] = 1)));
             }
 
+            let content = null;
             let db = this.getSitemapDataDb(sitemapid);
-            let response = await db.GET({sitemapid});
 
-            let content = JSON.stringify(uniq(JSON.parse(response.data)));
+            if(finalResult){
+                content = JSON.stringify(uniq(finalResult));
+            }else{
+                //let response = await db.GET({sitemapid});
+                //content = JSON.stringify(uniq(JSON.parse(response.data)));
+            }
+
+            if(this.browser){
+                this.browser.sendNotification("Saving to DB");
+                this.browser.sendNotification(content);
+            }
 
             let json = "json";
             let field = "data";
             let data = {content, field, distinct};
 
-            let result = await db.UPDATE({json, data, sitemapid});
-
-            return Promise.resolve(Object.assign(result, {distinct}));
+            db.UPDATE({json, data, sitemapid});
+            //return Promise.resolve(Object.assign(result, {distinct}));
         }
     }
 };

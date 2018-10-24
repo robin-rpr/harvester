@@ -1,7 +1,7 @@
 var ChromePopupBrowser = function (options) {
-
 	this.pageLoadDelay = options.pageLoadDelay;
 	this.scrollToBottom = options.scrollToBottom;
+	this.urls = options.urls;
 };
 
 ChromePopupBrowser.prototype = {
@@ -33,7 +33,6 @@ ChromePopupBrowser.prototype = {
 	},
 
 	loadUrl: function (url, callback) {
-
 		var tab = this.tab;
 
 		var tabLoadListener = function (tabId, changeInfo, tab) {
@@ -45,6 +44,8 @@ ChromePopupBrowser.prototype = {
 					chrome.tabs.onUpdated.removeListener(tabLoadListener);
 
 					// callback tab is loaded after page load delay
+					
+					
 					if(this.scrollToBottom == "true"){
                         var scrollListenser = function(request, sender, sendResponse) {
                             if (request.antilazyloading){
@@ -55,7 +56,11 @@ ChromePopupBrowser.prototype = {
 
 						chrome.tabs.sendMessage(tab.id, "Anti-LazyLoad running");
 						chrome.runtime.onMessage.addListener(scrollListenser);
-                        chrome.tabs.executeScript(tab.id, {file: 'scrollToBottom.js'});
+						try{
+							chrome.tabs.executeScript(tab.id, {file: 'scrollToBottom.js'});
+						}catch(e){
+							alert(e);
+						}
                         chrome.tabs.sendMessage(tab.id, {run: true});
 					}else{
 						setTimeout(callback, this.pageLoadDelay);
@@ -64,7 +69,6 @@ ChromePopupBrowser.prototype = {
 			}
 		}.bind(this);
 		chrome.tabs.onUpdated.addListener(tabLoadListener);
-
 		chrome.tabs.update(tab.id, {url: url});
 	},
 
@@ -73,24 +77,35 @@ ChromePopupBrowser.prototype = {
 	},
 
 	fetchData: function (url, sitemap, parentSelectorId, callback, scope) {
-
 		var browser = this;
-
+		let u = this.urls.pop();
 		this._initPopupWindow(function () {
 			var tab = browser.tab;
-
 			browser.loadUrl(url, function () {
-
-				var message = {
-					extractData: true,
-					sitemap: JSON.parse(JSON.stringify(sitemap)),
-					parentSelectorId: parentSelectorId
-				};
-				chrome.tabs.sendMessage(tab.id, message, function (data) {
-					console.log("extracted data from web page", data);//TODO
-					callback.call(scope, data);
-				});
-			}.bind(this));
+				if(u === url){
+					u = "";
+					var message = {
+						extractData: true,
+						sitemap: JSON.parse(JSON.stringify(sitemap)),
+						parentSelectorId: parentSelectorId
+					};
+					chrome.tabs.sendMessage(tab.id, message, function (data) {
+						console.log("extracted data from web page", data);//TODO
+						callback.call(scope, data);
+					});
+				}
+			}.bind(this, u));
 		}, this);
+	},
+
+	sendNotification: function(msg){
+		chrome.tabs.sendMessage(this.tab.id, {message: msg, notice: true });
+		var notification = chrome.notifications.create("Notification", {
+			type: 'basic',
+			iconUrl: 'assets/images/icon128.png',
+			title: 'Saving to DB',
+			message: 'Records:' + msg
+		}, function(id) {
+		});
 	}
 };

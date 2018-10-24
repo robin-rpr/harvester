@@ -37,6 +37,9 @@ chrome.runtime.onMessage.addListener(
 			});
 
 			return true;
+		}else if(request.notice){
+			console.log("Notification: ", request.message);
+
 		}
 	}
 );

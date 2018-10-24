@@ -70,6 +70,7 @@ Sitemap.prototype = {
 	getStartUrls: function() {
 
 		var startUrls = this.startUrl;
+
 		// single start url
 		if(this.startUrl.push === undefined) {
 			startUrls = [startUrls];

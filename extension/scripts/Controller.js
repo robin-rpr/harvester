@@ -1048,7 +1048,6 @@ SitemapController.prototype = {
 		var sitemap = this.state.currentSitemap;
 		this.store.getSitemapData(sitemap, function (data) {
 			var dataColumns = sitemap.getDataColumns();
-
 			if(sitemap.selectors[0].columns){
 				dataColumns = JSON.parse(sitemap.selectors[0].columns);
 			}
