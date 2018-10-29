@@ -1,6 +1,6 @@
 {
 	"manifest_version": 2,
-	"version": "0.4.0",
+	"version": "0.4.1",
 	"name": "Web Scraper Plus",
 	"short_name": "Web Scraper Plus",
 	"description": "Tool for data extraction from websites. Based on `Web Scraper`, now support MySQL/Anti Lazy-Loading/CMD/Terminal/JS filter and more",

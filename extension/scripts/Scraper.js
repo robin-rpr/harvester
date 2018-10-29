@@ -141,14 +141,12 @@ Scraper.prototype = {
 	_run: function (tempDoc) {
 		var jobs = this.queue.getJobs();
 		var job = jobs.pop();
-
 		if(job && this.urls.indexOf(job.url) > -1 && this.current == this.size - jobs.length - 1){
 			job.execute(this.browser, function (job) {
 				var scrapedRecords = [];
 				var deferredDatamanipulations = [];
 
 				var records = job.getResults();
-
 				if(records.length > 0){
 					records.forEach(function (record) {
 						deferredDatamanipulations.push(this.saveImages.bind(this, record));
@@ -192,7 +190,6 @@ Scraper.prototype = {
 				            }catch(e){
 				            	console.log(e);
 				            }
-
 				            if(this.resultLength == 0 || tempDoc.length > this.resultLength){
 				            	this.resultLength = tempDoc ? tempDoc.length : 0;
 				            	this.current++;
@@ -227,6 +224,8 @@ Scraper.prototype = {
 			this.browser.sendNotification(tempDoc.length);
 			this.executionCallback(tempDoc);
 			return;
+		}else{
+			this._run(tempDoc);
 		}
 	}
 };

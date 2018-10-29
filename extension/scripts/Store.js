@@ -85,6 +85,7 @@ MySQLDB.prototype = {
                 dataType: dataType,
                 success: response => {
                     if(response.error){
+                        alert(JSON.stringify(response))
                         reject(Object.assign(data, {code:"update_error", response}));
                     }else{
                         if(this.browser){
@@ -94,7 +95,7 @@ MySQLDB.prototype = {
                         resolve(Object.assign(data, {code:"update", response}));
                     }
                 },
-                error: r => console.log(JSON.stringify(r))
+                error: r => alert(JSON.stringify(r))
             });
         });
     },
@@ -335,38 +336,41 @@ Store.prototype = {
     removeDuplicate: function(sitemapid, distinct, finalResult){
         if(distinct == "true"){
             distinct = "PATCH";
-
-            const  toSortedJSON = function(obj) {
-                return JSON.stringify(typeof obj == "object" ? Object.keys(obj).sort().reduce((o, key) => (o[key] = toSortedJSON(obj[key]), o), {}) : obj);
-            }
-
-            const uniq = function(xs) {
-                let seen = {};
-                return xs.filter(x => (k = (toSortedJSON || JSON.stringify)(x), !(k in seen) && (seen[k] = 1)));
-            }
-
-            let content = null;
-            let db = this.getSitemapDataDb(sitemapid);
-
-            if(finalResult){
-                content = JSON.stringify(uniq(finalResult));
-            }else{
-                //let response = await db.GET({sitemapid});
-                //content = JSON.stringify(uniq(JSON.parse(response.data)));
-            }
-
-            if(this.browser){
-                this.browser.sendNotification("Saving to DB");
-                this.browser.sendNotification(content);
-            }
-
-            let json = "json";
-            let field = "data";
-            let data = {content, field, distinct};
-
-            db.UPDATE({json, data, sitemapid});
-            //return Promise.resolve(Object.assign(result, {distinct}));
+        }else{
+            distinct = "PRESERVE";
         }
+
+        const  toSortedJSON = function(obj) {
+            return JSON.stringify(typeof obj == "object" ? Object.keys(obj).sort().reduce((o, key) => (o[key] = toSortedJSON(obj[key]), o), {}) : obj);
+        }
+
+        const uniq = function(xs) {
+            let seen = {};
+            return xs.filter(x => (k = (toSortedJSON || JSON.stringify)(x), !(k in seen) && (seen[k] = 1)));
+        }
+
+        let content = null;
+        let db = this.getSitemapDataDb(sitemapid);
+
+        if(finalResult){
+            content = JSON.stringify(uniq(finalResult));
+        }else{
+            //let response = await db.GET({sitemapid});
+            //content = JSON.stringify(uniq(JSON.parse(response.data)));
+        }
+
+        if(this.browser){
+            this.browser.sendNotification("Saving to DB");
+            this.browser.sendNotification(content);
+        }
+
+
+
+        let json = "json";
+        let field = "data";
+        let data = {content, field, distinct};
+
+        db.UPDATE({json, data, sitemapid});
     }
 };
 

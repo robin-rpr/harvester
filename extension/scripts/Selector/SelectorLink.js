@@ -65,7 +65,7 @@ var SelectorLink = {
 	},
 
 	getFeatures: function () {
-		return ['multiple', 'datafilter', 'delay', 'regex']
+		return ['multiple', 'datafilter', 'delay', 'regex', 'customColumns']
 	},
 
 	getItemCSSSelector: function() {
