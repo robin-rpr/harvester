@@ -3,6 +3,8 @@ import {AuthService} from '../../../../../services/auth/auth.service';
 import {PwaService} from '../../../../../services/pwa/pwa.service';
 import {Router} from '@angular/router';
 import {ErrorService} from '../../../../../services/error/error.service';
+import {colorEnums} from "../../../../shared/button/enums/color.enums";
+import {typeEnums} from "../../../../core/modal/enums/type.enums";
 
 @Component({
     selector: 'app-home',
@@ -15,13 +17,13 @@ import {ErrorService} from '../../../../../services/error/error.service';
 export class HomeComponent implements OnInit {
 
     showInstallButton: boolean;
+    colorEnums = colorEnums;
+    typeEnums = typeEnums;
 
     /**
      * @param authService Responsible for API calls
      * @param pwaService Provides Service Worker functions
      * @param router Responsible for page navigation
-     * @param winRefService Providing native Window Reference
-     * @param modalService Provides Modal functionality
      * @param errorService Provides Error Service
      */
     constructor(private authService: AuthService,
