@@ -1,5 +1,5 @@
-[![Logo](https://raw.githubusercontent.com/robin-rpr/harvester/master/src/assets/images/logo.png)](https://github.com/robin-rpr/harvester)
-
+<img src="https://raw.githubusercontent.com/robin-rpr/harvester/master/src/assets/images/logo.png" width="430">
+ 
 [![CircleCI](https://circleci.com/gh/robin-rpr/harvester.svg?style=svg)](https://circleci.com/gh/robin-rpr/harvester)
 ![Chrome Web Store](https://img.shields.io/chrome-web-store/v/pbbfbmlnpackgeofecdfncmmdbodkhma?color=%231a73e8&label=Chrome%20Web%20Store)
 ![GitHub last commit](https://img.shields.io/github/last-commit/robin-rpr/harvester)
