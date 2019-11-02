@@ -1,0 +1,3 @@
+<div class="message-modal__text">{{ (modalService.config$ | async)?.payload?.message }}</div>
+<img [hidden]="imageLoading" [src]="imageURL" *ngIf="environment.experimental.SUPER_SECRET_SETTING" class="message-modal__easter-egg"/>
+<div class="message-modal__easter-egg-loader" *ngIf="imageLoading && environment.experimental.SUPER_SECRET_SETTING"></div>

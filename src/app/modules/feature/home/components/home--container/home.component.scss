@@ -1,0 +1,21 @@
+@import '../../../../../../assets/scss/color';
+
+.home__align {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #606468;
+  width: 90%;
+  max-width: 320px;
+
+  .align__container {
+    color: #eee;
+  }
+
+  .container__install {
+    display: block;
+    margin-bottom: 14px;
+  }
+
+}

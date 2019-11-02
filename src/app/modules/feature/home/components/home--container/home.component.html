@@ -1,0 +1,12 @@
+<div class="home__align">
+
+    <div class="align__container">
+        <app-button class="container__install" [value]="pwaService.deferredPrompt ? 'Install this PWA': 'Loading PWA ...'" [type]="colorEnums.TERTIARY"
+                    [icon]="'icon-tiles-filled'"
+                    (action)="installPwa()"
+                    [disabled]= "!pwaService.isInstallable()"
+                    [loading]="!pwaService.isInstallable()"
+                    *ngIf="showInstallButton"></app-button>
+
+    </div>
+</div>
