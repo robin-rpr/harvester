@@ -1,7 +1,7 @@
 export const environment = {
     production: false,
-    title: 'Harvester',
-    api: 'https://api.harvester.dev/',
+    title: 'Harvester Staging',
+    api: 'https://api.staging.harvester.dev/',
     flags: {
         SUPER_SECRET_SETTING: false, /* @action: It's a secret! */
     },
