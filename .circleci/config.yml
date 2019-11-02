@@ -24,11 +24,17 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
       - run:
+          name: "Install System Dependencies"
+          command: |
+            apt-get update
+            apt-get -y install curl jq
+            apt-get -y install zip unzip
+      - run:
           name: "Build Extension"
           command: npm run build:prod
       - run:
           name: "Package Extension"
-          command: git archive -o harvester.zip HEAD
+          command: zip harvester.zip dist/
       - run:
           name: "Creating Artifacts"
           command: |
@@ -69,12 +75,13 @@ jobs:
           command: |
             apt-get update
             apt-get -y install curl jq
+            apt-get -y install zip unzip
       - run:
           name: "Build Extension"
           command: npm run build:prod
       - run:
           name: "Package Extension"
-          command: git archive -o harvester.zip HEAD
+          command: zip harvester.zip dist/
       - store_artifacts:
           path: harvester.zip
       - run:
