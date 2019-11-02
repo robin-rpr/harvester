@@ -1,0 +1,86 @@
+@import '../../../../../../assets/scss/color';
+
+.modal__align {
+  height: 100%;
+  width: 100%;
+  pointer-events: none;
+  z-index: 1;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .align__container {
+    pointer-events: all;
+    border-radius: 0.28rem;
+    overflow: hidden;
+    width: 320px;
+    z-index: 1;
+    background: #2c3338;
+
+
+    &--neutral {
+      border: 1px solid mix(black, #2c3338, 50%);
+    }
+
+    &--warning {
+      box-shadow: 0 0 0 3px $color--quaternary;
+    }
+
+    &--error {
+      box-shadow: 0 0 0 3px $color--primary;
+    }
+
+    .container__head {
+      display: flex;
+      flex-wrap: nowrap;
+      margin: 0 18.5px;
+      border-bottom: 2px solid $color--tertiary;
+      height: 58px;
+      color: $color--quinary;
+
+      .head__title {
+        text-align: center;
+        padding: 21px 16px;
+        font-size: 15px;
+        color: $color--quinary;
+        font-weight: 700;
+        text-transform: uppercase;
+        flex-grow: 1;
+      }
+    }
+
+    .container__body {
+      min-height: 20px;
+      padding: 16px 18.5px 0 18.5px;
+
+      .body__message {
+        color: #8d9aa9;
+        text-align: center;
+      }
+
+      .body__content {
+        max-height: 260px;
+        overflow: hidden;
+        width: 100%;
+      }
+    }
+
+    .container__controls {
+      padding: 18.5px;
+
+      & > app-button:not(:last-child) {
+        display: block;
+        margin-bottom: 10px;
+      }
+    }
+  }
+}
+
+.modal__backdrop {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 0;
+}

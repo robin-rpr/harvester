@@ -26,7 +26,8 @@
             "assets": [
               "src/favicon.ico",
               "src/assets",
-              "src/manifest.webmanifest"
+              "src/manifest.webmanifest",
+              "src/mainfest.json"
             ],
             "styles": [
               "src/styles.scss"
@@ -39,10 +40,6 @@
                 {
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/environment.prod.ts"
-                },
-                {
-                  "replace": "src/manifest.webmanifest",
-                  "with": "src/manifests/manifest.prod.webmanifest"
                 }
               ],
               "optimization": true,
@@ -68,10 +65,6 @@
                 {
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/environment.develop.ts"
-                },
-                {
-                  "replace": "src/manifest.webmanifest",
-                  "with": "src/manifests/manifest.develop.webmanifest"
                 }
               ],
               "optimization": true,
@@ -97,10 +90,6 @@
                 {
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/environment.staging.ts"
-                },
-                {
-                  "replace": "src/manifest.webmanifest",
-                  "with": "src/manifests/manifest.staging.webmanifest"
                 }
               ],
               "optimization": true,
@@ -150,7 +139,8 @@
             "assets": [
               "src/favicon.ico",
               "src/assets",
-              "src/manifest.webmanifest"
+              "src/manifest.webmanifest",
+              "src/manifest.json"
             ],
             "styles": [
               "src/styles.scss"

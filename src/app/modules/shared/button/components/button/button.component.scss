@@ -1,0 +1,145 @@
+@import '../../../../../../assets/scss/color';
+@import '../../animations/stripes.animation';
+
+.button__wrapper {
+  display: flex;
+  position: relative;
+  border: 0;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  padding: 0;
+  height: 53px;
+  width: 53px;
+  overflow: hidden;
+  outline: 0;
+  text-align: center;
+  transition: background 50ms;
+
+  &--primary {
+    background-color: $color--primary;
+    color: $color--quinary;
+
+    &:active {
+      background-color: mix(black, $color--primary, 20%);
+    }
+  }
+
+  &--secondary {
+    background-color: $color--secondary;
+    color: $color--quinary;
+
+    &:active {
+      background-color: mix(black, $color--secondary, 20%);
+    }
+  }
+
+  &--tertiary {
+    background-color: $color--tertiary;
+    color: $color--quinary;
+
+    &:active {
+      background-color: mix(black, $color--tertiary, 10%);
+      box-shadow: 0 0 0 1px mix(white, $color--tertiary, 5%);
+    }
+  }
+
+  &--quaternary {
+    background-color: $color--quaternary;
+    color: $color--tertiary;
+
+    &:active {
+      background-color: mix(black, $color--quaternary, 20%);
+    }
+  }
+
+  &--quinary {
+    background-color: mix(white, $color--tertiary, 10%);
+    color: $color--quinary;
+
+    &:active {
+      background-color: mix(white, $color--tertiary, 20%);
+    }
+  }
+
+  &--senary {
+    background-color: $color--senary;
+    color: $color--tertiary;
+
+    &:active {
+      background-color: mix(black, $color--senary, 20%);
+    }
+  }
+
+  &--disabled {
+    pointer-events: none;
+    background-color: $color--tertiary !important;
+    color: $color--quinary !important;
+    opacity: 0.7;
+  }
+
+  &--align-text-left {
+    text-align: left;
+  }
+
+  &--display-value {
+    width: 100%;
+
+    .wrapper__icon {
+      background: rgba(0, 0, 0, 0.13);
+    }
+  }
+
+  &--display-stripes {
+    $primary: $color--tertiary;
+    $secondary: mix(white, $color--tertiary, 5%);
+
+    background-size: 31px 31px;
+    background-image: linear-gradient(
+                    135deg,
+                    $primary 25%,
+                    $secondary 25%,
+                    $secondary 50%,
+                    $primary 50%,
+                    $primary 75%,
+                    $secondary 75%,
+                    $secondary
+    );
+    animation: animate-stripes 0.6s linear infinite;
+    animation-duration: 1.25s;
+    animation-direction: reverse;
+  }
+
+  .wrapper__icon {
+    z-index: 2;
+    display: inline-block;
+    font-size: 16px;
+    height: 1em;
+    vertical-align: middle;
+    width: 1em;
+    padding: 18.5px;
+    color: inherit;
+  }
+
+  .wrapper__content {
+    z-index: 1;
+    padding: 18px 16px;
+    flex: 1;
+    font-size: 14px;
+    color: inherit;
+    font-weight: 700;
+    text-transform: uppercase;
+    width: 100%;
+    text-align: inherit;
+
+    .content__description {
+      display: block;
+      font-weight: 400;
+      font-size: 12px;
+      text-align: inherit;
+    }
+  }
+
+  &--display-description .wrapper__content {
+    padding: 11px 16px;
+  }
+}

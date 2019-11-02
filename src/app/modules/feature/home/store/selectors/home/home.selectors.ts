@@ -1,18 +1,17 @@
-import * as fromFeature from '../reducers';
-import * as fromEcardSend from '../reducers/home.reducer';
+import * as fromReducers from '../../reducers';
 import { createSelector } from '@ngrx/store';
 
-export const selectEcardSendState = createSelector(
-  fromFeature.getEcardSendFeatureState,
-  (state: fromFeature.EcardSendState) => state.ecardSend,
+export const selectHomeState = createSelector(
+  fromReducers.getHomeState,
+  (state: fromReducers.IHomeState) => state.home,
 );
 
-export const selectEcardSendLoading = createSelector(
-  selectEcardSendState,
-  fromEcardSend.getEcardSendLoading,
+export const selectHomeLoading = createSelector(
+  selectHomeState,
+  fromReducers.getHomeState,
 );
 
-export const selectEcardSendLoaded = createSelector(
-  selectEcardSendState,
-  fromEcardSend.getEcardSendLoaded,
+export const selectHomeLoaded = createSelector(
+  selectHomeState,
+  fromReducers.getHomeState,
 );

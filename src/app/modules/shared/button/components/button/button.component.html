@@ -1,0 +1,9 @@
+<button class="button__wrapper" (click)="click($event)" [ngClass]="classes">
+    <div class="wrapper__icon" *ngIf="icon">
+        <i class="{{icon}}"></i>
+    </div>
+    <div class="wrapper__content" *ngIf="value">
+        <span>{{value}}</span>
+        <span class="content__description" *ngIf="description">{{description}}</span>
+    </div>
+</button>

@@ -1,0 +1,93 @@
+@import '../../../../../../assets/scss/color';
+
+.input__field {
+  display: flex;
+  margin-bottom: 14px;
+
+  &--disabled {
+    opacity: 0.5;
+    border: 1px solid black;
+    border-radius: 0.25rem;
+  }
+
+  &--invalid {
+    border-radius: 0.25rem;
+    box-shadow: 0 0 0 2px $color--quaternary;
+  }
+
+  .field__label {
+    display: inline-block;
+    font-size: 16px;
+    height: 1em;
+    vertical-align: middle;
+    width: 1em;
+    background-color: #434a52;
+    border-bottom-left-radius: 0.25rem;
+    border-top-left-radius: 0.25rem;
+    padding: 16.5px 18.5px 20.5px 18.5px;
+    color: #acafb3;
+    pointer-events: none;
+
+    .label__span {
+      border: 0;
+      clip: rect(0 0 0 0);
+      height: 1px;
+      margin: -1px;
+      overflow: hidden;
+      padding: 0;
+      position: absolute;
+      width: 1px;
+    }
+  }
+
+  .field__input {
+    padding: 16.5px;
+    background-color: #3b4148;
+    border-radius: 0;
+    margin: 0px;
+    border-bottom-right-radius: 0.25rem;
+    border-top-right-radius: 0.25rem;
+    border: 0;
+    outline: 0;
+    flex: 1;
+    transition: background-color 0.3s;
+    display: inline-block;
+    font-size: 16px !important;
+    width: 100%;
+    color: inherit;
+
+    &--left-border-radius {
+      border-bottom-left-radius: 0.25rem;
+      border-top-left-radius: 0.25rem;
+    }
+
+    &::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+      color: #697480;
+    }
+
+    &:-webkit-autofill,
+    &:-webkit-autofill:hover,
+    &:-webkit-autofill:focus,
+    &:-webkit-autofill:active {
+      -webkit-box-shadow: 0 0 0px 1000px #888f99 inset;
+      transition: background-color 5000s ease-in-out 0s;
+      -webkit-text-fill-color: #fff !important;
+    }
+  }
+
+  .field__error {
+    display: inline-block;
+    font-size: 16px;
+    height: 1em;
+    vertical-align: middle;
+    width: 1em;
+    //background: linear-gradient(90deg, rgba(0,0,0,0) 0%, #3b4148 29%);
+    background-image: -webkit-linear-gradient(0deg, rgba(59, 65, 72, 0.001) 0%, #3b4148 29%);
+    border-bottom-right-radius: 0.25rem;
+    border-top-right-radius: 0.25rem;
+    padding: 16.5px 18.5px 20.5px 18.5px;
+    color: $color--quaternary;
+    margin-left: -50px;
+    z-index: 1;
+  }
+}

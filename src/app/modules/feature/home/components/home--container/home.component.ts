@@ -1,16 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {TimemachineService} from '../../../../../services/timemachine/timemachine.service';
 import {AuthService} from '../../../../../services/auth/auth.service';
-import {environment} from '../../../../../../environments/environment';
-import {colorEnums} from '../../../../shared/button/enums/color.enums';
 import {PwaService} from '../../../../../services/pwa/pwa.service';
 import {Router} from '@angular/router';
-import {WinRefService} from '../../../../../services/win-ref/win-ref.service';
-import {combineLatest, Subscription, timer} from 'rxjs';
-import {ModalService} from '../../../../core/modal/services/modal.service';
-import {typeEnums} from '../../../../core/modal/enums/type.enums';
-import {MessageModalComponent} from '../../../../../components/message-modal/message-modal.component';
-import {ICredentialsModel} from '../../../../../models/credentials.model';
 import {ErrorService} from '../../../../../services/error/error.service';
 
 @Component({
@@ -23,8 +14,6 @@ import {ErrorService} from '../../../../../services/error/error.service';
  */
 export class HomeComponent implements OnInit {
 
-    colorEnums = colorEnums;
-    typeEnums = typeEnums;
     showInstallButton: boolean;
 
     /**
@@ -38,8 +27,6 @@ export class HomeComponent implements OnInit {
     constructor(private authService: AuthService,
                 public pwaService: PwaService,
                 private router: Router,
-                public winRefService: WinRefService,
-                private modalService: ModalService,
                 private errorService: ErrorService
     ) {
     }

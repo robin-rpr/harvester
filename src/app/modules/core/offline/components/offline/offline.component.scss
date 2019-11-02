@@ -1,0 +1,53 @@
+@import '../../../../../../assets/scss/color';
+
+
+.offline__align {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #606468;
+  overflow: hidden;
+  width: 90%;
+  z-index: 2;
+  max-width: 320px;
+
+  .align__cloud {
+    width: 150px;
+    height: 150px;
+    margin: auto;
+  }
+
+  .align__headline {
+    marign-top: 20px;
+    margin-bottom: 10px;
+    font-size: 23px;
+    font-weight: 600;
+    color: $color--quinary;
+  }
+
+  .align__description {
+    margin-bottom: 20px;
+
+    .description__link {
+      color: #eee;
+      outline: 0;
+      text-decoration: none;
+      cursor: pointer;
+
+      &:focus,
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .align__troubleshoot {
+    // TODO: Add Padding if necessary
+  }
+}
+
+
+
+
+

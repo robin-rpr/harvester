@@ -30,6 +30,7 @@
     "@angular/router": "~8.2.13",
     "@angular/service-worker": "~8.2.13",
     "@ngrx/effects": "^8.4.0",
+    "@ngrx/router-store": "^8.4.0",
     "@ngrx/store": "^8.4.0",
     "@ngrx/store-devtools": "^8.4.0",
     "@ngx-pwa/local-storage": "^8.2.3",
