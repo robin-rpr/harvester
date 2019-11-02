@@ -29,6 +29,13 @@ jobs:
       - run:
           name: "Package Extension"
           command: git archive -o harvester.zip HEAD
+      - run:
+          name: "Creating Artifacts"
+          command: |
+            mkdir /tmp/artifacts;
+            echo "my artifact files in a dir" > /tmp/artifacts/artifact-2;
+      - store_artifacts:
+          path: harvester.zip
   publish:
     requires:
       - build
@@ -68,6 +75,8 @@ jobs:
       - run:
           name: "Package Extension"
           command: git archive -o harvester.zip HEAD
+      - store_artifacts:
+          path: harvester.zip
       - run:
           name: "Upload & Publish Extension to the Google Chrome Store"
           command: |
