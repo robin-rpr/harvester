@@ -1,5 +1,4 @@
 import {Component} from '@angular/core';
-import {WinRefService} from '../../../../../services/win-ref/win-ref.service';
 import {colorEnums} from '../../../../shared/button/enums/color.enums';
 
 @Component({
@@ -21,11 +20,7 @@ export class OfflineComponent {
     colorEnums = colorEnums;
     isLoading: boolean;
 
-    /**
-     * @param winRefService Window Reference Service
-     */
     constructor(
-        private winRefService: WinRefService
     ) {
     }
 

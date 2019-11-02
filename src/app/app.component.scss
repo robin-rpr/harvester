@@ -1,0 +1,22 @@
+.app__offline {
+  display: block;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  z-index: 3;
+  overflow: hidden;
+}
+
+.app__update-modal {
+  display: block;
+  height: 100%;
+  pointer-events: none;
+  width: 100%;
+  position: absolute;
+  z-index: 2;
+  overflow: hidden;
+}
+
+.app__router-outlet {
+  z-index: 1;
+}

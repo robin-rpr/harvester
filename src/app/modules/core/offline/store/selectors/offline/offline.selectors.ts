@@ -1,17 +1,17 @@
 import * as fromReducers from '../../reducers';
 import { createSelector } from '@ngrx/store';
 
-export const selectModalState = createSelector(
-    fromReducers.getModalState,
-    (state: fromReducers.IModalState) => state.modal,
+export const selectOfflineState = createSelector(
+    fromReducers.getOfflineState,
+    (state: fromReducers.IOfflineState) => state.offline,
 );
 
-export const selectModalLoading = createSelector(
-    selectModalState,
-    fromReducers.getModalState,
+export const selectOfflineLoading = createSelector(
+    selectOfflineState,
+    fromReducers.getOfflineState,
 );
 
-export const selectModalLoaded = createSelector(
-    selectModalState,
-    fromReducers.getModalState,
+export const selectOfflineLoaded = createSelector(
+    selectOfflineState,
+    fromReducers.getOfflineState,
 );

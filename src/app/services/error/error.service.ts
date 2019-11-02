@@ -5,7 +5,6 @@ import {colorEnums} from '../../modules/shared/button/enums/color.enums';
 import {MessageModalComponent} from '../../components/message-modal/message-modal.component';
 import {ModalService} from '../../modules/core/modal/services/modal.service';
 import {Router} from '@angular/router';
-import {SentryService} from '../sentry/sentry.service';
 import {IError} from '../../models/error.model';
 import {DeviceService} from '../device/device.service';
 import {HttpErrorResponse} from '@angular/common/http';
@@ -19,7 +18,6 @@ export class ErrorService {
     constructor(
         private modalService: ModalService,
         private router: Router,
-        private sentryService: SentryService,
         private deviceService: DeviceService
     ) {
     }
@@ -54,7 +52,7 @@ export class ErrorService {
                 }
                 case 'REPORT': {
                     this.modalService.close();
-                    this.sentryService.handleError(this._nativefyError(error), {});
+                    // this.sentryService.handleError(this._nativefyError(error), {}); /* Deprecated */
                     break;
                 }
                 default: {
