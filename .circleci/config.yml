@@ -35,7 +35,7 @@ jobs:
           command: npm run build:prod
       - run:
           name: "Package Extension"
-          command: zip harvester.zip dist/
+          command: zip harvester.zip dist
       - run:
           name: "Creating Artifacts"
           command: |
@@ -83,7 +83,7 @@ jobs:
           command: npm run build:prod
       - run:
           name: "Package Extension"
-          command: zip harvester.zip dist/
+          command: zip harvester.zip dist
       - store_artifacts:
           path: harvester.zip
       - run:
