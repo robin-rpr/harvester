@@ -6,8 +6,8 @@ version: 2
 jobs:
   build:
     docker:
-      image: circleci/node:dubnium-jessie
-      user: root
+      - image: circleci/node:dubnium-jessie
+        user: root
     working_directory: ~/harvester
     steps:
       - checkout
@@ -52,8 +52,8 @@ jobs:
       tags:
         only: /.*/
     docker:
-      image: circleci/node:dubnium-jessie
-      user: root
+      - image: circleci/node:dubnium-jessie
+        user: root
     working_directory: ~/harvester
     environment:
       - APP_ID: "harvester-257811"
