@@ -40,7 +40,7 @@ jobs:
       - run:
           name: "Package Extension"
           command: git archive -o pointless.zip HEAD
-  - publish:
+  publish:
       requires:
         - build
       filters:
