@@ -1,4 +1,9 @@
-# Web Scraper Plus
+# Harvester
+
+[![CircleCI](https://circleci.com/gh/robin-rpr/harvester.svg?style=svg)](https://circleci.com/gh/robin-rpr/harvester)
+![Chrome Web Store](https://img.shields.io/chrome-web-store/v/pbbfbmlnpackgeofecdfncmmdbodkhma?color=%231a73e8&label=Chrome%20Web%20Store)
+![GitHub last commit](https://img.shields.io/github/last-commit/robin-rpr/harvester)
+
 Web Scraper Plus is a chrome browser extension built for data extraction from web 
 pages. Using this extension you can create a plan (sitemap) how a web site 
 should be traversed and what should be extracted. Using these sitemaps the 
