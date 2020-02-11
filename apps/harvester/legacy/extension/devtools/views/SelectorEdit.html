@@ -1,0 +1,226 @@
+<form class="form-horizontal" role="form" id="edit-selector">
+
+	<div class="form-group">
+		<label for="selectorId" class="col-lg-1 control-label">Id</label>
+
+		<div class="col-lg-10">
+			<input type="text" class="form-control" name="id" id="selectorId" placeholder="Selector Id" value="{{selector.id}}">
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label for="type" class="col-lg-1 control-label">Type</label>
+
+		<div class="input-group col-lg-10">
+			<select class="form-control" id="type" name="type">
+				{{#selectorTypes}}
+				<option value="{{type}}">{{title}}</option>
+				{{/selectorTypes}}
+			</select>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label for="selector" class="col-lg-1 control-label">Selector</label>
+
+		<div class="col-lg-10">
+			<div class="input-group">
+				  <span class="input-group-btn">
+					<button class="btn btn-default" action="select-selector" type="button">Select</button>
+					<button class="btn btn-default" action="preview-selector" type="button" data-toggle="button">Element preview</button>
+					<button class="btn btn-default" action="preview-selector-data" type="button">Data preview</button>
+				  </span>
+				<input type="text" class="form-control selector-value" id="selector" name="selector" value="{{selector.selector}}">
+			</div>
+		</div>
+	</div>
+
+	<div class="form-group feature feature-clickElementSelector">
+		<label for="clickElementSelector" class="col-lg-1 control-label">Click selector</label>
+
+		<div class="col-lg-10">
+			<div class="input-group">
+				  <span class="input-group-btn">
+					<button class="btn btn-default" action="select-selector" type="button">Select</button>
+					<button class="btn btn-default" action="preview-click-element-selector" type="button" data-toggle="button">Element preview</button>
+				  </span>
+				<input type="text" class="form-control selector-value" id="clickElementSelector" name="clickElementSelector" value="{{selector.clickElementSelector}}">
+			</div>
+		</div>
+	</div>
+
+	<!-- tableHeaderSelector -->
+	<div class="form-group feature feature-tableHeaderRowSelector">
+		<label for="tableHeaderRowSelector" class="col-lg-1 control-label">Header row selector</label>
+		<div class="col-lg-10">
+			<div class="input-group">
+				  <span class="input-group-btn">
+					<button class="btn btn-default" action="select-table-header-row-selector" type="button">Select</button>
+					<button class="btn btn-default" action="preview-table-row-selector" type="button" data-toggle="button">Element preview</button>
+				  </span>
+				<input type="text" class="form-control selector-value" id="tableHeaderRowSelector" name="tableHeaderRowSelector" value="{{selector.tableHeaderRowSelector}}">
+			</div>
+		</div>
+	</div>
+
+	<!-- tableRowSelector -->
+	<div class="form-group feature feature-tableDataRowSelector">
+		<label for="tableDataRowSelector" class="col-lg-1 control-label">Data rows selector</label>
+		<div class="col-lg-10">
+			<div class="input-group">
+				  <span class="input-group-btn">
+					<button class="btn btn-default" action="select-table-data-row-selector" type="button">Select</button>
+					<button class="btn btn-default" action="preview-table-row-selector" type="button" data-toggle="button">Element preview</button>
+				  </span>
+				<input type="text" class="form-control selector-value" id="tableDataRowSelector" name="tableDataRowSelector" value="{{selector.tableDataRowSelector}}">
+			</div>
+		</div>
+	</div>
+
+	<!-- ClickType -->
+	<div class="form-group feature feature-clickType">
+		<label for="clickType" class="col-lg-1 control-label">Click type</label>
+
+		<div class="input-group col-lg-10">
+			<select class="form-control" id="clickType" name="clickType">
+				<option value="clickOnce">Click once (pagination, tabs)</option>
+				<option value="clickMore">Click more (click to load more elements. Stops when no new elements with unique text content are found.)</option>
+			</select>
+		</div>
+	</div>
+
+	<!-- clickElementUniquenessType -->
+	<div class="form-group feature feature-clickElementUniquenessType">
+		<label for="clickElementUniquenessType" class="col-lg-1 control-label">Click element uniqueness</label>
+		<div class="input-group col-lg-10">
+			<select class="form-control" id="clickElementUniquenessType" name="clickElementUniquenessType">
+				<option value="uniqueText">Unique Text</option>
+				<option value="uniqueHTMLText">Unique HTML+Text</option>
+				<option value="uniqueHTML">Unique HTML</option>
+				<option value="uniqueCSSSelector">unique CSS Selector</option>
+			</select>
+		</div>
+	</div>
+
+	<div class="form-group feature feature-multiple">
+		<div class="col-lg-offset-1 col-lg-10">
+			<div class="checkbox">
+				<label>
+					<input type="checkbox" name="multiple" {{#selector.multiple}}checked="checked"{{/selector.multiple}}> Multiple
+				</label>
+			</div>
+		</div>
+	</div>
+
+	<!-- discardInitialElements -->
+	<div class="form-group feature feature-discardInitialElements">
+		<div class="col-lg-offset-1 col-lg-10">
+			<div class="checkbox">
+				<label>
+					<input type="checkbox" name="discardInitialElements" {{#selector.discardInitialElements}}checked="checked"{{/selector.discardInitialElements}}>
+					Discard initial elements that are available before click
+				</label>
+			</div>
+		</div>
+	</div>
+
+	<!-- downloadImage -->
+	<div class="form-group feature feature-downloadImage">
+		<div class="col-lg-offset-1 col-lg-10">
+			<div class="checkbox">
+				<label>
+					<input type="checkbox" name="downloadImage" {{#selector.downloadImage}}checked="checked"{{/selector.downloadImage}}> Download image
+				</label>
+			</div>
+		</div>
+	</div>
+
+	<div class="form-group feature feature-regex">
+		<label for="regex" class="col-lg-1 control-label">Regex</label>
+
+		<div class="col-lg-10">
+			<input type="text" class="form-control" name="regex" id="regex" placeholder="regex" value="{{selector.regex}}">
+		</div>
+	</div>
+
+	<div class="form-group feature feature-extractAttribute">
+		<label for="extractAttribute" class="col-lg-1 control-label">Attribute name</label>
+
+		<div class="col-lg-10">
+			<input type="text" class="form-control" name="extractAttribute" id="extractAttribute" placeholder="Attribute name to extract" value="{{selector.extractAttribute}}">
+		</div>
+	</div>
+
+	<div class="form-group feature feature-datafilter">
+		<label for="datafilter" class="col-lg-1 control-label">Data filter</label>
+
+		<div class="col-lg-10">
+			<input type="text" class="form-control" name="datafilter" id="datafilter" placeholder="A JS snippet which will apply to the data captured. The variable for data is `data`. Filter will be ignored when nothing returned or exception happened." value="{{selector.datafilter}}">
+		</div>
+	</div>
+
+	<div class="form-group feature feature-customColumns">
+		<label for="customColumns" class="col-lg-1 control-label">Custom columns</label>
+
+		<div class="col-lg-10">
+			<input type="text" class="form-control" name="customColumns" id="customColumns" placeholder="A JS array which will apply to the columns displayed and exported.This is useful when you changed the default column names by Data filter. Anything other than a JS array will be ignored." value="{{selector.customColumns}}">
+		</div>
+	</div>
+
+	<div class="form-group feature feature-delay">
+		<label for="delay" class="col-lg-1 control-label">Delay (ms)</label>
+
+		<div class="col-lg-10">
+			<input type="text" class="form-control" name="delay" id="delay" placeholder="delay" value="{{selector.delay}}">
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label for="parentSelectors" class="col-lg-1 control-label">Parent Selectors</label>
+
+		<div class="input-group col-lg-10">
+			<select multiple class="form-control" id="parentSelectors" name="parentSelectors">
+				{{#selectorIds}}
+				<option value="{{.}}">{{.}}</option>
+				{{/selectorIds}}
+			</select>
+		</div>
+	</div>
+
+	<div class="form-group feature feature-columns">
+		<label class="col-lg-1 control-label">Table columns</label>
+
+		<div class="col-lg-10">
+			<table class="table table-bordered table-condensed">
+				<thead>
+					<tr>
+						<th>Column</th>
+						<th>Result key</th>
+						<th>Include into result</th>
+					</tr>
+				</thead>
+				<tbody>
+					{{#selector.columns}}
+					<tr>
+						<td><input class="column-header" type="hidden" name="column[header][]" value="{{header}}">{{header}}</td>
+						<td><input class="column-name form-control" type="text" name="column[name][]" value="{{name}}"></td>
+						<td><input class="column-extract" type="checkbox" name="column[extract][]" {{#extract}}checked="checked"{{/extract}}></td>
+					</tr>
+					{{/selector.columns}}
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<div class="col-lg-offset-1 col-lg-10">
+			<button class="btn btn-primary" action="save-selector">Save selector</button> <button action="cancel-selector-editing" class="btn btn-default">Cancel</button>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<div class="col-lg-offset-1 col-lg-10">
+
+		</div>
+	</div>
+</form>

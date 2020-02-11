@@ -1,0 +1,13 @@
+<div class="component__hook">
+    <button (click)="click($event)" [ngClass]="classes" class="hook__wrapper">
+        <div *ngIf="icon" class="wrapper__icon">
+            <i class="{{icon}}"></i>
+        </div>
+        <div *ngIf="value" class="wrapper__content">
+            <span>{{value}}</span>
+        </div>
+    </button>
+    <div *ngIf="tooltip" class="hook__tooltip">
+        {{tooltip}}
+    </div>
+</div>

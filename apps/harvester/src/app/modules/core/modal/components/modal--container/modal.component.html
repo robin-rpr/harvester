@@ -1,0 +1,17 @@
+<div [@stateTransition]="(modalService.visible$ | async) ? 'visible' : 'hidden'" class="modal__align">
+    <div [ngClass]="classes$ | async" class="align__container">
+        <div class="container__head">
+            <div class="head__title">{{(modalService.config$ | async)?.title}}</div>
+        </div>
+        <div class="container__body" id="portal"></div>
+        <div class="container__controls">
+            <app-button (action)="action(button.id)" *ngFor="let button of (modalService.config$ | async)?.buttons"
+                        [color]="button.color" [disabled]="button.disabled" [icon]="button.icon" [loading]="button.loading"
+                        [value]="button.value"></app-button>
+        </div>
+    </div>
+</div>
+<input #backdropId [value]="(modalService.config$ | async)?.backdrop?.id" type="hidden"/>
+<input #backdropPointerEvents [value]="(modalService.config$ | async)?.backdrop?.pointerEvents" type="hidden"/>
+<div (click)="backdropPointerEvents.value == 'true' ? action(backdropId.value) : null" *ngIf="(modalService.visible$ | async)"
+     class="modal__backdrop"></div>

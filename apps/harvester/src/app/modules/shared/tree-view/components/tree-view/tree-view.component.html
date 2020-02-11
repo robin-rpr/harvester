@@ -1,0 +1,11 @@
+<div class="tree-view-root">
+    <app-tree-node
+            (foldingChanged)="updateUnfoldedNodes($event)"
+            (selectionChanged)="updateSelectedNodes($event)"
+            *ngFor="let node of rootNodes; trackBy: giveId"
+            [config]="config"
+            [node]="node"
+            [selectedNodes]="selectedNodes"
+            [unfoldedNodes]="unfoldedNodes"
+    ></app-tree-node>
+</div>

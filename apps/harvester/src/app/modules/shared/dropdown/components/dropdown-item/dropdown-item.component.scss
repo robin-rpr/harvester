@@ -1,0 +1,40 @@
+@import '../../../../../../assets/scss/color';
+
+#dropdown-item {
+  .component__wrapper {
+    display: flex;
+    padding: 2px 4px;
+    cursor: pointer;
+
+    &:hover {
+      background: mix(white, $color--tertiary, 12%);
+
+      .wrapper__content {
+        color: $color--octonary;
+      }
+    }
+
+    &--display-icon {
+      .wrapper__content {
+        padding-left: 5px !important;
+      }
+    }
+
+    .wrapper__icon {
+      display: inline-block;
+      font-size: 17px;
+      height: 16px;
+      vertical-align: middle;
+      width: 16px;
+    }
+
+    .wrapper__content {
+      flex: 1;
+      font-size: 13px;
+      padding-left: 21px;
+      color: #9094A3; // $color-tertiary;
+      width: 100%;
+      text-align: inherit;
+    }
+  }
+}

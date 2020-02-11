@@ -1,0 +1,16 @@
+<div class="component__navigator">
+    <button (click)="click($event)" [ngClass]="classes" class="navigator__wrapper">
+        <div class="wrapper__icon">
+            <i class="tio-folder"></i>
+            <div *ngIf="icon" class="icon__label">
+                <i class="{{icon}}"></i>
+            </div>
+        </div>
+        <div *ngIf="value" class="wrapper__content">
+            <span>{{value}}</span>
+        </div>
+        <div class="wrapper__chevron">
+            <i class="tio-chevron_right"></i>
+        </div>
+    </button>
+</div>

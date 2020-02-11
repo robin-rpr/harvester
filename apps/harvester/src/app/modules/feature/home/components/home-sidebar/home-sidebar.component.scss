@@ -1,0 +1,9 @@
+@import '../../../../../../assets/scss/color';
+
+#home-sidebar {
+  .component__wrapper {
+    height: calc(100vh - 70px);
+    background: $color--tertiary;
+    box-shadow: 1px 0px 28px rgba(9, 10, 14, 0.31)
+  }
+}

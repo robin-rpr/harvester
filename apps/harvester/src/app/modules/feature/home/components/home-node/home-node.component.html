@@ -1,0 +1,18 @@
+<div class="component" id="home-node">
+    <div class="component__wrapper">
+        <app-tabs>
+            <app-tabs-tab
+                    [title]="'Config'">
+                <app-home-node-config [config]="(homeService.config$ | async)?.payload"></app-home-node-config>
+            </app-tabs-tab>
+            <app-tabs-tab
+                    [title]="'Aggregation'">
+            </app-tabs-tab>
+            <app-tabs-tab
+                    [title]="'Preview'">
+                <app-home-node-preview></app-home-node-preview>
+            </app-tabs-tab>
+        </app-tabs>
+    </div>
+</div>
+

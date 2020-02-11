@@ -1,0 +1,14 @@
+@import '../../../../../../assets/scss/color';
+@import '../../../../../../assets/scss/component';
+
+#header-navigator {
+  .component__wrapper {
+    display: flex;
+    padding: 5px 7px;
+
+    .wrapper__divider {
+      border-left: 1px solid mix(black, $color--quinary, 69%);
+      margin: 4px 6px;
+    }
+  }
+}

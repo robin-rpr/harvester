@@ -1,0 +1,28 @@
+<div class="component" id="home-iab">
+    <div class="component__wrapper">
+        <div class="wrapper__url-bar">
+            <div class="url-bar__controls">
+                <button class="controls__control-btn" [disabled]="true" (click)="back()"><i class="tio-arrow_backward"></i></button>
+                <button class="controls__control-btn" [disabled]="true" (click)="forward()"><i class="tio-arrow_forward"></i></button>
+                <button class="controls__control-btn" (click)="refresh()"><i class="tio-refresh"></i></button>
+            </div>
+            <div class="url-bar__search-wrapper">
+                <div class="search-wrapper__browser-url-field">
+                    <div class="browser-url-field__secure-icon">
+                        <i class="tio-lock"></i>
+                    </div>
+                    <input class="browser-url-field__input" (keyup.enter)="navigate(input.value)" [value]="url" #input>
+                </div>
+            </div>
+        </div>
+        <ng-container [ngSwitch]="type">
+            <iframe *ngSwitchCase="typeEnums.IFRAME"
+                    sandbox="allow-forms allow-popups allow-pointer-lock allow-same-origin allow-scripts allow-top-navigation allow-modals"
+                    class="wrapper__iframe" #iframe></iframe>
+            <div
+                    *ngSwitchCase="typeEnums.HTML"
+                    class="wrapper__html"
+            ></div>
+        </ng-container>
+    </div>
+</div>

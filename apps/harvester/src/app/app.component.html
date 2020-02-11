@@ -1,8 +1,4 @@
-<div style="text-align:center">
-  <h1>Welcome to harvester!</h1>
-  <img
-    width="450"
-    src="https://raw.githubusercontent.com/nrwl/nx/master/nx-logo.png"
-  />
-</div>
-<div>Message: {{ hello$ | async | json }}</div>
+<app-offline *ngIf="!isOnline" [@stateTransition]="isOnline ? 'hidden' : 'visible'" class="app__offline"></app-offline>
+<app-header></app-header>
+<router-outlet class="app__router-outlet"></router-outlet>
+<app-modal></app-modal>

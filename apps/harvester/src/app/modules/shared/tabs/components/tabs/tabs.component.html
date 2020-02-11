@@ -1,0 +1,18 @@
+<div class="component" id="tabs">
+    <div class="component__wrapper">
+        <div class="wrapper__tabs">
+            <div (click)="select(tab)"
+                 *ngFor="let tab of tabs as tab"
+                 [ngClass]="{'tabs__tab--active': tab.active}"
+                 class="tabs__tab">
+                {{tab.title}}
+                {{tab?.description}}
+            </div>
+        </div>
+        <div class="wrapper__content">
+            <ng-content></ng-content>
+        </div>
+
+    </div>
+</div>
+

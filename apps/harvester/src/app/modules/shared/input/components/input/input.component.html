@@ -1,0 +1,16 @@
+<form [formGroup]="group">
+    <div [ngClass]="{'input__field--invalid': group.controls.input.invalid && displayErrors, 'input__field--disabled': group.controls.input.disabled }"
+         class="input__field">
+        <label *ngIf="icon" class="field__label" for="input-{{name}}">
+            <i class="{{icon}}"></i>
+            <span class="label__span">{{placeholder}}</span>
+        </label>
+        <input [ngClass]="{'field__input--left-border-radius': !icon}" autocomplete="{{name}}" class="field__input" formControlName="input" id="input-{{name}}"
+               name="{{name}}" placeholder="{{placeholder}}"
+               spellcheck="false"
+               type="{{type}}">
+        <div *ngIf="group.controls.input.invalid && displayErrors" class="field__error">
+            <i class="icon-minus-circle-filled"></i>
+        </div>
+    </div>
+</form>

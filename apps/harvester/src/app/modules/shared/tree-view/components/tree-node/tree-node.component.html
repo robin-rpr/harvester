@@ -1,0 +1,45 @@
+<div class="component" id="tree-node">
+    <div (click)="nodeClicked()"
+         [ngClass]="{ 'component__wrapper--opaque': !selectionAllowed, 'component__wrapper--clickable': nodeClickable && selectionAllowed, 'component__wrapper--selected': selected, 'component__wrapper--description': !isGroupNode}"
+         class="component__wrapper">
+        <div [ngClass]="{'wrapper__controls--description': !isGroupNode}" class="wrapper__controls">
+            <i (click)="toggleChildren($event)"
+               *ngIf="hasChildren && !unfolded" class="controls__caret controls__caret--unfold tio-chevron_right"></i>
+            <i (click)="toggleChildren($event)" *ngIf="unfolded"
+               class="controls__caret controls__caret--fold tio-chevron_down"></i>
+        </div>
+        <div [ngClass]="{'wrapper__content--description': !isGroupNode, 'wrapper__content--selected': selected}" class="wrapper__content">
+            <div class="content__title">
+                {{ node.title }}
+            </div>
+            <div *ngIf="!isGroupNode" class="content__description">
+                {{node.type}}
+            </div>
+        </div>
+        <div *ngIf="node.icon && !isGroupNode" class="wrapper__icon">
+            <i [class]="node.icon"></i>
+        </div>
+        <label class="wrapper__label">
+            <input
+                    (click)="checkboxClicked($event)"
+                    *ngIf="selectionEnabled"
+                    [checked]="selected"
+                    [disabled]="!selectionAllowed"
+                    class="label__input"
+                    name="radio"
+                    type="radio"
+            />
+        </label>
+    </div>
+    <div *ngIf="hasChildren && unfolded" class="component__children">
+        <app-tree-node
+                (foldingChanged)="foldingChanged.emit($event)"
+                (selectionChanged)="selectionChanged.emit($event)"
+                *ngFor="let childNode of children"
+                [config]="config"
+                [node]="childNode"
+                [selectedNodes]="selectedNodes"
+                [unfoldedNodes]="unfoldedNodes"
+        ></app-tree-node>
+    </div>
+</div>

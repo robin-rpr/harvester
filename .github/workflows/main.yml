@@ -1,0 +1,92 @@
+name: main
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    name: build
+    runs-on: ubuntu-latest
+    container:
+      image: node:dubnium-jessie
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - name: Cache node modules
+        uses: actions/cache@v1
+        with:
+          path: ~/.npm # npm cache files are stored in `~/.npm` on Linux/macOS
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+      - name: Install App Dependencies
+        run: npm install --ignore-scripts
+
+      - name: Install System Dependencies
+        run: |
+          apt-get update
+          apt-get -y install curl jq
+          apt-get -y install zip unzip
+
+      - name: Build
+        run: npm run build:prod
+
+      - name: Package
+        run: cd dist/ && zip -r harvester.zip harvester && cd ..
+
+      - name: Upload Package artifact
+        uses: actions/upload-artifact@v1.0.0
+        with:
+          name: package
+          path: dist/harvester.zip
+
+      - name: Upload Source artifact
+        uses: actions/upload-artifact@v1.0.0
+        with:
+          name: source
+          path: dist/harvester
+
+          # - name: Test
+          # run: npm test
+
+  publish:
+    name: publish
+    runs-on: ubuntu-latest
+    needs: [build]
+    container:
+      image: node:dubnium-jessie
+    env:
+      APP_ID: harvester-257811
+    steps:
+      - name: Download Package artifact
+        uses: actions/download-artifact@v1
+        with:
+          name: package
+      - name: Download Source artifact
+        uses: actions/download-artifact@v1
+        with:
+          name: source
+      - name: Publish to Chrome Web Store
+        uses: Klemensas/chrome-extension-upload-action@v1.3
+        with:
+          # Auth refresh token
+          refresh-token: ${{ secrets.REFRESH_TOKEN }}
+          # Extension application target id
+          app-id: $APP_ID
+          # Token client id
+          client-id: ${{ secrets.CLIENT_ID }}
+          # Token client secret
+          client-secret: ${{ secrets.CLIENT_SECRET }}
+          # Name of zipped target upload file
+          file-name: harvester.zip
+      - name: Publish to GitHub Pages
+        uses: crazy-max/ghaction-github-pages@v1.2.5
+        env:
+          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+        with:
+          build_dir: source
+          fqdn: harvester.dev

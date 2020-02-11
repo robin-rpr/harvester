@@ -1,0 +1,9 @@
+<div class="component" id="home-sidebar">
+    <div class="component__wrapper">
+        <app-tree-view
+                (selectionChanged)="select($event)"
+                [config]="treeViewConfig"
+                [rootNodes]="treeNodes"
+        ></app-tree-view>
+    </div>
+</div>

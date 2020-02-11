@@ -1,0 +1,17 @@
+<div class="flags__align">
+    <div class="align__container">
+        <app-button (action)="exit()" [color]="colorEnums.TERTIARY" [icon]="'icon-arrow-left-1'"
+                    class="container__exit"></app-button>
+
+        <div *ngFor="let key of objectKeys(environment.flags)" class="container__flag-control">
+            <app-button (action)="update(key)" *ngIf="key !== 'state'"
+                        [color]="environment.flags[key] ? colorEnums.SENARY : colorEnums.TERTIARY"
+                        [icon]="environment.flags[key] ? 'icon-power' : 'icon-moon-filled' "
+                        [value]="key"
+                        class="flag-control__button"></app-button>
+        </div>
+        <div class="container__divider"></div>
+        <app-button (action)="reset()" [color]="colorEnums.TERTIARY" [value]="'Reset to defaults'"
+                    class="container__reset"></app-button>
+    </div>
+</div>

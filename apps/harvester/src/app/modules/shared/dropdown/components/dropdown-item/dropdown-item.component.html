@@ -1,0 +1,10 @@
+<div class="component" id="dropdown-item">
+    <div class="component__wrapper" (click)="click($event)" [ngClass]="classes">
+        <div *ngIf="icon" class="wrapper__icon">
+            <i class="{{icon}}"></i>
+        </div>
+        <div *ngIf="value" class="wrapper__content">
+            <span>{{value}}</span>
+        </div>
+    </div>
+</div>

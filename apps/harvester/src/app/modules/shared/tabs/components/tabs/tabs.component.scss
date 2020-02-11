@@ -1,0 +1,32 @@
+@import '../../../../../../assets/scss/color';
+
+#tabs {
+  .component__wrapper {
+    .wrapper__tabs {
+      display: flex;
+      width: 100%;
+      background: mix(black, $color--tertiary, 40%);
+
+      & > :not(:first-child) {
+        border-left: 1px solid $color--tertiary;
+      }
+
+      .tabs__tab {
+        padding: 8px 39px;
+        // background: mix(black, $color--tertiary, 45%);
+        color: transparentize($color--octonary, 0.6);
+        cursor: pointer;
+        font-weight: 500;
+
+        &--active {
+          color: $color--octonary;
+          background: mix(black, $color--tertiary, 50%);
+        }
+      }
+    }
+
+    .wrapper__content {
+      box-shadow: $color--septenary 0 6px 6px -6px inset;
+    }
+  }
+}

@@ -1,0 +1,57 @@
+<style>
+	.blue{color: #428bca;}
+</style>
+<div id="scrape-sitemap-config">
+	<form class="form-horizontal" role="form" id="submit-scrape-sitemap-form">
+		<div class="form-group">
+			<label for="requestInterval" class="col-lg-1 control-label">Request interval (ms)</label>
+			<div class="col-lg-10">
+				<input type="text" class="form-control" name="requestInterval" id="requestInterval" placeholder="Request interval" value="2000">
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="requestIntervalRandomness" class="col-lg-1 control-label">Random interval (ms)</label>
+			<div class="col-lg-10">
+				<input type="text" class="form-control" name="requestIntervalRandomness" id="requestIntervalRandomness" placeholder="Request interval randomness" value="0">
+				<p class="help-block">A <b>Math.random() * RandomInterval</b> will be added to the <b>RequestInterval</b> attribute.</p>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="pageLoadDelay" class="col-lg-1 control-label">Page load delay (ms)</label>
+			<div class="col-lg-10">
+				<input type="text" class="form-control" name="pageLoadDelay" id="pageLoadDelay" placeholder="Page load delay" value="500">
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="scrollToBottom" class="col-lg-1 control-label">Anti Lazy-Loading</label>
+			<div class="col-lg-10">
+				<input type="text" class="form-control" name="scrollToBottom" id="scrollToBottom" placeholder="Anti Lazy-Loading" value="true">
+				<p class="help-block">Page will <b>SLOWLY</b> scroll to bottom in order to force the page load all resources.</p>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="distinct" class="col-lg-1 control-label">Distinct</label>
+			<div class="col-lg-10">
+				<input type="text" class="form-control" name="distinct" id="distinct" placeholder="Try to discard duplicate data" value="true">
+				<p class="help-block">Web Scraper Plus will try to discard duplicate data. <b>ONLY</b> works with <a href="https://github.com/hejiheji001/ArrestDB/" target="_blank"><b>ArrestDB + JSON</b></a> now.</p>
+			</div>
+		</div>
+<!-- 		<div class="form-group">
+			<label for="nonEmpty" class="col-lg-1 control-label">Non-Empty</label>
+			<div class="col-lg-10">
+				<input type="text" class="form-control" name="nonEmpty" id="nonEmpty" placeholder="Try to discard empty column" value="true">
+				<p class="help-block">Web Scraper Plus will try to discard empty columns.</p>
+			</div>
+		</div> -->
+		<div class="alert alert-success col-lg-10 col-lg-offset-1 hide scraping-in-progress" role="alert">
+			Scraping in progress. Close the popup to stop scraping.<br>
+			When scraping is finished you can browse the data or export it as CSV.
+		</div>
+
+		<div class="form-group">
+			<div class="col-lg-offset-1 col-lg-10">
+				<button type="submit" class="btn btn-primary" id="submit-scrape-sitemap">Start scraping</button>
+			</div>
+		</div>
+	</form>
+</div>

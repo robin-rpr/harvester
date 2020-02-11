@@ -1,0 +1,20 @@
+@import '../../../../../../assets/scss/color';
+@import '../../../../../../assets/scss/component';
+
+#header-controls {
+  .component__wrapper {
+    display: flex;
+    min-width: 262px;
+    padding: 5px;
+    border-right: 1px solid mix(white, $color--tertiary, 4%);
+
+    & > :not(:last-child) {
+      margin-right: 3px;
+    }
+
+    .wrapper__divider {
+      border-left: 1px solid mix(white, $color--tertiary, 8%);
+      margin: 4px 6px;
+    }
+  }
+}

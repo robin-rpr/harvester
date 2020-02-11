@@ -1,0 +1,51 @@
+@import '../../../assets/scss/color';
+
+.message-modal__text {
+  color: $color--quinary;
+  font-weight: 600;
+  text-align: center;
+}
+
+.message-modal__easter-egg {
+  width: 100%;
+  margin-top: 18.5px;
+  border-radius: 0.25rem;
+}
+
+.message-modal__easter-egg-loader {
+  width: 100%;
+  margin-top: 18.5px;
+  border-radius: 0.25rem;
+  height: 4px;
+  opacity: 0.2;
+  background: $color--quinary;
+  animation-name: pulse_animation;
+  animation-duration: 400ms;
+  transform-origin: 70% 70%;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+
+  &:before {
+    content: 'Loading ...';
+    margin-top: -8px;
+    color: #fff;
+    left: 50%;
+    transform: translate(-50%, 0);
+    position: absolute;
+    background: #2c3338;
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+}
+
+@keyframes pulse_animation {
+  0% {
+    opacity: 0.2
+  }
+  50% {
+    opacity: 0.4;
+  }
+  100% {
+    opacity: 0.2
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "manifest_version": 2,
+  "version": "1.0.0",
+  "name": "Harvester",
+  "short_name": "Harvester",
+  "description": "Web Data Extraction Tool",
+  "permissions": [
+    "<all_urls>",
+    "tabs",
+    "notifications",
+    "storage",
+    "unlimitedStorage",
+    "downloads"
+  ],
+  "icons": {
+    "16": "assets/icons/extension/icon16.png",
+    "48": "assets/icons/extension/icon48.png",
+    "128": "assets/icons/extension/icon128.png"
+  },
+  "browser_action": {
+    "default_icon": {
+      "19": "assets/icons/extension/icon19.png",
+      "38": "assets/icons/extension/icon38.png"
+    },
+    "default_title": "Harvester",
+    "default_popup": "index.html"
+  },
+  "options_page": "index.html",
+  "devtools_page": "index.html",
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+  "background": {
+    "scripts": []
+  },
+  "externally_connectable": {
+    "matches": [
+      "*://*.harvester.dev/*",
+      "*://*.harvester.cloud/*"
+    ]
+  },
+  "web_accessible_resources": [
+    "assets/icons/extension/icon16.png",
+    "assets/icons/extension/icon48.png",
+    "assets/icons/extension/icon128.png",
+    "assets/icons/extension/icon19.png",
+    "assets/icons/extension/icon38.png"
+  ]
+}

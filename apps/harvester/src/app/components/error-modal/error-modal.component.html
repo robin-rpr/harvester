@@ -1,0 +1,15 @@
+<div class="error-modal__name">{{ (modalService.config$ | async)?.payload?.error?.name }}
+    ({{ (modalService.config$ | async)?.payload?.error?.status }})
+</div>
+<div class="error-modal__status">
+    <div class="status__code">Ex{{ (modalService.config$ | async)?.payload?.error?.status }}</div>
+    <div class="status__text">
+        <span class="text__name">{{ (modalService.config$ | async)?.payload?.error?.name }}</span>
+        <span class="text__statusText">{{ (modalService.config$ | async)?.payload?.error?.statusText }}</span>
+    </div>
+</div>
+<div class="error-modal__message">
+    <span class="message__span">{{ (modalService.config$ | async)?.payload?.error?.message }}</span>
+</div>
+<textarea [value]="(modalService.config$ | async)?.payload?.systemReport | json" class="error-modal__dump"
+          disabled></textarea>

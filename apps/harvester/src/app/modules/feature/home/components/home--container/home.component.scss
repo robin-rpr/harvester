@@ -1,0 +1,21 @@
+#home--container {
+  .component__wrapper {
+    display: flex;
+
+    .wrapper__sidebar {
+      display: block;
+      min-width: 272px;
+      box-sizing: border-box;
+    }
+
+    .wrapper__body {
+      flex-grow: 1;
+    }
+
+    .wrapper__iab {
+      display: block;
+      box-sizing: border-box;
+      min-width: 495px;
+    }
+  }
+}

@@ -1,0 +1,168 @@
+@import '../../../../../../assets/scss/color';
+@import '../../../../../../assets/scss/z-index';
+@import '../../animations/stripes.animation';
+
+.component__navigator {
+  position: relative;
+
+  .navigator__wrapper {
+    display: flex;
+    position: relative;
+    border: 0;
+    // cursor: pointer;
+    padding: 3px 2.5px;
+    border-radius: 3px;
+    height: 24px;
+    width: fit-content;
+    overflow: hidden;
+    outline: 0;
+    background: none;
+    transition: background 50ms;
+    text-align: left;
+
+    &--primary {
+      .wrapper__content {
+        color: $color--quinary;
+        background: none;
+      }
+
+      .wrapper__icon {
+        color: $color--primary;
+        background: none;
+      }
+    }
+
+    &--secondary {
+      .wrapper__content {
+        color: $color--quinary;
+        background: none;
+      }
+
+      .wrapper__icon {
+        color: $color--secondary;
+        background: none;
+      }
+    }
+
+    &--tertiary {
+      .wrapper__content {
+        color: $color--quinary;
+        background: none;
+      }
+
+      .wrapper__icon {
+        color: $color--quinary;
+        background: none;
+      }
+    }
+
+    &--quaternary {
+      .wrapper__content {
+        color: $color--quinary;
+        background: none;
+      }
+
+      .wrapper__icon {
+        color: $color--quaternary;
+        background: none;
+      }
+    }
+
+    &--quinary {
+      .wrapper__content {
+        color: $color--quinary;
+        background: none;
+      }
+
+      .wrapper__icon {
+        color: $color--quinary;
+        background: none;
+      }
+    }
+
+    &--senary {
+      .wrapper__content {
+        color: $color--quinary;
+        background: none;
+      }
+
+      .wrapper__icon {
+        color: $color--senary;
+        background: none;
+      }
+    }
+
+    &--disabled {
+      pointer-events: none;
+      background-color: $color--tertiary !important;
+      color: $color--quinary !important;
+      opacity: 0.7;
+    }
+
+    &--display-icon {
+
+    }
+
+    &--display-value {
+      width: fit-content;
+    }
+
+    &--display-stripes {
+      $primary: $color--tertiary;
+      $secondary: mix(white, $color--tertiary, 5%);
+
+      background-size: 31px 31px;
+      background-image: linear-gradient(
+                      135deg,
+                      $primary 25%,
+                      $secondary 25%,
+                      $secondary 50%,
+                      $primary 50%,
+                      $primary 75%,
+                      $secondary 75%,
+                      $secondary
+      );
+      animation: animate-stripes 0.6s linear infinite;
+      animation-duration: 1.25s;
+      animation-direction: reverse;
+    }
+
+    .wrapper__icon {
+      z-index: 2;
+      display: inline-block;
+      font-size: 17px;
+      height: 16px;
+      vertical-align: middle;
+      width: 16px;
+      position: relative;
+
+      .icon__label {
+        font-size: 11px;
+        color: $color--octonary;
+        top: 100%;
+        left: 100%;
+        transform: translate(-80%, -80%);
+        position: absolute;
+      }
+    }
+
+    .wrapper__content {
+      z-index: 1;
+      flex: 1;
+      font-size: 13px;
+      width: 100%;
+      text-align: inherit;
+      padding-left: 7.5px;
+      padding-right: 4px;
+    }
+
+    .wrapper__chevron {
+      color: $color--quinary;
+      background: none;
+      font-size: 17px;
+      height: 16px;
+      vertical-align: middle;
+      width: 16px;
+    }
+  }
+}

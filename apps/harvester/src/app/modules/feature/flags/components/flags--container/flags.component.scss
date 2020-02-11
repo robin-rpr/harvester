@@ -1,0 +1,39 @@
+.flags__align {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #606468;
+  width: 90%;
+  max-width: 320px;
+
+  .align__container {
+    color: #eee;
+
+    & > *:not(:last-child) {
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    .container__divider {
+      padding: 0;
+      border: none;
+      background-color: #707690;
+      height: 1px;
+      margin: 20px 30%;
+
+      &:before {
+        content: 'more'; // TODO: Move over to HTML to allow Translation
+        margin-top: -10px;
+        color: #fff;
+        left: 50%;
+        transform: translate(-50%, 0);
+        position: absolute;
+        background: #2c3338;
+        padding-left: 5px;
+        padding-right: 5px;
+      }
+    }
+
+  }
+}

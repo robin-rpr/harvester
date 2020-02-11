@@ -1,0 +1,19 @@
+<tr>
+	<td class="id">{{_id}}</td>
+	<td><div style="height:50px;overflow: hidden;">
+		{{#startUrl.push}}
+			{{#startUrl}}
+				{{.}},
+			{{/startUrl}}
+		{{/startUrl.push}}
+		{{^startUrl.push}}
+			{{startUrl}}
+		{{/startUrl.push}}
+		</div>
+	</td>
+	<td>
+		<button action="browse-sitemap-data" type="button" class="btn btn-primary btn-xs">Browse</button>
+		<!--<button action="csv-download-sitemap-data" type="button" class="btn btn-primary btn-xs">CSV</button>-->
+		<button action="delete-sitemap" type="button" class="btn btn-primary btn-xs">Delete</button>
+	</td>
+</tr>

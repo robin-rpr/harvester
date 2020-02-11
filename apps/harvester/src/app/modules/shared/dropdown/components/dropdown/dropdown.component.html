@@ -1,0 +1,22 @@
+<div class="component" id="dropdown"
+     (focusout)="active = false"
+     (click)="active = !active">
+    <button [ngClass]="classes" class="component__wrapper">
+        <div *ngIf="icon" class="wrapper__icon">
+            <i class="{{icon}}"></i>
+        </div>
+        <div *ngIf="value" class="wrapper__content">
+            <span>{{value}}</span>
+        </div>
+        <div class="wrapper__caret">
+            <i class="tio-caret_down"></i>
+        </div>
+    </button>
+    <div [hidden]="!active" class="component__items">
+        <app-dropdown-item *ngFor="let item of items"
+                           [icon]="item.icon"
+                           [value]="item.value"
+                           (action)="select(item)"
+        ></app-dropdown-item>
+    </div>
+</div>

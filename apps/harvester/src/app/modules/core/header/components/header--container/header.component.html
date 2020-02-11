@@ -1,0 +1,32 @@
+<div class="component component--container" id="header--container">
+    <div class="component__wrapper">
+        <div class="wrapper__info-bar">
+            <div class="info-bar__profile">
+                <app-hook [color]="colorEnums.QUINARY" [icon]="'tio-account_square'"
+                          class="profile__home"></app-hook>
+                <app-hook [color]="colorEnums.QUINARY" [icon]="'tio-cloud_disabled'" [value]="'Harvester App'"
+                          class="profile__button"></app-hook>
+            </div>
+            <div class="info-bar__state">Ready</div>
+            <div class="info-bar__etc">
+                <app-hook [color]="colorEnums.QUINARY" [icon]="'tio-settings'"
+                          class="etc__update"></app-hook>
+                <app-hook [color]="colorEnums.QUINARY" [icon]="'tio-puzzle'"
+                          class="etc__puzzle"></app-hook>
+                <app-hook [color]="colorEnums.QUINARY" [icon]="'tio-command'"
+                          class="etc__command"></app-hook>
+                <app-hook [color]="colorEnums.QUATERNARY" [icon]="'tio-warning'"
+                          class="etc__warning"></app-hook>
+            </div>
+        </div>
+        <div class="wrapper__control-bar">
+            <div class="control-bar__actions">
+                <app-header-controls></app-header-controls>
+            </div>
+
+            <div class="control-bar__navigator">
+                <app-header-navigator></app-header-navigator>
+            </div>
+        </div>
+    </div>
+</div>
