@@ -11,6 +11,7 @@ import {IAPIType, IRegisterType} from '../../models/napi.model';
 export class NAPIService {
 
     constructor() {
+        // @ts-ignore
         if (!(window.chrome && chrome.runtime && chrome.runtime.id)) {
             for (const method of Object.getOwnPropertyNames(NAPIService.prototype).slice(1)) {
                 NAPIService.prototype[method] = function() {
@@ -38,6 +39,7 @@ export class NAPIService {
     private _api(type: IAPIType): any {
         switch (type) {
             case IAPIType.CHROME:
+                // @ts-ignore
                 return chrome;
             default:
                 throw 'Unknown API Type';

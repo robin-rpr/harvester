@@ -26,6 +26,7 @@ import {CustomRouterSerializer} from './store/utils/router-serializer';
 import {JwtInterceptor} from './http/interceptor';
 import * as fromGuards from './guards';
 import {ErrorService} from './services/error/error.service';
+import {HeaderModule} from "./modules/core/header/header.module";
 
 describe('AppComponent', () => {
     beforeEach(async(() => {
@@ -39,6 +40,7 @@ describe('AppComponent', () => {
                 BrowserModule,
                 BrowserAnimationsModule,
                 OfflineModule,
+                HeaderModule,
                 ModalModule,
                 AppRoutingModule,
                 ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production}),

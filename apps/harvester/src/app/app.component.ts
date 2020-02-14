@@ -3,7 +3,7 @@ import {DeviceService} from './services/device/device.service';
 import {transitionAnimation} from './modules/core/offline/animations/offline.animation';
 import {AuthService} from './services/auth/auth.service';
 // @ts-ignore:disable-next-line
-import {version} from '../../package.json';
+import {version} from '../../../../package.json';
 import {environment} from '../environments/environment';
 import {PwaService} from './services/pwa/pwa.service';
 import {Title} from '@angular/platform-browser';

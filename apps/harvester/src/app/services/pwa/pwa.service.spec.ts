@@ -1,6 +1,8 @@
 import {TestBed} from '@angular/core/testing';
 import {PwaService} from './pwa.service';
 import {ServiceWorkerModule, SwUpdate} from '@angular/service-worker';
+import {NativeService} from "../native/native.service";
+import {StorageService} from "../storage/storage.service";
 
 describe('PwaService', () => {
     beforeEach(() => TestBed.configureTestingModule({
@@ -9,6 +11,8 @@ describe('PwaService', () => {
         ],
         providers: [
             SwUpdate,
+            NativeService,
+            StorageService,
             PwaService
         ]
     }));

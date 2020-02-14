@@ -3,7 +3,6 @@ import {ErrorModalComponent} from '../../components/error-modal/error-modal.comp
 import {typeEnums} from '../../modules/core/modal/enums/type.enums';
 import {MessageModalComponent} from '../../components/message-modal/message-modal.component';
 import {ModalService} from '../../modules/core/modal/services/modal.service';
-import {Router} from '@angular/router';
 import {IError} from '../../models/error.model';
 import {DeviceService} from '../device/device.service';
 import {HttpErrorResponse} from '@angular/common/http';
@@ -17,7 +16,6 @@ export class ErrorService {
 
     constructor(
         private modalService: ModalService,
-        private router: Router,
         private deviceService: DeviceService
     ) {
     }

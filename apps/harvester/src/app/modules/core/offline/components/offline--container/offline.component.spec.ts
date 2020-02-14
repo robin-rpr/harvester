@@ -1,7 +1,7 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {OfflineComponent} from './offline.component';
-import {HookModule} from '../../../../shared/hook/hook.module';
+import {ButtonModule} from "../../../../shared/button/button.module";
 
 describe('OfflineComponent', () => {
     let component: OfflineComponent;
@@ -9,7 +9,7 @@ describe('OfflineComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [HookModule],
+            imports: [ButtonModule],
             declarations: [OfflineComponent]
         })
             .compileComponents();

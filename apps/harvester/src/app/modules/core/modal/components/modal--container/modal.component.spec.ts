@@ -4,6 +4,7 @@ import {ModalComponent} from './modal.component';
 import {HookModule} from '../../../../shared/hook/hook.module';
 import {ModalService} from '../../services/modal.service';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {ButtonModule} from "../../../../shared/button/button.module";
 
 describe('ModalComponent', () => {
     let component: ModalComponent;
@@ -13,9 +14,12 @@ describe('ModalComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 BrowserAnimationsModule,
-                HookModule
+                ButtonModule
             ],
-            providers: [ModalService],
+            providers: [
+                ModalService,
+                ModalComponent
+            ],
             declarations: [ModalComponent]
         })
             .compileComponents();

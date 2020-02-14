@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output, Input} from '@angular/core';
 import {ITreeNode} from '../../../../shared/tree-view/models/tree-node.interface';
 import {ITreeViewConfig} from '../../../../shared/tree-view/models/tree-view-config.interface';
 import {typeEnums} from '../../../../shared/tree-view/enums/tree-node.enum';
@@ -11,6 +11,7 @@ import {typeEnums} from '../../../../shared/tree-view/enums/tree-node.enum';
 export class HomeSidebarComponent implements OnInit {
 
     @Output() SELECT: EventEmitter<ITreeNode[]> = new EventEmitter();
+
     treeNodes: ITreeNode[];
     treeViewConfig: ITreeViewConfig = {selection: {enabled: true, nodeClickable: true}};
 

@@ -1,6 +1,10 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {HeaderControlsComponent} from './header-controls.component';
+import {ButtonModule} from "../../../../shared/button/button.module";
+import {HookModule} from "../../../../shared/hook/hook.module";
+import {NavigatorModule} from "../../../../shared/navigator/navigator.module";
+import {DropdownModule} from "../../../../shared/dropdown/dropdown.module";
 
 describe('HeaderControlsComponent', () => {
     let component: HeaderControlsComponent;
@@ -8,6 +12,12 @@ describe('HeaderControlsComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
+            imports: [
+                ButtonModule,
+                HookModule,
+                NavigatorModule,
+                DropdownModule
+            ],
             declarations: [HeaderControlsComponent]
         })
             .compileComponents();

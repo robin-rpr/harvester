@@ -1,6 +1,7 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {HomeSidebarComponent} from './home-sidebar.component';
+import {TreeViewModule} from "../../../../shared/tree-view/tree-view.module";
 
 describe('HomeSidebarComponent', () => {
     let component: HomeSidebarComponent;
@@ -8,6 +9,9 @@ describe('HomeSidebarComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
+            imports: [
+                TreeViewModule
+            ],
             declarations: [HomeSidebarComponent]
         })
             .compileComponents();
