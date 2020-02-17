@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {ITreeNode} from '../../../../shared/tree-view/models/tree-node.interface';
+import {ITreeNode} from '../../../../shared/tree-view/models/tree-node.model';
 
 @Component({
     selector: 'app-home-node-config',

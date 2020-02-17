@@ -10,7 +10,8 @@ describe('HomeSidebar Selectors', () => {
         TestBed.configureTestingModule({
             imports: [
                 StoreModule.forRoot({
-                    ...fromRoot.reducer,
+                    ...fromRoot.appReducer,
+                    ...fromRoot.routerReducer,
                     conditions: combineReducers(fromReducers.homeSidebarReducers),
                 }),
             ],

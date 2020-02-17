@@ -1,8 +1,8 @@
-import {ITreeNode} from '../models/tree-node.interface';
+import {ITreeNode} from '../models/tree-node.model';
 import {Injectable} from '@angular/core';
 
 @Injectable()
-export class NodeUtils {
+export class TreeNodeUtils {
     public findNodesDeep(nodes: ITreeNode[], keys: string[]): ITreeNode[] {
         let foundNodes: ITreeNode[] = [];
         for (const node of nodes) {

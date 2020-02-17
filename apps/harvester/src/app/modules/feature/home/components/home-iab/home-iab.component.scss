@@ -1,9 +1,12 @@
 @import '../../../../../../assets/scss/color';
 
 #home-iab {
+  height: 100%;
+
   .component__wrapper {
     background: #fff;
-    height: calc(100vh - 70px);
+    height: 100%;
+    position: relative;
 
     .wrapper__url-bar {
       vertical-align: baseline;
@@ -90,8 +93,9 @@
     .wrapper__iframe {
       background: mix(white, $color--tertiary, 1%);
       width: 100%;
-      height: calc(100vh - 114px);
+      height: calc(100% - 38px);
       border: none;
+      position: absolute;
       border-left: 1px solid mix(white, $color--tertiary, 4%);
     }
   }

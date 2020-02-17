@@ -1,4 +1,5 @@
 <app-offline *ngIf="!isOnline" [@stateTransition]="isOnline ? 'hidden' : 'visible'" class="app__offline"></app-offline>
 <app-header></app-header>
 <router-outlet class="app__router-outlet"></router-outlet>
+<app-footer></app-footer>
 <app-modal></app-modal>

@@ -1,7 +1,10 @@
 export const environment = {
     production: false,
     title: 'Harvester Develop',
-    api: 'https://api.develop.harvester.dev/',
+    api: {
+        target: 'https://api.develop.harvester.dev',
+        secure: true
+    },
     flags: {
         SUPER_SECRET_SETTING: false, /* @action: It's a secret! */
         ALLOW_LEGACY_STORAGE: true, /* @action: Allows the use of LocalStorage */

@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {ITreeNode} from '../../models/tree-node.interface';
-import {ITreeViewConfig} from '../../models/tree-view-config.interface';
+import {ITreeNode} from '../../models/tree-node.model';
+import {ITreeViewConfig} from '../../models/tree-view-config.model';
 import {typeEnums} from '../../enums/tree-node.enum';
 
 @Component({
@@ -9,14 +9,37 @@ import {typeEnums} from '../../enums/tree-node.enum';
     styleUrls: ['./tree-node.component.scss'],
 })
 export class TreeNodeComponent implements OnInit {
+
     @Input() config: ITreeViewConfig;
     @Input() node: ITreeNode;
+    @Input() paddingLeft: number;
+    @Input() isRootNode: boolean;
+    @Input() paddingIncrease: number;
     @Input() unfoldedNodes: ITreeNode[];
-    @Input() selectedNodes: ITreeNode[];
+    @Input() path: string;
+    @Input() selectedNodes: string[];
     @Output() foldingChanged: EventEmitter<ITreeNode> = new EventEmitter();
-    @Output() selectionChanged: EventEmitter<ITreeNode> = new EventEmitter();
+    @Output() selectionChanged: EventEmitter<string> = new EventEmitter();
+
+    _paddingLeft: number;
+    _path: string;
 
     constructor() {
+
+    }
+
+    ngOnInit() {
+        this._paddingLeft = this.paddingLeft + this.paddingIncrease;
+        this._path = `${this.path}.${this.node.key}`;
+
+        if (this.nodeClickable && this.selectionAllowed && this.node.selected) {
+            this.selectionChanged.emit(this._path);
+        }
+
+        if(this.isRootNode) {
+            this.toggleChildren(new MouseEvent('click'))
+        }
+
     }
 
     get isGroupNode(): boolean {
@@ -40,7 +63,7 @@ export class TreeNodeComponent implements OnInit {
     }
 
     get selected(): boolean {
-        return !!this.selectedNodes.find(candidate => candidate.key === this.node.key);
+        return !!this.selectedNodes.find(path => path === this._path);
     }
 
     get maxSelectionsReached(): boolean {
@@ -61,22 +84,18 @@ export class TreeNodeComponent implements OnInit {
         return this.config.selection && this.config.selection.nodeClickable;
     }
 
-    ngOnInit() {
-        if (this.nodeClickable && this.selectionAllowed && this.node.selected) {
-            this.selectionChanged.emit(this.node);
-        }
-    }
+
 
     nodeClicked() {
         if (this.nodeClickable && this.selectionAllowed) {
-            this.selectionChanged.emit(this.node);
+            this.selectionChanged.emit(this._path);
         }
     }
 
     checkboxClicked($event: MouseEvent) {
         $event.stopPropagation();
         if (this.selectionAllowed) {
-            this.selectionChanged.emit(this.node);
+            this.selectionChanged.emit(this._path);
         }
     }
 

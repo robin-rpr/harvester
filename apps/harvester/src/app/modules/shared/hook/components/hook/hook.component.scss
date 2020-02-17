@@ -17,7 +17,7 @@
     border: 0;
     // cursor: pointer;
     padding: 3px 4.5px;
-    border-radius: 20px;
+    border-radius: 4px;
     height: 24px;
     width: fit-content;
     overflow: hidden;
@@ -26,7 +26,10 @@
     background: none;
     transition: background 50ms;
 
-    &:hover {background-color: #75173C !important};
+
+    &:hover {
+      background-color: mix($color--tertiary, $color--octonary, 90%);
+    };
 
     &--primary {
       .wrapper__content {
@@ -54,12 +57,12 @@
 
     &--tertiary {
       .wrapper__content {
-        color: $color--quinary;
+        color: $color--octonary;
         background: none;
       }
 
       .wrapper__icon {
-        color: $color--quinary;
+        color: $color--octonary;
         background: none;
       }
     }

@@ -1,8 +1,5 @@
 <div class="component" id="header-navigator">
     <div class="component__wrapper">
-        <app-navigator [color]="colorEnums.TERTIARY" [value]="'localhost:4200'"></app-navigator>
-        <app-navigator [color]="colorEnums.TERTIARY" [icon]="'tio-node_multiple'"
-                       [value]="'Profile Link'"></app-navigator>
-        <app-navigator [color]="colorEnums.TERTIARY" [icon]="'tio-label'" [value]="'Name'"></app-navigator>
+        <app-navigator *ngFor="let node of nodes" [color]="colorEnums.TERTIARY" [icon]="node?.icon" [value]="node?.title"></app-navigator>
     </div>
 </div>

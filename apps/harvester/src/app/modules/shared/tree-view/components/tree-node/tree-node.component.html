@@ -1,7 +1,7 @@
 <div class="component" id="tree-node">
     <div (click)="nodeClicked()"
-         [ngClass]="{ 'component__wrapper--opaque': !selectionAllowed, 'component__wrapper--clickable': nodeClickable && selectionAllowed, 'component__wrapper--selected': selected, 'component__wrapper--description': !isGroupNode}"
-         class="component__wrapper">
+         [ngClass]="{ 'component__wrapper--opaque': !selectionAllowed, 'component__wrapper--root': isRootNode, 'component__wrapper--clickable': nodeClickable && selectionAllowed, 'component__wrapper--selected': selected, 'component__wrapper--description': !isGroupNode}"
+         class="component__wrapper" [style.paddingLeft]="_paddingLeft + 'px'">
         <div [ngClass]="{'wrapper__controls--description': !isGroupNode}" class="wrapper__controls">
             <i (click)="toggleChildren($event)"
                *ngIf="hasChildren && !unfolded" class="controls__caret controls__caret--unfold tio-chevron_right"></i>
@@ -16,7 +16,7 @@
                 {{node.type}}
             </div>
         </div>
-        <div *ngIf="node.icon && !isGroupNode" class="wrapper__icon">
+        <div *ngIf="node.icon && !isGroupNode" class="wrapper__icon" [ngClass]="{'wrapper__icon--selected': selected}">
             <i [class]="node.icon"></i>
         </div>
         <label class="wrapper__label">
@@ -31,15 +31,20 @@
             />
         </label>
     </div>
-    <div *ngIf="hasChildren && unfolded" class="component__children">
-        <app-tree-node
-                (foldingChanged)="foldingChanged.emit($event)"
-                (selectionChanged)="selectionChanged.emit($event)"
-                *ngFor="let childNode of children"
-                [config]="config"
-                [node]="childNode"
-                [selectedNodes]="selectedNodes"
-                [unfoldedNodes]="unfoldedNodes"
-        ></app-tree-node>
-    </div>
+
+</div>
+<div *ngIf="hasChildren && unfolded"  class="component__children">
+    <app-tree-node
+            (foldingChanged)="foldingChanged.emit($event)"
+            (selectionChanged)="selectionChanged.emit($event)"
+            *ngFor="let childNode of children"
+            [config]="config"
+            [node]="childNode"
+            [path]="_path"
+            [isRootNode]="isRootNode ? false : false"
+            [paddingIncrease]="paddingIncrease"
+            [paddingLeft]="_paddingLeft"
+            [selectedNodes]="selectedNodes"
+            [unfoldedNodes]="unfoldedNodes"
+    ></app-tree-node>
 </div>

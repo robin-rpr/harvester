@@ -27,8 +27,8 @@
         width: 100%;
         padding: 2px;
         pointer-events: none;
-        border-left: 1px solid mix(white, $color--tertiary, 8%);
-        border-right: 1px solid mix(white, $color--tertiary, 8%)
+        border-left: 1px solid mix(white, $color--tertiary, 12%);
+        border-right: 1px solid mix(white, $color--tertiary, 12%)
       }
 
       .info-bar__etc {
@@ -47,6 +47,6 @@
     display: flex;
     justify-content: start;
     font-size: 13px;
-    border-bottom: 1px solid mix(white, $color--tertiary, 4%)
+    // border-bottom: 1px solid mix(white, $color--tertiary, 12%)
   }
 }

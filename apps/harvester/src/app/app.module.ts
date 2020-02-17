@@ -9,14 +9,14 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {OfflineModule} from './modules/core/offline/offline.module';
 import {ModalModule} from './modules/core/modal/modal.module';
 import {MetaReducer, StoreModule} from '@ngrx/store';
-import {reducer} from './store/reducers';
+import {appReducer, routerReducer} from './store/reducers';
 import {EffectsModule} from '@ngrx/effects';
 import {effects} from './store/effects';
 import {RouterStateSerializer, StoreRouterConnectingModule} from '@ngrx/router-store';
 import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {storeFreeze} from 'ngrx-store-freeze';
-import {CustomRouterSerializer} from './store/utils/router-serializer';
+import {CustomRouterSerializer} from './utils/router-serializer';
 import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule, HttpHandler} from '@angular/common/http';
 import {JwtInterceptor} from './http/interceptor';
 
@@ -33,6 +33,11 @@ import {HeaderModule} from './modules/core/header/header.module';
 import {NavigatorModule} from './modules/shared/navigator/navigator.module';
 import {TabsModule} from './modules/shared/tabs/tabs.module';
 import {TelemetryService} from './services/telemetry/telemetry.service';
+import {FooterModule} from "./modules/core/footer/footer.module";
+import { I18nPipe } from './modules/shared/i18n/pipes/i18n/i18n.pipe';
+import {I18nModule} from "./modules/shared/i18n/i18n.module";
+import {homeReducers} from "./modules/feature/home/store/reducers";
+import {AppStateFacade} from "./app-state.facade";
 
 export const metaReducers: MetaReducer<any>[] = !environment.production ? [storeFreeze] : [];
 
@@ -40,7 +45,7 @@ export const metaReducers: MetaReducer<any>[] = !environment.production ? [store
     declarations: [
         AppComponent,
         MessageModalComponent,
-        ErrorModalComponent
+        ErrorModalComponent,
     ],
     imports: [
         BrowserModule,
@@ -50,7 +55,8 @@ export const metaReducers: MetaReducer<any>[] = !environment.production ? [store
         HttpClientModule,
         AppRoutingModule,
         ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production}),
-        StoreModule.forRoot(reducer, {metaReducers}),
+        StoreModule.forRoot(routerReducer, {metaReducers}), // Router State
+        StoreModule.forFeature('APP_STATE', appReducer), // App State
         EffectsModule.forRoot(effects),
         StoreRouterConnectingModule.forRoot(),
         environment.production ? [] : StoreDevtoolsModule.instrument({maxAge: 50, logOnly: true}),
@@ -60,8 +66,10 @@ export const metaReducers: MetaReducer<any>[] = !environment.production ? [store
         NavigatorModule,
         OfflineModule,
         ModalModule,
+        FooterModule,
         HeaderModule,
-        TabsModule
+        TabsModule,
+        I18nModule
     ],
     providers: [
         {provide: RouterStateSerializer, useClass: CustomRouterSerializer},
@@ -73,10 +81,7 @@ export const metaReducers: MetaReducer<any>[] = !environment.production ? [store
         ErrorService,
         NAPIService,
         TelemetryService,
-    ],
-    entryComponents: [
-        MessageModalComponent,
-        ErrorModalComponent
+        AppStateFacade
     ],
     bootstrap: [AppComponent],
     exports: [StoreModule]

@@ -1,0 +1,18 @@
+<div class="component" id="footer-controls">
+    <div class="component__wrapper">
+        <app-hook [color]="colorEnums.QUINARY" [icon]="'tio-folder_opened'"
+                  class="wrapper__execute"></app-hook>
+        <app-hook [color]="colorEnums.TERTIARY" [icon]="'tio-save'"
+                  class="wrapper__execute"></app-hook>
+        <app-dropdown [items]="items"></app-dropdown>
+        <app-hook [color]="colorEnums.SENARY" [icon]="'tio-replay'" [tooltip]="'Replay action'"
+                  class="wrapper__replay"></app-hook>
+        <app-hook [color]="colorEnums.QUATERNARY" [icon]="'tio-download_to'" [tooltip]="'Download meta'"
+                  class="wrapper__download"></app-hook>
+        <app-hook [color]="colorEnums.QUINARY" [icon]="'tio-lock'" [tooltip]="'Lock item'"
+                  class="wrapper__lock"></app-hook>
+        <div class="wrapper__divider"></div>
+        <app-hook [color]="colorEnums.PRIMARY" [icon]="'tio-delete'"
+                  class="wrapper__delete"></app-hook>
+    </div>
+</div>

@@ -4,20 +4,20 @@ import {PwaService} from '../../../../../services/pwa/pwa.service';
 import {Router} from '@angular/router';
 import {ErrorService} from '../../../../../services/error/error.service';
 import {HomeStateFacade} from '../../home-state.facade';
-import {ITreeNode} from '../../../../shared/tree-view/models/tree-node.interface';
 import {colorEnums} from '../../../../../enums/color.enums';
 import {HomeService} from '../../services/home/home.service';
 import {HomeConfig} from '../../models/home.model';
 import {ComponentPortal, DomPortalHost} from '@angular/cdk/portal';
-import {Observable, of} from 'rxjs';
+import {Observable} from 'rxjs';
 import {IHomeSidebarState} from '../../store/reducers/home-sidebar/home-sidebar.reducer';
 import {IHomeState} from '../../store/reducers/home/home.reducer';
 import * as treeNodeEnums from '../../../../shared/tree-view/enums/tree-node.enum';
 import * as homeIabEnums from '../../enums/home-iab.enum';
 import {HomeGroupComponent} from '../home-group/home-group.component';
 import {HomeNodeComponent} from '../home-node/home-node.component';
-import {filter, map} from 'rxjs/operators';
-import { ResizeEvent } from 'angular-resizable-element';
+import {filter, withLatestFrom, distinctUntilChanged} from 'rxjs/operators';
+import {TreeNodeUtils} from "../../../../shared/tree-view/utils/tree-node.utils";
+import {AppStateFacade} from "../../../../../app-state.facade";
 
 @Component({
     selector: 'app-home',
@@ -39,17 +39,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
     private portalHost: DomPortalHost;
 
-    /**
-     * @param authService Responsible for API calls
-     * @param pwaService Provides Service Worker functions
-     * @param router Responsible for page navigation
-     * @param homeService Home Service
-     * @param errorService Provides Error Service
-     * @param componentFactoryResolver Factory Resolver for Portal
-     * @param injector Injector
-     * @param appRef Application Ref
-     * @param homeStateFacade Main State Facade
-     */
     constructor(private authService: AuthService,
                 public pwaService: PwaService,
                 private router: Router,
@@ -58,25 +47,31 @@ export class HomeComponent implements OnInit, AfterViewInit {
                 private componentFactoryResolver: ComponentFactoryResolver,
                 private injector: Injector,
                 private appRef: ApplicationRef,
-                private homeStateFacade: HomeStateFacade
+                private homeStateFacade: HomeStateFacade,
+                private appStateFacade: AppStateFacade,
+                private treeNodeUtils: TreeNodeUtils
     ) {
     }
 
     ngOnInit(): void {
+        this.appStateFacade.loadAppNodes();
+
         // FIXME: [NOASSIGN] Not unwrapping this Observable causes the Observable to never end
         this.pwaService.isAvailable(true)
             .subscribe(res => {
                 this.showInstallButton = res;
             });
 
-        this.homeSidebarState.pipe(
-            map(state => state.selectedTreeNodes),
-            filter((selectedTreeNodes: ITreeNode[]) => selectedTreeNodes.length !== 0)
+        this.appStateFacade.selectSelectedNodes$.pipe(
+            filter((selectedTreeNodes: string[]) => selectedTreeNodes.length > 0),
+            withLatestFrom(this.appStateFacade.selectNodes$),
+            distinctUntilChanged((a, b) => JSON.stringify(a) === JSON.stringify(b)),
         )
-            .subscribe((selectedTreeNodes: ITreeNode[]) => { // FIXME [NOASSIGN]: Extremely unperformant
+            .subscribe(([selectedTreeNodes, treeNodes]) => {
+                const resolvedTreeNodes = this.treeNodeUtils.findNodesDeep(treeNodes, selectedTreeNodes[0].split('.'));
                 this.homeService.open({
-                    component: selectedTreeNodes[0].type === this.treeNodeTypeEnums.NODE_GROUP ? HomeGroupComponent : HomeNodeComponent,
-                    payload: selectedTreeNodes[0]
+                    component: resolvedTreeNodes[resolvedTreeNodes.length - 1].type === this.treeNodeTypeEnums.NODE_GROUP ? HomeGroupComponent : HomeNodeComponent,
+                    payload: resolvedTreeNodes[resolvedTreeNodes.length - 1]
                 }).subscribe();
             });
     }
@@ -109,8 +104,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
         });
     }
 
-    selectNode(event: ITreeNode[]): void {
-        this.homeStateFacade.selectHomeSidebarNode(event);
+    selectNode(event: string[]): void {
+        this.appStateFacade.selectAppNode(event);
     }
 
     /**

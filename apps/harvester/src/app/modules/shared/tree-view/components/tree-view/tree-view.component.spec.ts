@@ -2,7 +2,7 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {TreeViewComponent} from './tree-view.component';
 import {TreeNodeComponent} from "../tree-node/tree-node.component";
-import {NodeUtils} from "../../utils/node.utils";
+import {NodeUtils} from "../../utils/tree-node.utils";
 
 describe('TreeViewComponent', () => {
     let component: TreeViewComponent;

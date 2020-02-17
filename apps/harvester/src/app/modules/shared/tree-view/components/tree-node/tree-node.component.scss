@@ -6,14 +6,21 @@ $block-spacing: 6px;
   .component__wrapper {
     display: flex;
     color: $color--quinary;
-    background: 1px solid mix(white, $color--tertiary, 4%);
 
     &--selected {
-      background: #383E5C;
+      background: mix(white, $color--tertiary, 6%);
+    }
+
+    &--root {
+      .wrapper__content {
+        .content__title {
+          color: #80CBC4 !important;
+          font-weight: 600;
+        }
+      }
     }
 
     &--description {
-      background: none;
     }
 
     &--opaque {
@@ -64,9 +71,8 @@ $block-spacing: 6px;
 
       &--selected {
         .content__title {
-          color: #80CBC4 !important;
+          color: $color--octonary;
         }
-
       }
 
       .content__title {
@@ -87,11 +93,12 @@ $block-spacing: 6px;
       padding: 7px 10px;
       height: 28px;
       margin-left: auto;
+      transition: all 100ms ease-in;
+
+      &--selected {
+        color: $color--octonary;
+      }
     }
 
-  }
-
-  .component__children {
-    padding-left: 16px;
   }
 }

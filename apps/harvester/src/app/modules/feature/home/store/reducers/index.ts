@@ -20,3 +20,4 @@ export const homeSidebarReducers: ActionReducerMap<IHomeSidebarState> = {
 
 export const getHomeState = createFeatureSelector<IHomeState>('HOME_STATE');
 export const getHomeSidebarState = createFeatureSelector<IHomeSidebarState>('HOME_SIDEBAR_STATE');
+

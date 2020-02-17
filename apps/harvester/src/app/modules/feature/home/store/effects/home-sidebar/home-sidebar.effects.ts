@@ -1,25 +1,15 @@
 import {Injectable} from '@angular/core';
-import {Actions} from '@ngrx/effects';
-import {TelemetryService} from '../../../../../../services/telemetry/telemetry.service';
+import {Actions, Effect, ofType} from '@ngrx/effects';
+import * as fromActions from '../../actions/home-sidebar/home-sidebar.actions';
+import {catchError, map, switchMap} from 'rxjs/operators';
+import {HomeSidebarService} from "../../../services/home-sidebar/home-sidebar.service";
+import {ITreeNode} from "../../../../../shared/tree-view/models/tree-node.model";
+
 
 @Injectable()
 export class HomeSidebarEffects {
-    constructor(private actions$: Actions,
-                private telemetryService: TelemetryService) {
-
-        /*
-        @Effect()
-          selectHomeSidebarNode$ = this.actions$.pipe(
-              ofType(fromActions.SELECT_HOME_SIDEBAR_NODE),
-              switchMap((action: fromActions.SelectHomeSidebarNode) => {
-                return this.telemetryService.push({ action: action.type, payload: action.payload}).pipe(
-                    map((res: unknown) => new fromActions.SelectHomeSidebarNodeSuccess()),
-                    catchError(error => [
-                      new ecardSendActions.LoadScopeChoicesFail(error),
-                      new coreActions.AddErrorMessage({ message: 'ERROR_GENERIC' }),
-                    ]),
-                );
-              }),
-          );*/
+    constructor(
+        private actions$: Actions,
+    ) {
     }
 }

@@ -1,4 +1,4 @@
-import {ITreeNodeAction} from './tree-node-action.interface';
+import {ITreeNodeAction} from './tree-node-action.model';
 import {typeEnums} from '../enums/tree-node.enum';
 
 export interface ITreeNode {
@@ -22,7 +22,7 @@ export class TreeNodeFactory {
     constructor() {
     }
 
-    public get mockRequest(): ITreeNode {
+    public get mockResponse(): ITreeNode {
         return {
             key: 'HEAD',
             title: 'localhost:4200',

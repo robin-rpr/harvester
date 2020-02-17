@@ -1,11 +1,13 @@
 #home--container {
   .component__wrapper {
     display: flex;
+    height: calc(100vh - 104px);
 
     .wrapper__sidebar {
       display: block;
       min-width: 272px;
       box-sizing: border-box;
+      height: 100%;
     }
 
     .wrapper__body {
@@ -16,6 +18,7 @@
       display: block;
       box-sizing: border-box;
       min-width: 495px;
+      height: 100%;
     }
   }
 }

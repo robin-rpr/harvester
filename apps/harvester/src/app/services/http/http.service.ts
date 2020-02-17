@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {catchError, map} from 'rxjs/operators';
 import {ErrorService} from '../error/error.service';
+import {TreeNodeFactory} from "../../modules/shared/tree-view/models/tree-node.model";
 
 @Injectable({
     providedIn: 'root'
@@ -15,25 +16,25 @@ export class HttpService {
     ) {
     }
 
-    get(url, options): Observable<any> {
+    get(url, options?): Observable<any> {
         return this.http.get(url, options).pipe(
             map((res: any) => {
                 return res;
             }),
             catchError((error: any) => {
-                this.errorService.throw(error);
+                this.errorService.throw(error, true);
                 return error;
             })
         );
     }
 
-    post(url, body, options): Observable<any> {
+    post(url, body, options?): Observable<any> {
         return this.http.post(url, body, options).pipe(
             map((res: any) => {
                 return res;
             }),
             catchError((error: any) => {
-                this.errorService.throw(error);
+                this.errorService.throw(error, true);
                 return error;
             })
         );

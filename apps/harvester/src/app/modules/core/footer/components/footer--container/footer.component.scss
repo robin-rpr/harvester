@@ -1,0 +1,22 @@
+@import '../../../../../../assets/scss/color';
+@import '../../../../../../assets/scss/component';
+
+#footer--container {
+  .component__wrapper {
+    background: mix(black, $color--tertiary, 50%);
+    display: flex;
+    justify-content: space-between;
+
+    .wrapper__visibility {
+      padding: 5px;
+    }
+
+    .wrapper__intelli {
+      flex-grow: 1;
+    }
+
+    .wrapper__controls {
+
+    }
+  }
+}

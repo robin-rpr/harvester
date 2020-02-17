@@ -2,7 +2,7 @@
     <div class="component__wrapper">
         <div class="wrapper__tabs">
             <div (click)="select(tab)"
-                 *ngFor="let tab of tabs as tab"
+                 *ngFor="let tab of tabs"
                  [ngClass]="{'tabs__tab--active': tab.active}"
                  class="tabs__tab">
                 {{tab.title}}

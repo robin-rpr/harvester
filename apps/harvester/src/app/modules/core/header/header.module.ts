@@ -7,6 +7,8 @@ import {HeaderNavigatorComponent} from './components/header-navigator/header-nav
 import {HeaderControlsComponent} from './components/header-controls/header-controls.component';
 import {NavigatorModule} from '../../shared/navigator/navigator.module';
 import {DropdownModule} from '../../shared/dropdown/dropdown.module';
+import {HomeStateFacade} from "../../feature/home/home-state.facade";
+import {TreeNodeUtils} from "../../shared/tree-view/utils/tree-node.utils";
 
 
 @NgModule({
@@ -20,7 +22,12 @@ import {DropdownModule} from '../../shared/dropdown/dropdown.module';
         HookModule,
         NavigatorModule,
         DropdownModule
+    ],
+    providers: [
+        HomeStateFacade,
+        TreeNodeUtils
     ]
+
 })
 export class HeaderModule {
 }

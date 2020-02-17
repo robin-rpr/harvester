@@ -5,6 +5,10 @@
             *ngFor="let node of rootNodes; trackBy: giveId"
             [config]="config"
             [node]="node"
+            [paddingLeft]="0"
+            [isRootNode]="true"
+            [path]="'$$ROOT'"
+            [paddingIncrease]="10"
             [selectedNodes]="selectedNodes"
             [unfoldedNodes]="unfoldedNodes"
     ></app-tree-node>

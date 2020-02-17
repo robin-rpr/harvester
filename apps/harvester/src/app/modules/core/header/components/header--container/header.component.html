@@ -25,7 +25,9 @@
             </div>
 
             <div class="control-bar__navigator">
-                <app-header-navigator></app-header-navigator>
+                <app-header-navigator
+                        [nodes]="nodes$ | async"
+                ></app-header-navigator>
             </div>
         </div>
     </div>

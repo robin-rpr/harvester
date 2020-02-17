@@ -22,7 +22,7 @@ import {RouterStateSerializer, StoreRouterConnectingModule} from '@ngrx/router-s
 import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {metaReducers} from './app.module';
-import {CustomRouterSerializer} from './store/utils/router-serializer';
+import {CustomRouterSerializer} from './utils/router-serializer';
 import {JwtInterceptor} from './http/interceptor';
 import * as fromGuards from './guards';
 import {ErrorService} from './services/error/error.service';

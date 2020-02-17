@@ -13,6 +13,6 @@ export class TelemetryService {
     }
 
     push(payload: ITelemetry): Observable<any> {
-        return this.httpService.post(`${environment.api}/telemetry/push`, payload, {});
+        return this.httpService.post(`${environment.api.target}/telemetry/push`, payload, {});
     }
 }

@@ -1,7 +1,7 @@
 import {ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {ITreeNode} from '../../models/tree-node.interface';
-import {ITreeViewConfig} from '../../models/tree-view-config.interface';
-import {NodeUtils} from '../../utils/node.utils';
+import {ITreeNode} from '../../models/tree-node.model';
+import {ITreeViewConfig} from '../../models/tree-view-config.model';
+import {TreeNodeUtils} from '../../utils/tree-node.utils';
 
 @Component({
     selector: 'app-tree-view',
@@ -12,9 +12,9 @@ export class TreeViewComponent implements OnInit {
     @Input() config: ITreeViewConfig = {};
     @Input() rootNodes: ITreeNode[] = [];
     @Output() foldingChanged: EventEmitter<ITreeNode[]> = new EventEmitter();
-    @Output() selectionChanged: EventEmitter<ITreeNode[]> = new EventEmitter();
+    @Output() selectionChanged: EventEmitter<string[]> = new EventEmitter();
 
-    constructor(private readonly nodeUtils: NodeUtils, private readonly chr: ChangeDetectorRef) {
+    constructor(private readonly treeNodeUtils: TreeNodeUtils, private readonly chr: ChangeDetectorRef) {
     }
 
     // tslint:disable-next-line:variable-name
@@ -25,32 +25,22 @@ export class TreeViewComponent implements OnInit {
     }
 
     // tslint:disable-next-line:variable-name
-    private _selectedNodes: ITreeNode[] = [];
+    private _selectedNodes: string[] = [];
 
-    get selectedNodes(): ITreeNode[] {
+    get selectedNodes(): string[] {
         return this._selectedNodes;
-    }
-
-    set unfoldedNodeKeys(keys: string[]) {
-        this._unfoldedNodes = this.nodeUtils.findNodesDeep(this.rootNodes, keys);
-        this.chr.detectChanges();
-    }
-
-    set selectedNodeKeys(keys: string[]) {
-        this._selectedNodes = this.nodeUtils.findNodesDeep(this.rootNodes, keys);
-        this.chr.detectChanges();
     }
 
     ngOnInit() {
     }
 
     public updateUnfoldedNodes(node: ITreeNode): void {
-        this._unfoldedNodes = this.nodeUtils.nodeAccumulator(this._unfoldedNodes, node);
+        this._unfoldedNodes = this.treeNodeUtils.nodeAccumulator(this._unfoldedNodes, node);
         this.foldingChanged.emit(this._unfoldedNodes);
     }
 
-    public updateSelectedNodes(node: ITreeNode): void {
-        this._selectedNodes = [node];
+    public updateSelectedNodes(path: string): void {
+        this._selectedNodes = [path];
         this.selectionChanged.emit(this._selectedNodes);
     }
 

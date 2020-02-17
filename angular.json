@@ -63,8 +63,7 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "harvester:build",
-            "proxyConfig": "apps/harvester/proxy.conf.json"
+            "browserTarget": "harvester:build"
           },
           "configurations": {
             "production": {

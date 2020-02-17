@@ -13,7 +13,7 @@ import {HttpService} from '../../../../../services/http/http.service';
     styleUrls: ['./home-iab.component.scss'],
 })
 export class HomeIabComponent implements AfterViewInit, OnDestroy {
-    @ViewChild('iframe', null) private iframe: ElementRef;
+    @ViewChild('iframe', {read: ElementRef}) private iframe: ElementRef;
     @Input() type: typeEnums;
     @Input() url: string;
     @Output() selection: EventEmitter<IElement> = new EventEmitter<IElement>();

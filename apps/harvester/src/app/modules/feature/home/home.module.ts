@@ -20,6 +20,7 @@ import {EffectsModule} from '@ngrx/effects';
 import {HomeEffects, HomeSidebarEffects} from './store/effects';
 import { HomeIabComponent } from './components/home-iab/home-iab.component';
 import {ResizableModule} from 'angular-resizable-element';
+import {I18nModule} from "../../shared/i18n/i18n.module";
 
 @NgModule({
     declarations: [
@@ -44,14 +45,11 @@ import {ResizableModule} from 'angular-resizable-element';
         StoreModule.forFeature('HOME_SIDEBAR_STATE', homeSidebarReducers),
         EffectsModule.forFeature([HomeEffects, HomeSidebarEffects]),
         ResizableModule,
+        I18nModule
     ],
     providers: [
         HomeService,
         HomeStateFacade,
-    ],
-    entryComponents: [
-        HomeNodeComponent,
-        HomeGroupComponent
     ]
 })
 export class HomeModule {

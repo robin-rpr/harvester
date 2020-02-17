@@ -1,5 +1,5 @@
 import {AfterContentInit, Component, ContentChildren, OnInit, QueryList} from '@angular/core';
-import {ITab} from '../../models/tabs.interface';
+import {ITab} from '../../models/tabs.model';
 import {TabsTabComponent} from '../tabs-tab/tabs-tab.component';
 
 @Component({

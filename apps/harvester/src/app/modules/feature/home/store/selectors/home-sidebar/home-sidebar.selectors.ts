@@ -1,4 +1,6 @@
 import * as fromReducers from '../../reducers';
+import * as fromHomeSidebarReducer from '../../reducers/home-sidebar/home-sidebar.reducer';
+
 import {createSelector} from '@ngrx/store';
 
 export const selectHomeSidebarState = createSelector(
@@ -8,10 +10,10 @@ export const selectHomeSidebarState = createSelector(
 
 export const selectHomeSidebarLoading = createSelector(
     selectHomeSidebarState,
-    fromReducers.getHomeSidebarState,
+    fromHomeSidebarReducer.getHomeSidebarLoading,
 );
 
 export const selectHomeSidebarLoaded = createSelector(
     selectHomeSidebarState,
-    fromReducers.getHomeSidebarState,
+    fromHomeSidebarReducer.getHomeSidebarLoaded,
 );

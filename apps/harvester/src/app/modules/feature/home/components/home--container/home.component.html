@@ -2,12 +2,13 @@
     <div class="component__wrapper">
         <app-home-sidebar (SELECT)="selectNode($event)" class="wrapper__sidebar"
                           mwlResizable
+                          [treeNodes]="appStateFacade.selectNodes$ | async"
                           [resizeCursorPrecision]="6"
                           [enableGhostResize]="true"
                           [resizeEdges]="{bottom: false, right: true, top: false, left: false}"
         ></app-home-sidebar>
         <div class="wrapper__body" id="portal"></div>
-        <app-home-iab [type]="homeIabTypeEnums.IFRAME" [url]="'https://webworker.com/'" class="wrapper__iab"
+        <app-home-iab [type]="homeIabTypeEnums.IFRAME" [url]="'https://example.com'" class="wrapper__iab"
             mwlResizable
             [resizeCursorPrecision]="6"
             [enableGhostResize]="true"
