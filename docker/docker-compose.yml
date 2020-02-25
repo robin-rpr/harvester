@@ -19,7 +19,7 @@ services:
     networks:
       - harvester
     volumes:
-      - "../:/app:ro"
+      - "../:/home/node/app:ro"
 
   harvester:
     logging:
