@@ -3,7 +3,7 @@ WORKDIR /usr/src/app
 USER node
 
 COPY --chown=node:node . .
-RUN if [ ! -d "node_modules" ]; then npm install; fi
+RUN if [ ! -d "node_modules" ]; then sudo npm install; fi
 
 # FIXME: Sudo because of https://github.com/nodejs/docker-node/issues/740
 RUN sudo npm run nx build api --configuration=${CONFIGURATION}
