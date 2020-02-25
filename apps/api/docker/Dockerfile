@@ -1,7 +1,7 @@
 FROM node:latest as builder
 USER node
-RUN mkdir -p /usr/src/home/node/app
-WORKDIR /usr/src/home/node/app
+RUN mkdir -p /home/node/app
+WORKDIR /home/node/app
 
 COPY --chown=node:node . .
 RUN if [ ! -d "node_modules" ]; then npm install; fi
