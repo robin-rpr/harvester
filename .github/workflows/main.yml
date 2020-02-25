@@ -42,9 +42,9 @@ jobs:
 
       - name: Export environment variables
         run: |
-          - export MONGODB_DATABASE=${{ secrets.MONGODB_DATABASE }}
-          - export MONGODB_USER=${{ secrets.MONGODB_USER }}
-          - export MONGODB_PASSWORD=${{ secrets.MONGODB_PASSWORD }}
+          export MONGODB_DATABASE=${{ secrets.MONGODB_DATABASE }}
+          export MONGODB_USER=${{ secrets.MONGODB_USER }}
+          export MONGODB_PASSWORD=${{ secrets.MONGODB_PASSWORD }}
 
       - name: Environment variables substitution
         run: envsubst < "docker/docker-compose.yml" > "docker/docker-compose.yml";
