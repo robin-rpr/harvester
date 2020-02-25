@@ -40,7 +40,9 @@ jobs:
           apt-get -y install curl jq
           apt-get -y install zip unzip
           apt-get -y install gettext-base
-          apt-get -y install docker-compose
+          curl -L "https://github.com/docker/compose/releases/download/1.25.4/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+          chmod +x /usr/local/bin/docker-compose
+          ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
 
       - name: Export environment variables
         run: |
