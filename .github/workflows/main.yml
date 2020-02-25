@@ -40,6 +40,7 @@ jobs:
           apt-get -y install curl jq
           apt-get -y install zip unzip
           apt-get -y install gettext-base
+          apt-get -y install docker-compose
 
       - name: Export environment variables
         run: |
