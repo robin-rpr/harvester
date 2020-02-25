@@ -39,11 +39,5 @@ export class HeaderComponent implements OnInit {
                 })
             })
         )
-
-        this.appStateFacade.selectSelectedNodes$
-            .subscribe(nodes => {
-                    console.log('nodes', nodes)
-                }
-            )
     }
 }

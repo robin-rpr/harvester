@@ -1,0 +1,66 @@
+version: "3.1"
+
+networks:
+  harvester:
+
+services:
+  api:
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
+    restart: always
+    build:
+      context: .
+      dockerfile: ../apps/api/docker/Dockerfile
+    ports:
+      - "3000:3000"
+    networks:
+      - harvester
+    volumes:
+      - "../:/app:ro"
+
+  harvester:
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
+    restart: always
+    build:
+      context: .
+      dockerfile: ../apps/harvester/docker/Dockerfile
+    ports:
+      - "4000:4000"
+    networks:
+      - harvester
+    depends_on:
+      - api
+    volumes:
+      - "../:/app:ro"
+
+
+
+  harvester-e2e:
+    image: node:latest
+      # depends_on:
+    #- harvester
+    volumes:
+      - "../:/app:ro"
+    command: ["npm", "run", "test"]]
+
+  mongodb:
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
+    image: mongodb
+    restart: always
+    networks:
+      - harvester
+    environment:
+      MONGODB_DATABASE: ${MONGODB_DATABASE:?err}
+      MONGODB_USER: ${MONGODB_USER:?err}
+      MONGODB_PASSWORD: ${MONGODB_PASSWORD:?err}

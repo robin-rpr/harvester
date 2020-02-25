@@ -23,35 +23,54 @@ jobs:
             ${{ runner.os }}-build-${{ env.cache-name }}-
             ${{ runner.os }}-build-
             ${{ runner.os }}-
+
+      - name: Login to GitHub registry
+        uses: actions-hub/docker/login@master
+        env:
+          DOCKER_USERNAME: ${{ secrets.REGISTRY_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
+          DOCKER_REGISTRY_URL: docker.pkg.github.com
+
       - name: Install App Dependencies
-        run: npm install --ignore-scripts
+          run: npm install --ignore-scripts
 
       - name: Install System Dependencies
-        run: |
-          apt-get update
-          apt-get -y install curl jq
-          apt-get -y install zip unzip
+          run: |
+            apt-get update
+            apt-get -y install curl jq
+            apt-get -y install zip unzip
 
-      - name: Build
+      - name: Export environment variables
+        run: |
+          - export MONGODB_DATABASE=${{ secrets.MONGODB_DATABASE }}
+          - export MONGODB_USER=${{ secrets.MONGODB_USER }}
+          - export MONGODB_PASSWORD=${{ secrets.MONGODB_PASSWORD }}
+
+      - name: Environment variables substitution
+        run: envsubst < "docker/docker-compose.yml" > "docker/docker-compose.yml";
+
+      - name: Build Apps
         run: npm run build:prod
 
-      - name: Package
-        run: cd dist/ && zip -r harvester.zip harvester && cd ..
+      - name: Push to GitHub registry :latest
+        uses: actions-hub/docker@master
+        with:
+          args: push docker.pkg.github.com/${{ github.repository }}:latest
+
+      - name: Build Chrome extension
+        run: npm run build:extension:prod
 
       - name: Upload Package artifact
         uses: actions/upload-artifact@v1.0.0
         with:
           name: package
-          path: dist/harvester.zip
+          path: dist/apps/harvester.zip
 
       - name: Upload Source artifact
         uses: actions/upload-artifact@v1.0.0
         with:
           name: source
-          path: dist/harvester
-
-          # - name: Test
-          # run: npm test
+          path: dist/apps/harvester
 
   publish:
     name: publish
@@ -66,10 +85,14 @@ jobs:
         uses: actions/download-artifact@v1
         with:
           name: package
+
       - name: Download Source artifact
         uses: actions/download-artifact@v1
         with:
           name: source
+
+        # Push K8s here
+
       - name: Publish to Chrome Web Store
         uses: Klemensas/chrome-extension-upload-action@v1.3
         with:
@@ -83,6 +106,7 @@ jobs:
           client-secret: ${{ secrets.CLIENT_SECRET }}
           # Name of zipped target upload file
           file-name: harvester.zip
+
       - name: Publish to GitHub Pages
         uses: crazy-max/ghaction-github-pages@v1.2.5
         env:

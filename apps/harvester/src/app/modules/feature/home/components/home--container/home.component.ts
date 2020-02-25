@@ -48,7 +48,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
                 private injector: Injector,
                 private appRef: ApplicationRef,
                 private homeStateFacade: HomeStateFacade,
-                private appStateFacade: AppStateFacade,
+                public appStateFacade: AppStateFacade,
                 private treeNodeUtils: TreeNodeUtils
     ) {
     }

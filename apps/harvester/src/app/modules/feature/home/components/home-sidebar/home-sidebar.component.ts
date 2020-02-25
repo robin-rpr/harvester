@@ -18,7 +18,6 @@ export class HomeSidebarComponent implements OnInit {
     }
 
     ngOnInit() {
-        console.log(this.treeNodes);
     }
 
 
