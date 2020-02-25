@@ -1,4 +1,4 @@
-name: main
+name: master
 on:
   push:
     branches:
@@ -10,6 +10,11 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: node:dubnium-jessie
+    env:
+      CONFIGURATION: prod
+      MONGODB_DATABASE: ${{ secrets.MONGODB_DATABASE }}
+      MONGODB_USER: ${{ secrets.MONGODB_USER }}
+      MONGODB_PASSWORD: ${{ secrets.MONGODB_PASSWORD }}
     steps:
       - name: Checkout
         uses: actions/checkout@v1
@@ -44,19 +49,13 @@ jobs:
           chmod +x /usr/local/bin/docker-compose
           ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
 
-      - name: Export environment variables
-        run: |
-          export MONGODB_DATABASE="${{ secrets.MONGODB_DATABASE }}"
-          export MONGODB_USER="${{ secrets.MONGODB_USER }}"
-          export MONGODB_PASSWORD="${{ secrets.MONGODB_PASSWORD }}"
-
       - name: Environment variables substitution
         run: |
-          envsubst < "docker/docker-compose.prod.yml" > "docker/docker-compose.dist.yml";
+          envsubst < "docker/docker-compose.${CONFIGURATION}.yml" > "docker/docker-compose.dist.yml";
           cp -f docker/docker-compose.dist.yml docker/docker-compose.yml
 
       - name: Build Apps
-        run: npm run build:prod
+        run: npm run build
 
       - name: Push to GitHub registry :latest
         uses: actions-hub/docker@master
@@ -64,7 +63,8 @@ jobs:
           args: push docker.pkg.github.com/${{ github.repository }}:latest
 
       - name: Build Chrome extension
-        run: npm run build:extension:prod
+        run: |
+          nx build harvester --configuration=${CONFIGURATION} && cd dist/apps/ && zip -r harvester.zip harvester
 
       - name: Upload Package artifact
         uses: actions/upload-artifact@v1.0.0
