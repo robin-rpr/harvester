@@ -1,15 +1,12 @@
 FROM node:latest as builder
-
-RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
-WORKDIR /home/node/app
-COPY package*.json ./
+WORKDIR /usr/src/app
 USER node
-RUN npm install
-RUN npm run build --configuration=${CONFIGURATION}
-COPY --chown=node:node . .
 
-WORKDIR dict/apps/harvester
+COPY --chown=node:node . .
+RUN if [ ! -d "node_modules" ]; then npm install; fi
+
+RUN npm run nx build harvester --configuration=${CONFIGURATION}
 
 FROM nginx
-COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
-COPY --from=builder --R /* /usr/share/nginx/html
+COPY ./nginx/apps/harvester/default.${CONFIGURATION}.conf /etc/nginx/conf.d/default.conf
+COPY --from=builder /dist/apps/harvester/* /usr/share/nginx/html

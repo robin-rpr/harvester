@@ -1,4 +1,4 @@
-version: "3.1"
+version: "3.7"
 
 networks:
   harvester:
@@ -11,9 +11,11 @@ services:
         max-size: "200k"
         max-file: "10"
     restart: always
+    environment:
+      CONFIGURATION: staging
     build:
-      context: .
-      dockerfile: ../apps/api/docker/Dockerfile
+      context: ..
+      dockerfile: ./apps/api/docker/Dockerfile
     ports:
       - "3000:3000"
     networks:
@@ -28,9 +30,11 @@ services:
         max-size: "200k"
         max-file: "10"
     restart: always
+    environment:
+      CONFIGURATION: staging
     build:
-      context: .
-      dockerfile: ../apps/harvester/docker/Dockerfile
+      context: ..
+      dockerfile: ./apps/harvester/docker/Dockerfile
     ports:
       - "4000:4000"
     networks:
@@ -39,16 +43,6 @@ services:
       - api
     volumes:
       - "../:/app:ro"
-
-
-
-  harvester-e2e:
-    image: node:latest
-      # depends_on:
-    #- harvester
-    volumes:
-      - "../:/app:ro"
-    command: ["npm", "run", "test"]
 
   mongodb:
     logging:

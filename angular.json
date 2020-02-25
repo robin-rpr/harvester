@@ -29,7 +29,7 @@
             "scripts": []
           },
           "configurations": {
-            "production": {
+            "prod": {
               "fileReplacements": [
                 {
                   "replace": "apps/harvester/src/environments/environment.ts",

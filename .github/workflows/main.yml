@@ -32,13 +32,13 @@ jobs:
           DOCKER_REGISTRY_URL: docker.pkg.github.com
 
       - name: Install App Dependencies
-          run: npm install --ignore-scripts
+        run: npm install --ignore-scripts
 
       - name: Install System Dependencies
-          run: |
-            apt-get update
-            apt-get -y install curl jq
-            apt-get -y install zip unzip
+        run: |
+          apt-get update
+          apt-get -y install curl jq
+          apt-get -y install zip unzip
 
       - name: Export environment variables
         run: |

@@ -12,8 +12,8 @@ services:
         max-file: "10"
     restart: always
     build:
-      context: .
-      dockerfile: ../apps/api/docker/Dockerfile
+      context: ..
+      dockerfile: ./apps/api/docker/Dockerfile
     ports:
       - "3000:3000"
     networks:
@@ -29,8 +29,8 @@ services:
         max-file: "10"
     restart: always
     build:
-      context: .
-      dockerfile: ../apps/harvester/docker/Dockerfile
+      context: ..
+      dockerfile: ./apps/harvester/docker/Dockerfile
     ports:
       - "4000:4000"
     networks:
@@ -39,13 +39,3 @@ services:
       - api
     volumes:
       - "../:/app:ro"
-
-
-
-  harvester-e2e:
-    image: node:latest
-   # depends_on:
-      #- harvester
-    volumes:
-      - "../:/app:ro"
-    command: ["npm", "run", "test"]
