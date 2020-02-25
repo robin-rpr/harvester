@@ -1,12 +1,13 @@
 FROM node:latest as builder
-WORKDIR /usr/src/app
 USER node
+RUN chown -r node:node /usr/src/app
+WORKDIR /usr/src/app
 
 COPY --chown=node:node . .
-RUN if [ ! -d "node_modules" ]; then sudo npm install; fi
+RUN if [ ! -d "node_modules" ]; then npm install; fi
 
 # FIXME: Sudo because of https://github.com/nodejs/docker-node/issues/740
-RUN sudo npm run nx build api --configuration=${CONFIGURATION}
+RUN npm run nx build api --configuration=${CONFIGURATION}
 
 WORKDIR /usr/src/app/dist/apps/api
 
