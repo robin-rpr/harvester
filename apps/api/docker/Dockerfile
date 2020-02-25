@@ -1,6 +1,6 @@
 FROM node:latest as builder
 USER node
-RUN mkdir /usr/src/home/node/app
+RUN mkdir -p /usr/src/home/node/app
 WORKDIR /usr/src/home/node/app
 
 COPY --chown=node:node . .
