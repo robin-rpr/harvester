@@ -55,6 +55,6 @@ services:
     networks:
       - harvester
     environment:
-      MONGODB_DATABASE: ${MONGODB_DATABASE:?err}
-      MONGODB_USER: ${MONGODB_USER:?err}
-      MONGODB_PASSWORD: ${MONGODB_PASSWORD:?err}
+      MONGODB_DATABASE: "${MONGODB_DATABASE}"
+      MONGODB_USER: "${MONGODB_USER}"
+      MONGODB_PASSWORD: "${MONGODB_PASSWORD}"

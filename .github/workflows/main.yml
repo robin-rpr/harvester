@@ -51,7 +51,9 @@ jobs:
           export MONGODB_PASSWORD="${{ secrets.MONGODB_PASSWORD }}"
 
       - name: Environment variables substitution
-        run: envsubst < "docker/docker-compose.yml" > "docker/docker-compose.yml";
+        run: |
+          envsubst < "docker/docker-compose.prod.yml" > "docker/docker-compose.dist.yml";
+          cp -f docker/docker-compose.dist.yml docker/docker-compose.yml
 
       - name: Build Apps
         run: npm run build:prod
