@@ -1,6 +1,6 @@
 FROM node:latest as builder
 USER node
-RUN chown -r node:node /usr/src/app
+RUN chown -R node:node /usr/src/app
 WORKDIR /usr/src/app
 
 COPY --chown=node:node . .
