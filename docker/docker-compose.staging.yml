@@ -15,7 +15,7 @@ services:
       context: ..
       dockerfile: ./apps/api/docker/Dockerfile
       args:
-        CONFIGURATION: local
+        CONFIGURATION: staging
     ports:
       - "3000:3000"
     networks:
@@ -34,7 +34,7 @@ services:
       context: ..
       dockerfile: ./apps/harvester/docker/Dockerfile
       args:
-        CONFIGURATION: local
+        CONFIGURATION: staging
     ports:
       - "4000:4000"
     networks:
