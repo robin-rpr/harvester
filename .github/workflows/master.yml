@@ -16,6 +16,7 @@ jobs:
       MONGODB_USER: ${{ secrets.MONGODB_USER }}
       MONGODB_PASSWORD: ${{ secrets.MONGODB_PASSWORD }}
       DOCKER_REGISTRY_HOST: ${{ secrets.DOCKER_REGISTRY_HOST }}
+      GITHUB_REPOSITORY: ${{ github.repository }}
     steps:
       - name: Checkout
         uses: actions/checkout@v1
@@ -61,12 +62,12 @@ jobs:
       - name: Push harvester/api to GitHub Registry
         uses: actions-hub/docker@master
         with:
-          args: push ${{ secrets.DOCKER_REGISTRY_HOST }}/harvester/api:latest
+          args: push ${{ secrets.DOCKER_REGISTRY_HOST }}/${{ github.repository }}/api:latest
 
       - name: Push harvester/harvester to GitHub Registry
         uses: actions-hub/docker@master
         with:
-          args: push ${{ secrets.DOCKER_REGISTRY_HOST }}/harvester/harvester:latest
+          args: push ${{ secrets.DOCKER_REGISTRY_HOST }}/${{ github.repository }}/harvester:latest
 
       - name: Build Chrome extension
         run: |
