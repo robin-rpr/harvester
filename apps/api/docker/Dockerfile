@@ -1,4 +1,6 @@
 FROM node:latest as builder
+ARG CONFIGURATION
+
 USER node
 RUN mkdir -p /home/node/app
 WORKDIR /home/node/app
@@ -9,10 +11,11 @@ RUN if [ ! -d "node_modules" ]; then npm install; fi
 # FIXME: Sudo because of https://github.com/nodejs/docker-node/issues/740
 RUN npm run nx build api --configuration=${CONFIGURATION}
 
-WORKDIR /usr/src/app/dist/apps/api
+WORKDIR /home/node/app/dist/apps/api
 
 CMD [ "node", "main.js" ]
 
 FROM nginx
-COPY ./nginx/apps/api/default.${CONFIGURATION}.conf /etc/nginx/conf.d/default.conf
-COPY --from=builder /dist/apps/api/* /usr/share/nginx/html
+ARG CONFIGURATION
+RUN if [ -z "$var" ]; then export CONFIGURATION="deafault.conf"; else export CONFIGURATION="default.${CONFIGURATION}.conf"; fi
+COPY --from=builder nginx/apps/api/${CONFIGURATION} /etc/nginx/conf.d/default.conf
