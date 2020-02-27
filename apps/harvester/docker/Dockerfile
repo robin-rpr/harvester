@@ -13,6 +13,6 @@ RUN sudo npm run nx build harvester --configuration=${CONFIGURATION}
 
 FROM nginx
 ARG CONFIGURATION
-RUN if [ -z "$var" ]; then export CONFIGURATION="deafault.conf"; else export CONFIGURATION="default.${CONFIGURATION}.conf"; fi
-COPY --from=builder nginx/apps/api/${CONFIGURATION} /etc/nginx/conf.d/default.conf
+RUN if [ -z "$CONFIGURATION" ]; then export CONFIGURATION="default.conf"; else export CONFIGURATION="default.${CONFIGURATION}.conf"; fi
+COPY --from=builder /nginx/apps/harvester/${CONFIGURATION} /etc/nginx/conf.d/default.conf
 COPY --from=builder /dist/apps/harvester/* /usr/share/nginx/html

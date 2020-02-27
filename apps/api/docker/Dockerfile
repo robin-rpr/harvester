@@ -17,5 +17,5 @@ CMD [ "node", "main.js" ]
 
 FROM nginx
 ARG CONFIGURATION
-RUN if [ -z "$var" ]; then export CONFIGURATION="deafault.conf"; else export CONFIGURATION="default.${CONFIGURATION}.conf"; fi
-COPY --from=builder nginx/apps/api/${CONFIGURATION} /etc/nginx/conf.d/default.conf
+RUN if [ -z "$CONFIGURATION" ]; then export CONFIGURATION="default.conf"; else export CONFIGURATION="default.${CONFIGURATION}.conf"; fi
+COPY --from=builder /nginx/apps/api/${CONFIGURATION} /etc/nginx/conf.d/default.conf

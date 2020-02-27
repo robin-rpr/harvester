@@ -14,8 +14,6 @@ services:
     build:
       context: ..
       dockerfile: ./apps/api/docker/Dockerfile
-      args:
-        CONFIGURATION: local
     ports:
       - "3000:3000"
     networks:
@@ -33,8 +31,6 @@ services:
     build:
       context: ..
       dockerfile: ./apps/harvester/docker/Dockerfile
-      args:
-        CONFIGURATION: local
     ports:
       - "4000:4000"
     networks:
