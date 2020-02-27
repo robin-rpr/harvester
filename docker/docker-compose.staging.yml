@@ -16,6 +16,7 @@ services:
       dockerfile: ./apps/api/docker/Dockerfile
       args:
         CONFIGURATION: staging
+        NGINX_CONFIG: default.staging.conf
     ports:
       - "3000:3000"
     networks:
@@ -35,6 +36,7 @@ services:
       dockerfile: ./apps/harvester/docker/Dockerfile
       args:
         CONFIGURATION: staging
+        NGINX_CONFIG: default.staging.conf
     ports:
       - "4000:4000"
     networks:
@@ -42,7 +44,7 @@ services:
     depends_on:
       - api
     volumes:
-      - "../:/app:ro"
+      - "../:/home/node/app:ro"
 
   mongodb:
     logging:
