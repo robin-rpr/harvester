@@ -15,6 +15,7 @@ jobs:
       MONGODB_DATABASE: ${{ secrets.MONGODB_DATABASE }}
       MONGODB_USER: ${{ secrets.MONGODB_USER }}
       MONGODB_PASSWORD: ${{ secrets.MONGODB_PASSWORD }}
+      DOCKER_REGISTRY_HOST: docker.pkg.github.com
     steps:
       - name: Checkout
         uses: actions/checkout@v1
@@ -34,7 +35,7 @@ jobs:
         env:
           DOCKER_USERNAME: ${{ secrets.REGISTRY_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
-          DOCKER_REGISTRY_URL: docker.pkg.github.com
+          DOCKER_REGISTRY_URL: ${DOCKER_REGISTRY_HOST}
 
       - name: Install App Dependencies
         run: npm install --ignore-scripts
@@ -57,14 +58,21 @@ jobs:
       - name: Build Apps
         run: npm run build
 
-      - name: Push to GitHub registry :latest
+      - name: Push harvester/api to GitHub Registry
         uses: actions-hub/docker@master
         with:
-          args: push docker.pkg.github.com/${{ github.repository }}:latest
+          args: push ${DOCKER_REGISTRY_HOST}/harvester/api:latest
+
+      - name: Push harvester/harvester to GitHub Registry
+        uses: actions-hub/docker@master
+        with:
+          args: push ${DOCKER_REGISTRY_HOST}/harvester/harvester:latest
 
       - name: Build Chrome extension
         run: |
-          nx build harvester --configuration=${CONFIGURATION} && cd dist/apps/ && zip -r harvester.zip harvester
+          nx build harvester --configuration=${CONFIGURATION}
+          cd dist/apps/
+          zip -r harvester.zip harvester
 
       - name: Upload Package artifact
         uses: actions/upload-artifact@v1.0.0

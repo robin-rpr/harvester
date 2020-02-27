@@ -11,6 +11,7 @@ services:
         max-size: "200k"
         max-file: "10"
     restart: always
+    image: ${DOCKER_REGISTRY_HOST}/harvester/api:latest
     build:
       context: ..
       dockerfile: ./apps/api/docker/Dockerfile
@@ -31,6 +32,7 @@ services:
         max-size: "200k"
         max-file: "10"
     restart: always
+    image: ${DOCKER_REGISTRY_HOST}/harvester/harvester:latest
     build:
       context: ..
       dockerfile: ./apps/harvester/docker/Dockerfile
