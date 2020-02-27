@@ -39,7 +39,7 @@ jobs:
           DOCKER_REGISTRY_URL: ${{ secrets.DOCKER_REGISTRY_HOST }}
 
       - name: Install App Dependencies
-        run: npm install --ignore-scripts
+        run: npm install
 
       - name: Install System Dependencies
         run: |
@@ -71,7 +71,7 @@ jobs:
 
       - name: Build Chrome extension
         run: |
-          nx build harvester --configuration=${CONFIGURATION}
+          npm run nx build harvester --configuration=${CONFIGURATION}
           cd dist/apps/
           zip -r harvester.zip harvester
 
