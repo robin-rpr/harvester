@@ -16,7 +16,7 @@ export class ProxyController {
     ): Promise<any> {
         let injectJS = `
             function test() {
-                //alert('Horray!')
+                // code ...
             }
             
             test();

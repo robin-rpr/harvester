@@ -1,0 +1,86 @@
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: harvester
+  labels:
+    name: harvester
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: api-prod-pod
+  labels:
+    component: api
+    env: prod
+spec:
+  containers:
+    - name: api-prod
+      image: docker.pkg.github.com/robin-rpr/harvester/api-prod:latest
+      ports:
+        - containerPort: 3000
+    - name: mongodb-prod
+      image: docker.pkg.github.com/robin-rpr/harvester/mongodb-prod:latest
+      ports:
+        - containerPort: 27017
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-prod-deployment
+  labels:
+    app: api-prod
+    env: prod
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: api-prod
+      env: prod
+  template:
+    metadata:
+      labels:
+        app: api-prod
+        env: prod
+    spec:
+      containers:
+        - name: api-prod
+          image: docker.pkg.github.com/robin-rpr/harvester/api-prod:latest
+          ports:
+            - containerPort: 3000
+        - name: mongodb-prod
+          image: docker.pkg.github.com/robin-rpr/harvester/mongodb-prod:latest
+          ports:
+            - containerPort: 27017
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: api-prod-node-port
+spec:
+  type: NodePort
+  selector:
+    app: api-prod
+    env: prod
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 3000
+    - name: https
+      protocol: TCP
+      port: 443
+      targetPort: 3001
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: api-prod-srv
+spec:
+  selector:
+    app: api-prod
+    env: prod
+  ports:
+    - name: mongodb
+      protocol: TCP
+      port: 27017
+      targetPort: 27017

@@ -10,20 +10,19 @@ services:
       options:
         max-size: "200k"
         max-file: "10"
-    restart: always
-    image: ${DOCKER_REGISTRY_HOST}/${GITHUB_REPOSITORY}/api:latest
-    build:
-      context: ..
-      dockerfile: ./apps/api/docker/Dockerfile
-      args:
-        CONFIGURATION:
-        NGINX_CONFIG: default.conf
+    image: node:latest
+    user: node
+    working_dir: /home/node/app
+    command: |
+      npm run serve api
     ports:
-      - "3000:3000"
+      - "3000:2000"
     networks:
       - harvester
     volumes:
-      - "../:/home/node/app:ro"
+      - type: bind
+        source: ../
+        target: /home/node/app
 
   harvester:
     logging:
@@ -31,19 +30,18 @@ services:
       options:
         max-size: "200k"
         max-file: "10"
-    restart: always
-    image: ${DOCKER_REGISTRY_HOST}/${GITHUB_REPOSITORY}/harvester:latest
-    build:
-      context: ..
-      dockerfile: ./apps/harvester/docker/Dockerfile
-      args:
-        CONFIGURATION:
-        NGINX_CONFIG: default.conf
+    image: node:latest
+    user: node
+    working_dir: /home/node/app
+    entrypoint: |
+      npm run serve harvester
     ports:
-      - "4000:4000"
+      - "4000:4200"
     networks:
       - harvester
     depends_on:
       - api
     volumes:
-      - "../:/home/node/app:ro"
+      - type: bind
+        source: ../
+        target: /home/node/app

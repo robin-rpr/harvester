@@ -5,7 +5,8 @@
   "scripts": {
     "ng": "ng",
     "nx": "nx",
-    "start": "ng serve",
+    "serve": "nx serve --host 0.0.0.0",
+    "start": "docker-compose --file docker/docker-compose.yml up",
     "build": "docker-compose --file docker/docker-compose.yml build",
     "test": "ng test",
     "lint": "nx workspace-lint && ng lint",

@@ -1,0 +1,86 @@
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: harvester
+  labels:
+    name: harvester
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: api-staging-pod
+  labels:
+    component: api
+    env: staging
+spec:
+  containers:
+    - name: api-staging
+      image: docker.pkg.github.com/robin-rpr/harvester/api-staging:latest
+      ports:
+        - containerPort: 3000
+    - name: mongodb-staging
+      image: docker.pkg.github.com/robin-rpr/harvester/mongodb-staging:latest
+      ports:
+        - containerPort: 27017
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-staging-deployment
+  labels:
+    app: api-staging
+    env: staging
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: api-staging
+      env: staging
+  template:
+    metadata:
+      labels:
+        app: api-staging
+        env: staging
+    spec:
+      containers:
+        - name: api-staging
+          image: docker.pkg.github.com/robin-rpr/harvester/api-staging:latest
+          ports:
+            - containerPort: 3000
+        - name: mongodb-staging
+          image: docker.pkg.github.com/robin-rpr/harvester/mongodb-staging:latest
+          ports:
+            - containerPort: 27017
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: api-staging-node-port
+spec:
+  type: NodePort
+  selector:
+    app: api-staging
+    env: staging
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 3000
+    - name: https
+      protocol: TCP
+      port: 443
+      targetPort: 3001
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: api-staging-srv
+spec:
+  selector:
+    app: api-staging
+    env: staging
+  ports:
+    - name: mongodb
+      protocol: TCP
+      port: 27017
+      targetPort: 27017

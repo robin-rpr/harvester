@@ -1,17 +1,17 @@
 version: "3.7"
 
 networks:
-  harvester:
+  harvester-prod:
 
 services:
-  api:
+  api-prod:
     logging:
       driver: "json-file"
       options:
         max-size: "200k"
         max-file: "10"
     restart: always
-    image: ${DOCKER_REGISTRY_HOST}/${GITHUB_REPOSITORY}/api:latest
+    image: ${DOCKER_REGISTRY_HOST}/${GITHUB_REPOSITORY}/api-prod:latest
     build:
       context: ..
       dockerfile: ./apps/api/docker/Dockerfile
@@ -21,18 +21,18 @@ services:
     ports:
       - "3000:3000"
     networks:
-      - harvester
+      - harvester-prod
     volumes:
       - "../:/home/node/app:ro"
 
-  harvester:
+  harvester-prod:
     logging:
       driver: "json-file"
       options:
         max-size: "200k"
         max-file: "10"
     restart: always
-    image: ${DOCKER_REGISTRY_HOST}/${GITHUB_REPOSITORY}/harvester:latest
+    image: ${DOCKER_REGISTRY_HOST}/${GITHUB_REPOSITORY}/harvester-prod:latest
     build:
       context: ..
       dockerfile: ./apps/harvester/docker/Dockerfile
@@ -42,13 +42,13 @@ services:
     ports:
       - "4000:4000"
     networks:
-      - harvester
+      - harvester-prod
     depends_on:
-      - api
+      - api-prod
     volumes:
       - "../:/home/node/app:ro"
 
-  mongodb:
+  mongodb-prod:
     logging:
       driver: "json-file"
       options:
@@ -56,9 +56,11 @@ services:
         max-file: "10"
     image: mongodb
     restart: always
+    ports:
+      - 27017:27017
     networks:
-      - harvester
+      - harvester-prod
     environment:
-      MONGODB_DATABASE: "${MONGODB_DATABASE}"
-      MONGODB_USER: "${MONGODB_USER}"
-      MONGODB_PASSWORD: "${MONGODB_PASSWORD}"
+      MONGO_INITDB_DATABASE: "${MONGODB_DATABASE}"
+      MONGO_INITDB_ROOT_USERNAME: "${MONGODB_USER}"
+      MONGO_INITDB_ROOT_PASSWORD: "${MONGODB_PASSWORD}"

@@ -1,0 +1,64 @@
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: harvester
+  labels:
+    name: harvester
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: harvester-prod-pod
+  labels:
+    component: harvester
+    env: prod
+spec:
+  containers:
+    - name: harvester-prod
+      image: docker.pkg.github.com/robin-rpr/harvester/harvester-prod:latest
+      ports:
+        - containerPort: 4000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: harvester-prod-deployment
+  labels:
+    app: harvester-prod
+    env: prod
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: harvester-prod
+      env: prod
+  template:
+    metadata:
+      labels:
+        app: harvester-prod
+        env: prod
+    spec:
+      containers:
+        - name: harvester-prod
+          image: docker.pkg.github.com/robin-rpr/harvester/harvester-prod:latest
+          ports:
+            - containerPort: 4000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: harvester-prod-node-port
+spec:
+  type: NodePort
+  selector:
+    app: harvester-prod
+    env: prod
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 4000
+    - name: https
+      protocol: TCP
+      port: 443
+      targetPort: 4001
