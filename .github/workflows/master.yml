@@ -38,15 +38,16 @@ jobs:
           DOCKER_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
           DOCKER_REGISTRY_URL: ${{ secrets.DOCKER_REGISTRY_HOST }}
 
-      - name: Install App Dependencies
+      - name: Install app dependencies
         run: npm install
 
-      - name: Install System Dependencies
+      - name: Install system dependencies
         run: |
           apt-get update
-          apt-get -y install curl jq
-          apt-get -y install zip unzip
-          apt-get -y install gettext-base
+          apt-get -y install curl jq zip unzip gettext-base
+
+      - name: Install docker-compose
+        run: |
           curl -L "https://github.com/docker/compose/releases/download/1.25.4/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
           chmod +x /usr/local/bin/docker-compose
           ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
@@ -105,6 +106,12 @@ jobs:
         uses: actions/download-artifact@v1
         with:
           name: source
+
+      - name: Install kubectl
+        run: |
+          curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
+          chmod +x ./kubectl
+          sudo mv ./kubectl /usr/local/bin/kubectl
 
       - name: Save DigitalOcean kubeconfig
         uses: digitalocean/action-doctl@master
