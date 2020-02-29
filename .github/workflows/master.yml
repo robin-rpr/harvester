@@ -114,24 +114,24 @@ jobs:
         env:
           DIGITALOCEAN_ACCESS_TOKEN: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
         with:
-          args: kubernetes cluster kubeconfig show harvester-k8s > source/.kubeconfig
+          args: kubernetes cluster kubeconfig show harvester-k8s > .kubeconfig
 
       - name: Kuberentes (k8s) cli - kubectl
         uses: actions-hub/kubectl@v1.1.0
         with:
-          KUBE_CONFIG: source/.kubeconfig
+          KUBE_CONFIG: /.kubeconfig
 
       - name: Deploy harvester/api to DigitalOcean Kubernetes
-        run: kubectl --kubeconfig=source/.kubeconfig apply -f source/kubernetes/apps/api/kubernetes.${{ env.CONFIGURATION }}.yml
+        run: kubectl --kubeconfig=.kubeconfig apply -f source/kubernetes/apps/api/kubernetes.${{ env.CONFIGURATION }}.yml
 
       - name: Verify harvester/api deployment
-        run: kubectl --kubeconfig=source/.kubeconfig rollout status deployment/api-${{ env.CONFIGURATION }}
+        run: kubectl --kubeconfig=.kubeconfig rollout status deployment/api-${{ env.CONFIGURATION }}
 
       - name: Deploy harvester/harvester to DigitalOcean Kubernetes
-        run: kubectl --kubeconfig=source/.kubeconfig apply -f ${{ github.workspace }}/kubernetes/apps/harvester/kubernetes.${{ env.CONFIGURATION }}.yml
+        run: kubectl --kubeconfig=.kubeconfig apply -f kubernetes/apps/harvester/kubernetes.${{ env.CONFIGURATION }}.yml
 
       - name: Verify harvester/harvester deployment
-        run: kubectl --kubeconfig=source/.kubeconfig rollout status deployment/harvester-${{ env.CONFIGURATION }}
+        run: kubectl --kubeconfig=.kubeconfig rollout status deployment/harvester-${{ env.CONFIGURATION }}
 
       - name: Publish to Chrome Web Store
         uses: Klemensas/chrome-extension-upload-action@v1.3
