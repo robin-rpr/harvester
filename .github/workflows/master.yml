@@ -113,20 +113,22 @@ jobs:
         with:
           args: kubernetes cluster kubeconfig show k8s-cluster-name > ${{ github.workspace }}/.kubeconfig
 
-      - name: Deploy harvester/api to DigitalOcean Kubernetes
-        uses: lachlanevenson/k8s-kubectl
+      - name: Kuberentes (k8s) cli - kubectl
+        uses: actions-hub/kubectl@v1.1.0
         with:
-          args: kubectl --kubeconfig=$HOME/.kubeconfig apply -f ${{ github.workspace }}/kubernetes/apps/api/kubernetes.${{ env.CONFIGURATION }}.yml
+          KUBE_CONFIG: ${{ github.workspace }}/.kubeconfig
+
+      - name: Deploy harvester/api to DigitalOcean Kubernetes
+        run: kubectl --kubeconfig=$HOME/.kubeconfig apply -f ${{ github.workspace }}/kubernetes/apps/api/kubernetes.${{ env.CONFIGURATION }}.yml
+
+      - name: Verify harvester/api deployment
+        run: kubectl --kubeconfig=$HOME/.kubeconfig rollout status deployment/api-${{ env.CONFIGURATION }}
 
       - name: Deploy harvester/harvester to DigitalOcean Kubernetes
-        uses: lachlanevenson/k8s-kubectl
-        with:
-          args: kubectl --kubeconfig=$HOME/.kubeconfig apply -f ${{ github.workspace }}/kubernetes/apps/harvester/kubernetes.${{ env.CONFIGURATION }}.yml
+        run: kubectl --kubeconfig=$HOME/.kubeconfig apply -f ${{ github.workspace }}/kubernetes/apps/harvester/kubernetes.${{ env.CONFIGURATION }}.yml
 
-      - name: Verify deployment
-        uses: lachlanevenson/k8s-kubectl
-        with:
-          args: kubectl --kubeconfig=$HOME/.kubeconfig rollout status deployment/static-example
+      - name: Verify harvester/harvester deployment
+        run: kubectl --kubeconfig=$HOME/.kubeconfig rollout status deployment/harvester-${{ env.CONFIGURATION }}
 
       - name: Publish to Chrome Web Store
         uses: Klemensas/chrome-extension-upload-action@v1.3
