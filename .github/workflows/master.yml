@@ -113,11 +113,6 @@ jobs:
         with:
           args: kubernetes cluster kubeconfig show harvester-k8s > .kubeconfig
 
-      - name: Kuberentes (k8s) cli - kubectl
-        uses: actions-hub/kubectl@v1.1.0
-        with:
-          KUBE_CONFIG: /.kubeconfig
-
       - name: Deploy harvester/api to DigitalOcean Kubernetes
         run: kubectl --kubeconfig=.kubeconfig apply -f source/kubernetes/apps/api/kubernetes.${{ env.CONFIGURATION }}.yml
 
