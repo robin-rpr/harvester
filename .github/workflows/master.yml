@@ -95,7 +95,7 @@ jobs:
     container:
       image: node:dubnium-jessie
     env:
-      APP_ID: harvester-257811
+      CONFIGURATION: prod
     steps:
       - name: Download Package artifact
         uses: actions/download-artifact@v1
