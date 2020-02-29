@@ -62,12 +62,12 @@ jobs:
       - name: Push harvester/api to GitHub Registry
         uses: actions-hub/docker@master
         with:
-          args: push ${{ secrets.DOCKER_REGISTRY_HOST }}/${{ github.repository }}/api:latest
+          args: push ${{ secrets.DOCKER_REGISTRY_HOST }}/${{ github.repository }}/api-${{ env.CONFIGURATION }}:latest
 
       - name: Push harvester/harvester to GitHub Registry
         uses: actions-hub/docker@master
         with:
-          args: push ${{ secrets.DOCKER_REGISTRY_HOST }}/${{ github.repository }}/harvester:latest
+          args: push ${{ secrets.DOCKER_REGISTRY_HOST }}/${{ github.repository }}/harvester-${{ env.CONFIGURATION }}:latest
 
       - name: Build Chrome extension
         run: |
@@ -111,19 +111,19 @@ jobs:
         env:
           DIGITALOCEAN_ACCESS_TOKEN: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
         with:
-          args: kubernetes cluster kubeconfig show k8s-cluster-name > ${GITHUB_WORKSPACE}/.kubeconfig
+          args: kubernetes cluster kubeconfig show k8s-cluster-name > ${{ github.workspace }}/.kubeconfig
 
       - name: Deploy harvester/api to DigitalOcean Kubernetes
         uses: lachlanevenson/k8s-kubectl
         run: sh -l -c
         with:
-          args: kubectl --kubeconfig=$HOME/.kubeconfig apply -f ${GITHUB_WORKSPACE}/kubernetes/apps/api/kubernetes.${CONFIGURATION}.yml
+          args: kubectl --kubeconfig=$HOME/.kubeconfig apply -f ${{ github.workspace }}/kubernetes/apps/api/kubernetes.${{ env.CONFIGURATION }}.yml
 
       - name: Deploy harvester/harvester to DigitalOcean Kubernetes
         uses: lachlanevenson/k8s-kubectl
         run: sh -l -c
         with:
-          args: kubectl --kubeconfig=$HOME/.kubeconfig apply -f ${GITHUB_WORKSPACE}/kubernetes/apps/harvester/kubernetes.${CONFIGURATION}.yml
+          args: kubectl --kubeconfig=$HOME/.kubeconfig apply -f ${{ github.workspace }}/kubernetes/apps/harvester/kubernetes.${{ env.CONFIGURATION }}.yml
 
       - name: Verify deployment
         uses: lachlanevenson/k8s-kubectl
