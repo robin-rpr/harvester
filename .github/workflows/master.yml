@@ -114,7 +114,7 @@ jobs:
         env:
           DIGITALOCEAN_ACCESS_TOKEN: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
         with:
-          args: kubernetes cluster kubeconfig show actions-example > source/.kubeconfig
+          args: kubernetes cluster kubeconfig show harvester-k8s > source/.kubeconfig
 
       - name: Kuberentes (k8s) cli - kubectl
         uses: actions-hub/kubectl@v1.1.0
