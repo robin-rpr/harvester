@@ -115,7 +115,6 @@ jobs:
 
       - name: Deploy harvester/api to DigitalOcean Kubernetes
         uses: lachlanevenson/k8s-kubectl
-        run: sh -l -c
         with:
           args: kubectl --kubeconfig=$HOME/.kubeconfig apply -f ${{ github.workspace }}/kubernetes/apps/api/kubernetes.${{ env.CONFIGURATION }}.yml
 
