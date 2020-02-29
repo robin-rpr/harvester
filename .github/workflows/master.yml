@@ -106,9 +106,6 @@ jobs:
         with:
           name: source
 
-      - name: Console.log
-        run: ls -la
-
       - name: Save DigitalOcean kubeconfig
         uses: digitalocean/action-doctl@master
         env:
