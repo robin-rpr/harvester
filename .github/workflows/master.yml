@@ -121,13 +121,11 @@ jobs:
 
       - name: Deploy harvester/harvester to DigitalOcean Kubernetes
         uses: lachlanevenson/k8s-kubectl
-        run: sh -l -c
         with:
           args: kubectl --kubeconfig=$HOME/.kubeconfig apply -f ${{ github.workspace }}/kubernetes/apps/harvester/kubernetes.${{ env.CONFIGURATION }}.yml
 
       - name: Verify deployment
         uses: lachlanevenson/k8s-kubectl
-        run: sh -l -c
         with:
           args: kubectl --kubeconfig=$HOME/.kubeconfig rollout status deployment/static-example
 
@@ -137,7 +135,7 @@ jobs:
           # Auth refresh token
           refresh-token: ${{ secrets.REFRESH_TOKEN }}
           # Extension application target id
-          app-id: $APP_ID
+          app-id: ${{ secrets.APP_ID }}
           # Token client id
           client-id: ${{ secrets.CLIENT_ID }}
           # Token client secret
