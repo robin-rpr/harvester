@@ -99,6 +99,9 @@ jobs:
         with:
           args: kubernetes cluster kubeconfig show harvester-k8s > .kubeconfig
 
+      - name: ls -la
+        run: ls -la
+
       - name: Deploy harvester/api to DigitalOcean Kubernetes
         run: kubectl --kubeconfig=.kubeconfig apply -f kubernetes/apps/api/kubernetes.${{ env.CONFIGURATION }}.yml
 
