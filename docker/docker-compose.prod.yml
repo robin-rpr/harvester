@@ -54,7 +54,7 @@ services:
       options:
         max-size: "200k"
         max-file: "10"
-    image: mongodb
+    image: mongo
     restart: always
     ports:
       - 27017:27017
