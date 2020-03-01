@@ -130,7 +130,8 @@ metadata:
   namespace: harvester
   creationTimestamp: null
   labels:
-    io.kompose.service: mongodata
+    app: mongodata
+    env: prod
   name: mongodata
 spec:
   accessModes:
