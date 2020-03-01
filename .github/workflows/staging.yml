@@ -1,0 +1,189 @@
+name: staging
+on:
+  push:
+    branches:
+      - staging
+
+jobs:
+  build-api:
+    name: build-api
+    runs-on: ubuntu-latest
+    env:
+      CONFIGURATION: staging
+      DOCKER_REGISTRY_HOST: ${{ secrets.DOCKER_REGISTRY_HOST }}
+      GITHUB_REPOSITORY: ${{ github.repository }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - name: Login to GitHub Registry
+        uses: actions-hub/docker/login@master
+        env:
+          DOCKER_USERNAME: ${{ secrets.REGISTRY_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
+          DOCKER_REGISTRY_URL: ${{ secrets.DOCKER_REGISTRY_HOST }}
+
+      - name: Environment variables substitution
+        run: |
+          envsubst < "docker/docker-compose.${CONFIGURATION}.yml" > "docker/docker-compose.dist.yml";
+          cp -f docker/docker-compose.dist.yml docker/docker-compose.yml
+
+      - name: Build harvester/api
+        run: npm run build api-${{ env.CONFIGURATION }}
+
+      - name: Push harvester/api to GitHub Registry
+        uses: actions-hub/docker@master
+        with:
+          args: push ${{ secrets.DOCKER_REGISTRY_HOST }}/${{ github.repository }}/api-${{ env.CONFIGURATION }}:latest
+
+  build-harvester:
+    name: build-harvester
+    runs-on: ubuntu-latest
+    env:
+      CONFIGURATION: staging
+      DOCKER_REGISTRY_HOST: ${{ secrets.DOCKER_REGISTRY_HOST }}
+      GITHUB_REPOSITORY: ${{ github.repository }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - name: Login to GitHub Registry
+        uses: actions-hub/docker/login@master
+        env:
+          DOCKER_USERNAME: ${{ secrets.REGISTRY_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
+          DOCKER_REGISTRY_URL: ${{ secrets.DOCKER_REGISTRY_HOST }}
+
+      - name: Environment variables substitution
+        run: |
+          envsubst < "docker/docker-compose.${CONFIGURATION}.yml" > "docker/docker-compose.dist.yml";
+          cp -f docker/docker-compose.dist.yml docker/docker-compose.yml
+
+      - name: Build harvester/harvester
+        run: npm run build harvester-${{ env.CONFIGURATION }}
+
+      - name: Push harvester/harvester to GitHub Registry
+        uses: actions-hub/docker@master
+        with:
+          args: push ${{ secrets.DOCKER_REGISTRY_HOST }}/${{ github.repository }}/harvester-${{ env.CONFIGURATION }}:latest
+
+  build-raw:
+    name: build-raw
+    runs-on: ubuntu-latest
+    needs: [build-api,build-harvester]
+    env:
+      CONFIGURATION: staging
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - name: Cache node modules
+        uses: actions/cache@v1
+        with:
+          path: ~/.npm # npm cache files are stored in `~/.npm` on Linux/macOS
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - name: Install node modules
+        run: npm install
+
+      - name: Build apps
+        run: |
+          npm run nx build --configuration=${CONFIGURATION}
+
+      - name: Compress builds
+        run: |
+          cd dist/apps/
+          zip -r api-${CONFIGURATION}.zip api
+          zip -r harvester-${CONFIGURATION}.zip harvester
+
+      - name: Upload harvester/api Package artifact
+        uses: actions/upload-artifact@v1.0.0
+        with:
+          name: api-${{ env.CONFIGURATION }}-package
+          path: dist/apps/api-${{ env.CONFIGURATION }}.zip
+
+      - name: Upload harvester/harvester Package artifact
+        uses: actions/upload-artifact@v1.0.0
+        with:
+          name: harvester-${{ env.CONFIGURATION }}-package
+          path: dist/apps/harvester-${{ env.CONFIGURATION }}.zip
+
+      - name: Upload harvester/api Source artifact
+        uses: actions/upload-artifact@v1.0.0
+        with:
+          name: api-${{ env.CONFIGURATION }}-source
+          path: dist/apps/api
+
+      - name: Upload harvester/harvester Source artifact
+        uses: actions/upload-artifact@v1.0.0
+        with:
+          name: harvester-${{ env.CONFIGURATION }}-source
+          path: dist/apps/harvester
+
+  publish-packages:
+    name: publish-packages
+    runs-on: ubuntu-latest
+    needs: [build-api,build-harvester]
+    env:
+      CONFIGURATION: staging
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - name: Save DigitalOcean kubeconfig
+        uses: digitalocean/action-doctl@master
+        env:
+          DIGITALOCEAN_ACCESS_TOKEN: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+        with:
+          args: kubernetes cluster kubeconfig show harvester-k8s > .kubeconfig
+
+      - name: Deploy harvester/api to DigitalOcean Kubernetes
+        run: kubectl --kubeconfig=.kubeconfig apply -f kubernetes/apps/api/kubernetes.${{ env.CONFIGURATION }}.yml
+
+      - name: Verify harvester/api deployment
+        run: kubectl --kubeconfig=.kubeconfig rollout status -n harvester deployment/api-${{ env.CONFIGURATION }}-deployment
+
+      - name: Deploy harvester/harvester to DigitalOcean Kubernetes
+        run: kubectl --kubeconfig=.kubeconfig apply -f kubernetes/apps/harvester/kubernetes.${{ env.CONFIGURATION }}.yml
+
+      - name: Verify harvester/harvester deployment
+        run: kubectl --kubeconfig=.kubeconfig rollout status -n harvester deployment/harvester-${{ env.CONFIGURATION }}-deployment
+
+  publish-enxtensions:
+    name: publish-extensions
+    runs-on: ubuntu-latest
+    needs: [build-raw,build-api,build-harvester]
+    env:
+      CONFIGURATION: staging
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - name: Download harvester/harvester Package artifact
+        uses: actions/download-artifact@v1
+        with:
+          name: harvester-${{ env.CONFIGURATION }}-package
+
+      - name: Download harvester/harvester Source artifact
+        uses: actions/download-artifact@v1
+        with:
+          name: harvester-${{ env.CONFIGURATION }}-source
+
+      # TODO: Add Nightly Extensions
+      #- name: Publish to Chrome Web Store
+      #  uses: Klemensas/chrome-extension-upload-action@v1.3
+      #  with:
+      #    # Auth refresh token
+      #    refresh-token: ${{ secrets.REFRESH_TOKEN }}
+      #    # Extension application target id
+      #    app-id: ${{ secrets.APP_ID }}
+      #    # Token client id
+      #    client-id: ${{ secrets.CLIENT_ID }}
+      #    # Token client secret
+      #    client-secret: ${{ secrets.CLIENT_SECRET }}
+      #    # Name of zipped target upload file
+      #    file-name: harvester-${{ env.CONFIGURATION }}.zip
