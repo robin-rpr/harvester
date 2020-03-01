@@ -14,8 +14,6 @@ metadata:
     component: harvester
     env: staging
 spec:
-  imagePullSecrets:
-    - name: regcred
   containers:
     - name: harvester-staging
       readinessProbe:
@@ -48,8 +46,6 @@ spec:
         app: harvester-staging
         env: staging
     spec:
-      imagePullSecrets:
-        - name: regcred
       containers:
         - name: harvester-staging
           readinessProbe:

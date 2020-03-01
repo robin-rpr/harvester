@@ -14,8 +14,6 @@ metadata:
     component: harvester
     env: prod
 spec:
-  imagePullSecrets:
-    - name: regcred
   containers:
     - name: harvester-prod
       readinessProbe:
@@ -48,8 +46,6 @@ spec:
         app: harvester-prod
         env: prod
     spec:
-      imagePullSecrets:
-        - name: regcred
       containers:
         - name: harvester-prod
           readinessProbe:

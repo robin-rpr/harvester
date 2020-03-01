@@ -14,8 +14,6 @@ metadata:
     component: api
     env: prod
 spec:
-  imagePullSecrets:
-    - name: regcred
   containers:
     - name: api-prod
       readinessProbe:
@@ -48,8 +46,6 @@ spec:
         app: api-prod
         env: prod
     spec:
-      imagePullSecrets:
-        - name: regcred
       restartPolicy: Always
       containers:
         - name: api-prod
