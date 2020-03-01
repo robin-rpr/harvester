@@ -42,6 +42,7 @@ spec:
         app: api-staging
         env: staging
     spec:
+      restartPolicy: Always
       containers:
         - name: api-staging
           image: docker.pkg.github.com/robin-rpr/harvester/api-staging:latest

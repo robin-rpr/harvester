@@ -42,6 +42,7 @@ spec:
         app: api-local
         env: local
     spec:
+      restartPolicy: Always
       containers:
         - name: api-local
           image: harvester/api:latest

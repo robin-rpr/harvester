@@ -42,6 +42,7 @@ spec:
         app: api-prod
         env: prod
     spec:
+      restartPolicy: Always
       containers:
         - name: api-prod
           image: docker.pkg.github.com/robin-rpr/harvester/api-prod:latest

@@ -39,17 +39,6 @@ jobs:
       - name: Install app dependencies
         run: npm install
 
-#      - name: Install system dependencies
-#        run: |
-#          apt-get update
-#          apt-get -y install curl jq zip unzip gettext-base
-
-#      - name: Install docker-compose
-#        run: |
-#          curl -L "https://github.com/docker/compose/releases/download/1.25.4/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-#          chmod +x /usr/local/bin/docker-compose
-#          ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
-
       - name: Environment variables substitution
         run: |
           envsubst < "docker/docker-compose.${CONFIGURATION}.yml" > "docker/docker-compose.dist.yml";
@@ -67,11 +56,6 @@ jobs:
         uses: actions-hub/docker@master
         with:
           args: push ${{ secrets.DOCKER_REGISTRY_HOST }}/${{ github.repository }}/harvester-${{ env.CONFIGURATION }}:latest
-
-      - name: Push harvester/mongodb to GitHub Registry
-        uses: actions-hub/docker@master
-        with:
-          args: push ${{ secrets.DOCKER_REGISTRY_HOST }}/${{ github.repository }}/mongodb-${{ env.CONFIGURATION }}:latest
 
       - name: Build Chrome extension
         run: |
@@ -107,12 +91,6 @@ jobs:
         uses: actions/download-artifact@v1
         with:
           name: source
-
-#      - name: Install kubectl
-#        run: |
-#          curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
-#          chmod +x ./kubectl
-#          mv ./kubectl /usr/local/bin/kubectl
 
       - name: Save DigitalOcean kubeconfig
         uses: digitalocean/action-doctl@master

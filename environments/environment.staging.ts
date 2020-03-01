@@ -1,3 +1,5 @@
+// WARNING: DO NOT STORE CREDENTIALS HERE!
+
 export const environment = {
     production: true,
     title: 'Harvester Staging',
