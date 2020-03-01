@@ -82,6 +82,9 @@ jobs:
     env:
       CONFIGURATION: prod
     steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+
       - name: Download Package artifact
         uses: actions/download-artifact@v1
         with:
@@ -98,9 +101,6 @@ jobs:
           DIGITALOCEAN_ACCESS_TOKEN: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
         with:
           args: kubernetes cluster kubeconfig show harvester-k8s > .kubeconfig
-
-      - name: ls -la
-        run: ls -la
 
       - name: Deploy harvester/api to DigitalOcean Kubernetes
         run: kubectl --kubeconfig=.kubeconfig apply -f kubernetes/apps/api/kubernetes.${{ env.CONFIGURATION }}.yml
