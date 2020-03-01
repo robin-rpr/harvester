@@ -16,6 +16,12 @@ metadata:
 spec:
   containers:
     - name: harvester-local
+      readinessProbe:
+        httpGet:
+          path: /
+          port: 80
+        initialDelaySeconds: 20
+        periodSeconds: 3
       image: harvester/harvester:latest
       ports:
         - containerPort: 4000
@@ -42,6 +48,12 @@ spec:
     spec:
       containers:
         - name: harvester-local
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 20
+            periodSeconds: 3
           image: harvester/harvester:latest
           ports:
             - containerPort: 4000

@@ -16,13 +16,15 @@ metadata:
 spec:
   containers:
     - name: api-local
+      readinessProbe:
+        httpGet:
+          path: /api/status
+          port: 3000
+        initialDelaySeconds: 20
+        periodSeconds: 3
       image: harvester/api:latest
       ports:
         - containerPort: 3000
-    - name: mongodb-local
-      image: mongo
-      ports:
-        - containerPort: 27017
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -47,13 +49,15 @@ spec:
       restartPolicy: Always
       containers:
         - name: api-local
+          readinessProbe:
+            httpGet:
+              path: /api/status
+              port: 3000
+            initialDelaySeconds: 20
+            periodSeconds: 3
           image: harvester/api:latest
           ports:
             - containerPort: 3000
-        - name: mongodb-local
-          image: mongo
-          ports:
-            - containerPort: 27017
 ---
 apiVersion: v1
 kind: Service
@@ -82,15 +86,15 @@ metadata:
   name: mongodb-local-deployment
   labels:
     app: api-local
-    env: prod
+    env: local
 spec:
   replicas: 3
   strategy:
     type: Recreate
   selector:
     matchLabels:
-      app: mongodb-prod
-      env: pro
+      app: mongodb-local
+      env: local
   template:
     metadata:
       labels:
@@ -132,7 +136,7 @@ metadata:
   creationTimestamp: null
   labels:
     app: mongodata
-    env: prod
+    env: local
   name: mongodata
 spec:
   accessModes:

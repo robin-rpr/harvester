@@ -3,7 +3,7 @@ import { Message } from '@harvester/api-interfaces';
 
 @Injectable()
 export class AppService {
-  getData(): Message {
-    return { message: 'Welcome to api!' };
+  getStatus(): Message {
+    return { message: 'READY' }; // TODO: Check API Health
   }
 }

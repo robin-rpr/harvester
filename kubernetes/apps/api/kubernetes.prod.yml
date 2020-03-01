@@ -18,6 +18,12 @@ spec:
     - name: regcred
   containers:
     - name: api-prod
+      readinessProbe:
+        httpGet:
+          path: /api/status
+          port: 3000
+        initialDelaySeconds: 20
+        periodSeconds: 3
       image: docker.pkg.github.com/robin-rpr/harvester/api-prod:latest
       ports:
         - containerPort: 3000
@@ -47,6 +53,12 @@ spec:
       restartPolicy: Always
       containers:
         - name: api-prod
+          readinessProbe:
+            httpGet:
+              path: /api/status
+              port: 3000
+            initialDelaySeconds: 20
+            periodSeconds: 3
           image: docker.pkg.github.com/robin-rpr/harvester/api-prod:latest
           ports:
             - containerPort: 3000

@@ -18,6 +18,12 @@ spec:
     - name: regcred
   containers:
     - name: api-staging
+      readinessProbe:
+        httpGet:
+          path: /api/status
+          port: 3000
+        initialDelaySeconds: 20
+        periodSeconds: 3
       image: docker.pkg.github.com/robin-rpr/harvester/api-staging:latest
       ports:
         - containerPort: 3000
@@ -47,6 +53,12 @@ spec:
       restartPolicy: Always
       containers:
         - name: api-staging
+          readinessProbe:
+            httpGet:
+              path: /api/status
+              port: 3000
+            initialDelaySeconds: 20
+            periodSeconds: 3
           image: docker.pkg.github.com/robin-rpr/harvester/api-staging:latest
           ports:
             - containerPort: 3000
@@ -78,15 +90,15 @@ metadata:
   name: mongodb-staging-deployment
   labels:
     app: api-staging
-    env: prod
+    env: staging
 spec:
   replicas: 3
   strategy:
     type: Recreate
   selector:
     matchLabels:
-      app: mongodb-prod
-      env: pro
+      app: mongodb-staging
+      env: staging
   template:
     metadata:
       labels:
@@ -128,7 +140,7 @@ metadata:
   creationTimestamp: null
   labels:
     app: mongodata
-    env: prod
+    env: staging
   name: mongodata
 spec:
   accessModes:
