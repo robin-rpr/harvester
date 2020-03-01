@@ -1,4 +1,4 @@
-// WARNING: DO NOT STORE CREDENTIALS HERE!
+/* WARNING: DO NOT STORE CREDENTIALS HERE! */
 
 export const environment = {
     production: true,

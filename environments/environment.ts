@@ -2,7 +2,7 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-// WARNING: DO NOT STORE CREDENTIALS HERE!
+/* WARNING: DO NOT STORE CREDENTIALS HERE! */
 
 export const environment = {
     production: false,
