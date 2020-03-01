@@ -13,6 +13,8 @@ metadata:
     component: api
     env: develop
 spec:
+  imagePullSecrets:
+    - name: regcred
   containers:
     - name: api-develop
       image: docker.pkg.github.com/robin-rpr/harvester/api-develop:latest
@@ -42,6 +44,8 @@ spec:
         app: api-develop
         env: develop
     spec:
+      imagePullSecrets:
+        - name: regcred
       containers:
         - name: api-develop
           image: docker.pkg.github.com/robin-rpr/harvester/api-develop:latest

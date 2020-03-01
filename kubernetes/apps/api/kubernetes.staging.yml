@@ -13,6 +13,8 @@ metadata:
     component: api
     env: staging
 spec:
+  imagePullSecrets:
+    - name: regcred
   containers:
     - name: api-staging
       image: docker.pkg.github.com/robin-rpr/harvester/api-staging:latest
@@ -42,6 +44,8 @@ spec:
         app: api-staging
         env: staging
     spec:
+      imagePullSecrets:
+        - name: regcred
       restartPolicy: Always
       containers:
         - name: api-staging

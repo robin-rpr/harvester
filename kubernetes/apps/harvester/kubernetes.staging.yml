@@ -13,6 +13,8 @@ metadata:
     component: harvester
     env: staging
 spec:
+  imagePullSecrets:
+    - name: regcred
   containers:
     - name: harvester-staging
       image: docker.pkg.github.com/robin-rpr/harvester/harvester-staging:latest
@@ -38,6 +40,8 @@ spec:
         app: harvester-staging
         env: staging
     spec:
+      imagePullSecrets:
+        - name: regcred
       containers:
         - name: harvester-staging
           image: docker.pkg.github.com/robin-rpr/harvester/harvester-staging:latest
