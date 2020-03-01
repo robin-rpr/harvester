@@ -145,13 +145,13 @@ jobs:
         run: kubectl --kubeconfig=.kubeconfig apply -f kubernetes/apps/api/kubernetes.${{ env.CONFIGURATION }}.yml
 
       - name: Verify harvester/api deployment
-        run: kubectl --kubeconfig=.kubeconfig rollout status deployment/api-${{ env.CONFIGURATION }}-deployment
+        run: kubectl --kubeconfig=.kubeconfig rollout status -n harvester deployment/api-${{ env.CONFIGURATION }}-deployment
 
       - name: Deploy harvester/harvester to DigitalOcean Kubernetes
         run: kubectl --kubeconfig=.kubeconfig apply -f kubernetes/apps/harvester/kubernetes.${{ env.CONFIGURATION }}.yml
 
       - name: Verify harvester/harvester deployment
-        run: kubectl --kubeconfig=.kubeconfig rollout status deployment/harvester-${{ env.CONFIGURATION }}-deployment
+        run: kubectl --kubeconfig=.kubeconfig rollout status -n harvester deployment/harvester-${{ env.CONFIGURATION }}-deployment
 
   publish-enxtensions:
     name: publish-extensions
