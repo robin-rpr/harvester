@@ -29,7 +29,7 @@ jobs:
           cp -f docker/docker-compose.dist.yml docker/docker-compose.yml
 
       - name: Build harvester/api
-        run: npm run build api
+        run: npm run build api-${{ env.CONFIGURATION }}
 
       - name: Push harvester/api to GitHub Registry
         uses: actions-hub/docker@master
@@ -60,7 +60,7 @@ jobs:
           cp -f docker/docker-compose.dist.yml docker/docker-compose.yml
 
       - name: Build harvester/harvester
-        run: npm run build harvester
+        run: npm run build harvester-${{ env.CONFIGURATION }}
 
       - name: Push harvester/harvester to GitHub Registry
         uses: actions-hub/docker@master
