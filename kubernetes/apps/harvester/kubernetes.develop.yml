@@ -8,6 +8,7 @@ metadata:
 apiVersion: v1
 kind: Pod
 metadata:
+  namespace: harvester
   name: harvester-develop-pod
   labels:
     component: harvester
@@ -24,6 +25,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  namespace: harvester
   name: harvester-develop-deployment
   labels:
     app: harvester-develop
@@ -51,6 +53,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
+  namespace: harvester
   name: harvester-develop-node-port
 spec:
   type: NodePort

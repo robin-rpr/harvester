@@ -8,6 +8,7 @@ metadata:
 apiVersion: v1
 kind: Pod
 metadata:
+  namespace: harvester
   name: api-local-pod
   labels:
     component: api
@@ -26,6 +27,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  namespace: harvester
   name: api-local-deployment
   labels:
     app: api-local
@@ -56,6 +58,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
+  namespace: harvester
   name: api-local-node-port
 spec:
   type: NodePort
@@ -72,16 +75,63 @@ spec:
       port: 443
       targetPort: 3001
 ---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: harvester
+  name: mongodb-local-deployment
+  labels:
+    app: api-local
+    env: prod
+spec:
+  replicas: 3
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: mongodb-local
+        env: local
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: mongodb-local
+          image: mongo
+          ports:
+            - containerPort: 27017
+          volumeMounts:
+            - mountPath: /data/db
+              name: mongodata
+      volumes:
+        - name: mongodata
+          persistentVolumeClaim:
+            claimName: mongodata
+---
 apiVersion: v1
 kind: Service
 metadata:
-  name: api-local-srv
+  namespace: harvester
+  name: mongodb-local-srv
 spec:
-  selector:
-    app: api-local
-    env: local
   ports:
-    - name: mongodb
-      protocol: TCP
+    - name: "27017"
       port: 27017
       targetPort: 27017
+  selector:
+    app: mongodb-local
+    env: local
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  namespace: harvester
+  creationTimestamp: null
+  labels:
+    io.kompose.service: mongodata
+  name: mongodata
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100M

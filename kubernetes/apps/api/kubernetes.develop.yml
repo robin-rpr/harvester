@@ -8,6 +8,7 @@ metadata:
 apiVersion: v1
 kind: Pod
 metadata:
+  namespace: harvester
   name: api-develop-pod
   labels:
     component: api
@@ -28,6 +29,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  namespace: harvester
   name: api-develop-deployment
   labels:
     app: api-develop
@@ -59,6 +61,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
+  namespace: harvester
   name: api-develop-node-port
 spec:
   type: NodePort
@@ -78,6 +81,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  namespace: harvester
   name: mongodb-develop-deployment
   labels:
     app: api-develop
@@ -109,6 +113,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
+  namespace: harvester
   name: mongodb-develop-srv
 spec:
   ports:
@@ -118,12 +123,11 @@ spec:
   selector:
     app: mongodb-develop
     env: develop
-status:
-  loadBalancer: {}
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
+  namespace: harvester
   creationTimestamp: null
   labels:
     io.kompose.service: mongodata
