@@ -21,7 +21,7 @@ jobs:
         env:
           DOCKER_USERNAME: ${{ secrets.REGISTRY_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
-          DOCKER_REGISTRY_URL: ${{ secrets.DOCKER_REGISTRY_HOST }}
+          DOCKER_REGISTRY_URL: ${{ secrets.REGISTRY_HOST }}
 
       - name: Environment variables substitution
         run: |
@@ -34,7 +34,7 @@ jobs:
       - name: Push harvester/api to GitHub Registry
         uses: actions-hub/docker@master
         with:
-          args: push ${{ secrets.DOCKER_REGISTRY_HOST }}/${{ github.repository }}/api-${{ env.CONFIGURATION }}:latest
+          args: push ${{ secrets.REGISTRY_HOST }}/${{ secrets.REGISTRY_USERNAME }}/${{ github.repository }}/api-${{ env.CONFIGURATION }}:latest
 
   build-harvester:
     name: build-harvester
@@ -52,7 +52,7 @@ jobs:
         env:
           DOCKER_USERNAME: ${{ secrets.REGISTRY_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
-          DOCKER_REGISTRY_URL: ${{ secrets.DOCKER_REGISTRY_HOST }}
+          DOCKER_REGISTRY_URL: ${{ secrets.REGISTRY_HOST }}
 
       - name: Environment variables substitution
         run: |
@@ -65,7 +65,7 @@ jobs:
       - name: Push harvester/harvester to GitHub Registry
         uses: actions-hub/docker@master
         with:
-          args: push ${{ secrets.DOCKER_REGISTRY_HOST }}/${{ github.repository }}/harvester-${{ env.CONFIGURATION }}:latest
+          args: push ${{ secrets.REGISTRY_HOST }}/${{ secrets.REGISTRY_USERNAME }}/${{ github.repository }}/harvester-${{ env.CONFIGURATION }}:latest
 
   build-raw:
     name: build-raw
