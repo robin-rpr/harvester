@@ -36,7 +36,7 @@ jobs:
       - name: Push harvester/api to Docker Comtainer Registry
         uses: actions-hub/docker@master
         with:
-          args: push ${{ secrets.REGISTRY_HOST }}/${{ secrets.REGISTRY_USERNAME }}/${{ secret.REGISTRY_NAME }}/api-${{ env.CONFIGURATION }}:latest
+          args: push ${{ secrets.REGISTRY_HOST }}/${{ secrets.REGISTRY_USERNAME }}/${{ secrets.REGISTRY_NAME }}/api-${{ env.CONFIGURATION }}:latest
 
   build-harvester:
     name: build-harvester
@@ -69,7 +69,7 @@ jobs:
       - name: Push harvester/harvester to Docker Comtainer Registry
         uses: actions-hub/docker@master
         with:
-          args: push ${{ secrets.REGISTRY_HOST }}/${{ secrets.REGISTRY_USERNAME }}/${{ secret.REGISTRY_NAME }}/harvester-${{ env.CONFIGURATION }}:latest
+          args: push ${{ secrets.REGISTRY_HOST }}/${{ secrets.REGISTRY_USERNAME }}/${{ secrets.REGISTRY_NAME }}/harvester-${{ env.CONFIGURATION }}:latest
 
   build-raw:
     name: build-raw
