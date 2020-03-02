@@ -11,7 +11,7 @@ services:
         max-size: "200k"
         max-file: "10"
     restart: always
-    image: ${DOCKER_REGISTRY_HOST}/${GITHUB_REPOSITORY}/api-staging:latest
+    image: ${REGISTRY_HOST}/${REGISTRY_USERNAME}/${GITHUB_REPOSITORY}/api-staging:latest
     build:
       context: ..
       dockerfile: ./apps/api/docker/Dockerfile
@@ -32,7 +32,7 @@ services:
         max-size: "200k"
         max-file: "10"
     restart: always
-    image: ${DOCKER_REGISTRY_HOST}/${GITHUB_REPOSITORY}/harvester-staging:latest
+    image: ${REGISTRY_HOST}/${REGISTRY_USERNAME}/${GITHUB_REPOSITORY}/harvester-staging:latest
     build:
       context: ..
       dockerfile: ./apps/harvester/docker/Dockerfile
