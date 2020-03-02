@@ -14,6 +14,8 @@ metadata:
     component: api
     env: develop
 spec:
+  imagePullSecrets:
+    - name: regcred
   containers:
     - name: api-develop
       readinessProbe:
@@ -22,7 +24,7 @@ spec:
           port: 3000
         initialDelaySeconds: 20
         periodSeconds: 3
-      image: docker.pkg.github.com/robin-rpr/harvester/api-develop:latest
+      image: registry.hub.docker.com/robinrpr/harvester/api-develop:latest
       ports:
         - containerPort: 3000
 ---
@@ -46,6 +48,8 @@ spec:
         app: api-develop
         env: develop
     spec:
+      imagePullSecrets:
+        - name: regcred
       restartPolicy: Always
       containers:
         - name: api-develop
@@ -55,7 +59,7 @@ spec:
               port: 3000
             initialDelaySeconds: 20
             periodSeconds: 3
-          image: docker.pkg.github.com/robin-rpr/harvester/api-develop:latest
+          image: /robin-rpr/harvester/api-develop:latest
           ports:
             - containerPort: 3000
 ---

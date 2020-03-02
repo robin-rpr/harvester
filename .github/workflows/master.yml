@@ -16,7 +16,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v1
 
-      - name: Login to GitHub Registry
+      - name: Login to Docker Container Registry
         uses: actions-hub/docker/login@master
         env:
           DOCKER_USERNAME: ${{ secrets.REGISTRY_USERNAME }}
@@ -47,7 +47,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v1
 
-      - name: Login to GitHub Registry
+      - name: Login to Docker Container Registry
         uses: actions-hub/docker/login@master
         env:
           DOCKER_USERNAME: ${{ secrets.REGISTRY_USERNAME }}
