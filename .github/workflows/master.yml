@@ -31,7 +31,7 @@ jobs:
           REGISTRY_NAME: ${{ secrets.REGISTRY_NAME }}
 
       - name: Build harvester/api
-        run: sudo npm run build api-${{ env.CONFIGURATION }}
+        run: npm run build api-${{ env.CONFIGURATION }}
 
       - name: Push harvester/api to Docker Comtainer Registry
         uses: actions-hub/docker@master
