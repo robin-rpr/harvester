@@ -10,8 +10,6 @@ jobs:
     runs-on: ubuntu-latest
     env:
       CONFIGURATION: prod
-      REGISTRY_HOST: ${{ secrets.REGISTRY_HOST }}
-      GITHUB_REPOSITORY: ${{ github.repository }}
     steps:
       - name: Checkout
         uses: actions/checkout@v1
@@ -27,11 +25,15 @@ jobs:
         run: |
           envsubst < "docker/docker-compose.${CONFIGURATION}.yml" > "docker/docker-compose.dist.yml";
           cp -f docker/docker-compose.dist.yml docker/docker-compose.yml
+        env:
+          REGISTRY_HOST: ${{ secrets.REGISTRY_HOST }}
+          REGISTRY_USERNAME: ${{ secrets.REGISTRY_USERNAME }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
 
       - name: Build harvester/api
-        run: npm run build api-${{ env.CONFIGURATION }}
+        run: sudo npm run build api-${{ env.CONFIGURATION }}
 
-      - name: Push harvester/api to GitHub Registry
+      - name: Push harvester/api to Docker Comtainer Registry
         uses: actions-hub/docker@master
         with:
           args: push ${{ secrets.REGISTRY_HOST }}/${{ secrets.REGISTRY_USERNAME }}/${{ github.repository }}/api-${{ env.CONFIGURATION }}:latest
@@ -41,8 +43,6 @@ jobs:
     runs-on: ubuntu-latest
     env:
       CONFIGURATION: prod
-      DOCKER_REGISTRY_HOST: ${{ secrets.DOCKER_REGISTRY_HOST }}
-      GITHUB_REPOSITORY: ${{ github.repository }}
     steps:
       - name: Checkout
         uses: actions/checkout@v1
@@ -58,11 +58,15 @@ jobs:
         run: |
           envsubst < "docker/docker-compose.${CONFIGURATION}.yml" > "docker/docker-compose.dist.yml";
           cp -f docker/docker-compose.dist.yml docker/docker-compose.yml
+        env:
+          REGISTRY_HOST: ${{ secrets.REGISTRY_HOST }}
+          REGISTRY_USERNAME: ${{ secrets.REGISTRY_USERNAME }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
 
       - name: Build harvester/harvester
         run: npm run build harvester-${{ env.CONFIGURATION }}
 
-      - name: Push harvester/harvester to GitHub Registry
+      - name: Push harvester/harvester to Docker Comtainer Registry
         uses: actions-hub/docker@master
         with:
           args: push ${{ secrets.REGISTRY_HOST }}/${{ secrets.REGISTRY_USERNAME }}/${{ github.repository }}/harvester-${{ env.CONFIGURATION }}:latest
