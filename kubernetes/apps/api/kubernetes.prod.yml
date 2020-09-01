@@ -22,8 +22,8 @@ spec:
 #        httpGet:
 #          path: /api/status
 #          port: 3000
-        initialDelaySeconds: 20
-        periodSeconds: 3
+#        initialDelaySeconds: 20
+#        periodSeconds: 3
       image: ghcr.io/robin-rpr/api-prod:latest
       ports:
         - containerPort: 3000
@@ -53,8 +53,6 @@ spec:
       restartPolicy: Always
       containers:
         - name: api-prod
-            initialDelaySeconds: 20
-            periodSeconds: 3
           image: ghcr.io/robin-rpr/api-prod:latest
           ports:
             - containerPort: 3000
