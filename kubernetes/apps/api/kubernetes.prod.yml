@@ -18,10 +18,10 @@ spec:
     - name: regcred
   containers:
     - name: api-prod
-      readinessProbe:
-        httpGet:
-          path: /api/status
-          port: 3000
+#      readinessProbe:
+#        httpGet:
+#          path: /api/status
+#          port: 3000
         initialDelaySeconds: 20
         periodSeconds: 3
       image: ghcr.io/robin-rpr/api-prod:latest
@@ -53,10 +53,6 @@ spec:
       restartPolicy: Always
       containers:
         - name: api-prod
-          readinessProbe:
-            httpGet:
-              path: /api/status
-              port: 3000
             initialDelaySeconds: 20
             periodSeconds: 3
           image: ghcr.io/robin-rpr/api-prod:latest
