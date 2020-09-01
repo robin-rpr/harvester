@@ -24,7 +24,7 @@ spec:
           port: 80
         initialDelaySeconds: 20
         periodSeconds: 3
-      image: registry.hub.docker.com/robinrpr/harvester/harvester-develop:latest
+      image: ghcr.io/robin-rpr/harvester-develop:latest
       ports:
         - containerPort: 4000
 ---
@@ -58,7 +58,7 @@ spec:
               port: 80
             initialDelaySeconds: 20
             periodSeconds: 3
-          image: registry.hub.docker.com/robinrpr/harvester/harvester-develop:latest
+          image: ghcr.io/robin-rpr/harvester-develop:latest
           ports:
             - containerPort: 4000
 ---
