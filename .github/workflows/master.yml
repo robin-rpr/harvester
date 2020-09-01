@@ -28,7 +28,6 @@ jobs:
         env:
           REGISTRY_HOST: ${{ secrets.REGISTRY_HOST }}
           REGISTRY_USERNAME: ${{ secrets.REGISTRY_USERNAME }}
-          REGISTRY_NAME: ${{ secrets.REGISTRY_NAME }}
 
       - name: Build harvester/api
         run: npm run build api-${{ env.CONFIGURATION }}
@@ -61,7 +60,6 @@ jobs:
         env:
           REGISTRY_HOST: ${{ secrets.REGISTRY_HOST }}
           REGISTRY_USERNAME: ${{ secrets.REGISTRY_USERNAME }}
-          REGISTRY_NAME: ${{ secrets.REGISTRY_NAME }}
 
       - name: Build harvester/harvester
         run: npm run build harvester-${{ env.CONFIGURATION }}
