@@ -1,7 +1,7 @@
 export const environment = {
     production: true,
     api: {
-        target: 'http://staging.api.harvester.dev',
-        secure: false
+        target: 'https://staging.api.harvester.dev',
+        secure: true
     },
 };
