@@ -8,7 +8,7 @@ WORKDIR /home/node/app
 COPY --chown=node:node . .
 RUN if [ ! -d "node_modules" ]; then npm install; fi
 
-RUN npm run nx build harvester --configuration=${CONFIGURATION}
+RUN npm run nx build harvester -- --configuration=${CONFIGURATION}
 
 FROM nginx
 ARG NGINX_CONFIG

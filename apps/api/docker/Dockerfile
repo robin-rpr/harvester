@@ -8,7 +8,7 @@ WORKDIR /home/node/app
 COPY --chown=node:node . .
 RUN if [ ! -d "node_modules" ]; then npm install; fi
 
-RUN npm run nx build api --configuration=${CONFIGURATION}
+RUN npm run nx build api -- --configuration=${CONFIGURATION}
 
 WORKDIR /home/node/app/dist/apps/api
 
