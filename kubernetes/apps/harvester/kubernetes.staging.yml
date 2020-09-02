@@ -82,6 +82,10 @@ metadata:
   name: harvester-staging-ingress
   annotations:
     kubernetes.io/ingress.class: nginx
+  namespace: harvester
+  labels:
+      app: ingress
+      env: staging
 spec:
   rules:
   - host: staging.harvester.dev

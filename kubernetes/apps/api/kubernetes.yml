@@ -145,6 +145,10 @@ metadata:
   name: api-local-ingress
   annotations:
     kubernetes.io/ingress.class: nginx
+  namespace: harvester
+  labels:
+      app: ingress
+      env: local
 spec:
   rules:
   - host: local.api.harvester.dev
