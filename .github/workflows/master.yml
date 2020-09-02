@@ -94,7 +94,8 @@ jobs:
 
       - name: Build apps
         run: |
-          npm run nx build --configuration=${CONFIGURATION}
+          npm run build harvester-${{ env.CONFIGURATION }}
+          npm run build api-${{ env.CONFIGURATION }}
 
       - name: Compress builds
         run: |
