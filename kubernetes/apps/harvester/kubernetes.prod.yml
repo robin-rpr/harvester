@@ -75,3 +75,18 @@ spec:
       protocol: TCP
       port: 443
       targetPort: 4001
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: harvester-prod-ingress
+  annotations:
+    kubernetes.io/ingress.class: nginx
+spec:
+  rules:
+  - host: harvester.dev
+    http:
+      paths:
+      - backend:
+          serviceName: harvester-prod-node-port
+          servicePort: 80

@@ -16,12 +16,12 @@ metadata:
 spec:
   containers:
     - name: api-local
-      readinessProbe:
-        httpGet:
-          path: /api/status
-          port: 3000
-        initialDelaySeconds: 20
-        periodSeconds: 3
+#      readinessProbe:
+#        httpGet:
+#          path: /api/status
+#          port: 3000
+#        initialDelaySeconds: 20
+#        periodSeconds: 3
       image: harvester/api:latest
       ports:
         - containerPort: 3000
@@ -49,12 +49,6 @@ spec:
       restartPolicy: Always
       containers:
         - name: api-local
-          readinessProbe:
-            httpGet:
-              path: /api/status
-              port: 3000
-            initialDelaySeconds: 20
-            periodSeconds: 3
           image: harvester/api:latest
           ports:
             - containerPort: 3000
@@ -144,3 +138,18 @@ spec:
   resources:
     requests:
       storage: 100Mi
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: api-local-ingress
+  annotations:
+    kubernetes.io/ingress.class: nginx
+spec:
+  rules:
+  - host: local.api.harvester.dev
+    http:
+      paths:
+      - backend:
+          serviceName: api-local-node-port
+          servicePort: 80

@@ -18,12 +18,12 @@ spec:
     - name: regcred
   containers:
     - name: api-staging
-      readinessProbe:
-        httpGet:
-          path: /api/status
-          port: 3000
-        initialDelaySeconds: 20
-        periodSeconds: 3
+#      readinessProbe:
+#        httpGet:
+#          path: /api/status
+#          port: 3000
+#        initialDelaySeconds: 20
+#        periodSeconds: 3
       image: ghcr.io/robin-rpr/api-staging:latest
       ports:
         - containerPort: 3000
@@ -53,12 +53,6 @@ spec:
       restartPolicy: Always
       containers:
         - name: api-staging
-          readinessProbe:
-            httpGet:
-              path: /api/status
-              port: 3000
-            initialDelaySeconds: 20
-            periodSeconds: 3
           image: ghcr.io/robin-rpr/api-staging:latest
           ports:
             - containerPort: 3000
@@ -148,3 +142,18 @@ spec:
   resources:
     requests:
       storage: 100Mi
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: api-staging-ingress
+  annotations:
+    kubernetes.io/ingress.class: nginx
+spec:
+  rules:
+  - host: staging.api.harvester.dev
+    http:
+      paths:
+      - backend:
+          serviceName: api-staging-node-port
+          servicePort: 80
