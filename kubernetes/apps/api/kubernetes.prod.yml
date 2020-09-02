@@ -162,4 +162,5 @@ spec:
       storage: 15Gi
   selector:
     matchLabels:
-      name: mongodata
+      app: mongodata
+      env: prod

@@ -18,12 +18,12 @@ spec:
     - name: regcred
   containers:
     - name: harvester-prod
-      readinessProbe:
-        httpGet:
-          path: /
-          port: 80
-        initialDelaySeconds: 20
-        periodSeconds: 3
+#      readinessProbe:
+#        httpGet:
+#          path: /
+#          port: 80
+#        initialDelaySeconds: 20
+#        periodSeconds: 3
       image: ghcr.io/robin-rpr/harvester-prod:latest
       ports:
         - containerPort: 4000
@@ -52,12 +52,6 @@ spec:
         - name: regcred
       containers:
         - name: harvester-prod
-          readinessProbe:
-            httpGet:
-              path: /
-              port: 80
-            initialDelaySeconds: 20
-            periodSeconds: 3
           image: ghcr.io/robin-rpr/harvester-prod:latest
           ports:
             - containerPort: 4000
