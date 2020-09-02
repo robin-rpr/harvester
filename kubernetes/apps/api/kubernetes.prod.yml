@@ -127,18 +127,39 @@ spec:
     app: mongodb-prod
     env: prod
 ---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: mongodata
+  labels:
+      app: mongodata
+      env: prod
+spec:
+  capacity:
+    storage: 15Gi
+  storageClassName: standard
+  accessModes:
+    - ReadWriteMany
+  gcePersistentDisk:
+    pdName: mongodata
+    fsType: ext4
+    readOnly: false
+---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   namespace: harvester
   creationTimestamp: null
   labels:
-    app: mongodata
+    app: mongodata-claim
     env: prod
-  name: mongodata
+  name: mongodata-claim
 spec:
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   resources:
     requests:
-      storage: 100Mi
+      storage: 15Gi
+  selector:
+    matchLabels:
+      name: mongodata
