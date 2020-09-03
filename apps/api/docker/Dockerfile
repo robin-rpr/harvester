@@ -13,8 +13,12 @@ RUN npm run nx build api
 
 WORKDIR /home/node/app/dist/apps/api
 
-CMD [ "node", "main.js" ]
-
-FROM nginx
+FROM smebberson/alpine-nginx-nodejs
 ARG NGINX_CONFIG
+
 COPY --from=builder home/node/app/nginx/apps/api/${NGINX_CONFIG} /etc/nginx/conf.d/default.conf
+COPY --from=builder home/node/app/dist/apps/api/* /usr/share/nginx/html/
+
+WORKDIR /usr/share/nginx/html
+
+CMD [ "node", "main.js" ]

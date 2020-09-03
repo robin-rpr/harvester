@@ -12,5 +12,6 @@ RUN npm run nx build harvester -- --configuration=${CONFIGURATION}
 
 FROM nginx
 ARG NGINX_CONFIG
+
 COPY --from=builder home/node/app/nginx/apps/harvester/${NGINX_CONFIG} /etc/nginx/conf.d/default.conf
 COPY --from=builder home/node/app/dist/apps/harvester/* /usr/share/nginx/html/
