@@ -1,0 +1,47 @@
+version: "3.7"
+
+networks:
+  harvester:
+
+services:
+  api:
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
+    image: node:latest
+    user: node
+    working_dir: /home/node/app
+    command: |
+      npm run serve api
+    ports:
+      - "3000:2000"
+    networks:
+      - harvester
+    volumes:
+      - type: bind
+        source: ../
+        target: /home/node/app
+
+  harvester:
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
+    image: node:latest
+    user: node
+    working_dir: /home/node/app
+    entrypoint: |
+      npm run serve harvester
+    ports:
+      - "4000:4200"
+    networks:
+      - harvester
+    depends_on:
+      - api
+    volumes:
+      - type: bind
+        source: ../
+        target: /home/node/app
