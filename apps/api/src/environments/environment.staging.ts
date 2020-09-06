@@ -1,7 +1,8 @@
 export const environment = {
     production: true,
     api: {
-        target: 'https://staging.api.harvester.dev',
+        host: 'staging.api.harvester.dev',
+        proxy: 'staging.proxy.harvester.dev',
         secure: true
     },
 };
