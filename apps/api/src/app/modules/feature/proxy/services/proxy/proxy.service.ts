@@ -49,7 +49,7 @@ export class ProxyService {
                     )
                 }),
                 map((serializedDOM: string) => {
-                    const regex = new RegExp(`/(['"(])((http[s]?):\/\/)?${website.domain}(\/[\w\-\.]+[^#?\s]+)(.*)?(['")])/ig`)
+                    const regex = new RegExp(`/(['"(])((http[s]?):\\/\\/)(${website.domain})(\\/[\\w\\-\\.]+[^#?\\s]+)(.*)?(['")])/ig`)
                     
                     let link: RegExpExecArray;
 
@@ -57,11 +57,12 @@ export class ProxyService {
                         (link = regex.exec(serializedDOM)) !== null
                     ) {
                         serializedDOM = serializedDOM.replace(
-                            link[2],
-                            `${environment.api.secure ? 'http':'https'}://${identification}.${environment.api.proxy}/${link[4]}`
+                            link[0],
+                            `${environment.api.secure ? 'http':'https'}://${identification}.${environment.api.proxy}/${link[6]}`
                         );
                     }
 
+                    return serializedDOM;
                 })
             )
             .subscribe(
@@ -96,7 +97,6 @@ export class ProxyService {
         DOM.window.document.body.insertAdjacentHTML(
             "afterbegin",
             `<style>${injectCSS ? injectCSS : ''}</style>${injectHTML ? injectHTML : ''}<script>${injectJS ? injectJS : ''}</script>${DOM.window.document.body.innerHTML}`);
-        
         return DOM.serialize();
     }
 }

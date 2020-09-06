@@ -23,9 +23,10 @@ export class ProxyController {
             
                     test();
                 `;
-                
+
                 this.proxyService.get(uri, subdomain, injectJS)
                     .then((proxy: ProxyResponse) => {
+                        res.set('Access-Control-Allow-Origin', '*')
                         res.status(proxy.status).send(proxy.data);
                     })
                     .catch((err: any) => {
