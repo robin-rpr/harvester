@@ -19,7 +19,7 @@ export class ProxyService {
     ): Promise<ProxyResponse> {
         return new Promise(async (resolve, reject) => {
             /* TODO: Make instead DB Call */
-            
+
             let website: { domain: string; secure: boolean; };
             switch(identification) {
                 case 'webworker': {
@@ -38,50 +38,67 @@ export class ProxyService {
             }
 
             this.httpService.get(
-                `${website.secure ? 'https' : 'http'}://${website.domain}/${uri}`)
-            .pipe(
-                map((res: any) => {
-                    const DOM = new JSDOM(
-                        res.data, { runScripts: "outside-only" });
-                    
-                    return this.injectDOM(
-                        DOM, injectJS, injectCSS, injectHTML
-                    )
-                }),
-                map((serializedDOM: string) => {
-                    const regex = new RegExp(`/(['"(])((http[s]?):\\/\\/)(${website.domain})(\\/[\\w\\-\\.]+[^#?\\s]+)(.*)?(['")])/ig`)
-                    
-                    let link: RegExpExecArray;
+                `${website.secure ? 'https' : 'http'}://${website.domain}/${uri}`,
+                { responseType: 'arraybuffer' }
+            )
+                    .pipe(
+                        map((res: any) => {
+                            switch(true) {
+                                case res.headers['content-type'].includes('text/html'): {
+                                   const DOM = new JSDOM(
+                                        res.data.toString('utf8'), { runScripts: "outside-only" });
 
-                    while(
-                        (link = regex.exec(serializedDOM)) !== null
-                    ) {
-                        serializedDOM = serializedDOM.replace(
-                            link[0],
-                            `${environment.api.secure ? 'http':'https'}://${identification}.${environment.api.proxy}/${link[6]}`
-                        );
+                                        let serializedDOM = this.injectDOM(
+                                            DOM, injectJS, injectCSS, injectHTML
+                                        )
+
+                                        const regex = new RegExp(`https?:\\/\\/${website.domain}`, 'gi')
+                                        const regexJSON = new RegExp(`https?:(?:\\\\)*/(?:\\\\)*/${website.domain}`, 'gi')
+
+                                        serializedDOM = serializedDOM.replace(
+                                            regex,
+                                            `${environment.api.secure ? 'http':'https'}://${identification}.${environment.api.proxy}`
+                                        );
+                                        
+                                        serializedDOM = serializedDOM.replace(
+                                            regexJSON,
+                                            `${environment.api.secure ? 'http':'https'}:\\\/\\\/${identification}.${environment.api.proxy}`
+                                        );
+                                        
+                                        return { ...res, data: serializedDOM }
+                                };
+                                case new RegExp(`(?:([^:/?#]+):)?(?://([^/?#]*))?([^?#]*\\.(?:jpg|gif|png))(?:\\?([^#]*))?(?:#(.*))?`).test(uri): {
+                                   
+                                    res = {
+                                        ...res,
+                                        data: Buffer.from(String.fromCharCode(...new Uint8Array(res.data)), 'binary')
+                                    }   
+                                    
+                                    return res;
+                                }
+                                default: return res;
+                            }
+                        })
+                )
+                .subscribe(
+                    data => {
+                        resolve(<ProxyResponse>{
+                            status: data.status,
+                            headers: data.headers,
+                            data: data.data
+                        })
+                    },
+                    err => {
+                        reject(<ProxyResponse>{
+                            status: 500,
+                            headers: {},
+                            data: err.stack
+                        })
                     }
-
-                    return serializedDOM;
-                })
-            )
-            .subscribe(
-                data => {
-                    resolve(<ProxyResponse>{
-                        status: 200,
-                        data
-                    })
-                },
-                err => {
-                    reject(<ProxyResponse>{
-                        status: 500,
-                        data: err
-                    })
-                }
-            )
+                )
         })
     }
-    
+
     injectDOM(
         DOM: any, /* FIXME: Change Type to DOM */
         injectJS: string,
@@ -92,11 +109,11 @@ export class ProxyService {
         DOM.window.document.head.insertAdjacentHTML(
             "afterbegin",
             `<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />${DOM.window.document.head.innerHTML}`);
-        
-        /* Inject */
-        DOM.window.document.body.insertAdjacentHTML(
-            "afterbegin",
-            `<style>${injectCSS ? injectCSS : ''}</style>${injectHTML ? injectHTML : ''}<script>${injectJS ? injectJS : ''}</script>${DOM.window.document.body.innerHTML}`);
-        return DOM.serialize();
+
+            /* Inject */
+            DOM.window.document.body.insertAdjacentHTML(
+                "afterbegin",
+                `<style>${injectCSS ? injectCSS : ''}</style>${injectHTML ? injectHTML : ''}<script>${injectJS ? injectJS : ''}</script>${DOM.window.document.body.innerHTML}`);
+                return DOM.serialize();
     }
 }

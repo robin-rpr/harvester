@@ -10,41 +10,27 @@ export class ProxyController {
     @Get('*')
     async get(
         @Headers('x-subdomain') subdomain: string,
-        @Headers('content-type') contentType: string,
         @Headers('x-uri') uri: string,
         @Res() res
     ): Promise<any> {
-        switch(true) {
-            case contentType.includes('text/html'): {
-                const injectJS = `
-                    function test() {
-                        alert('Hello World!')
-                    }
-            
-                    test();
-                `;
-
-                this.proxyService.get(uri, subdomain, injectJS)
-                    .then((proxy: ProxyResponse) => {
-                        res.set('Access-Control-Allow-Origin', '*')
-                        res.status(proxy.status).send(proxy.data);
-                    })
-                    .catch((err: any) => {
-                        res.status(err.status).send(err.data);
-                    })
-                break;
-            }
-            default: {
-                this.proxyService.get(uri, subdomain)
-                    .then((proxy: ProxyResponse) => {
-                        res.set('Access-Control-Allow-Origin', '*')
-                        res.status(proxy.status).send(proxy.data);
-                    })
-                    .catch((err: any) => {
-                        res.status(err.status).send(err.data);
-                    })
-            }
+        const injectJS = `
+        function test() {
+            alert('Hello World!');
+            console.log('Hello World from Proxy!');
         }
+
+        test();
+        `;
+
+        this.proxyService.get(uri, subdomain, injectJS)
+        .then((proxy: ProxyResponse) => {
+            res.set(proxy.headers);
+            res.set('Access-Control-Allow-Origin', '*')
+            res.status(proxy.status).send(proxy.data);
+        })
+        .catch((err: any) => {
+            res.status(err.status).send(err.data);
+        })
 
     }
 }
