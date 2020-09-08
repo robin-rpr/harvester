@@ -12,9 +12,10 @@ async function bootstrap() {
   app.enableCors();
   const globalPrefix = 'api';
   app.setGlobalPrefix(globalPrefix);
-  const port = process.env.port || 2000;
-  await app.listen(port, () => {
-    console.log('Listening at http://localhost:' + port + '/' + globalPrefix);
+  const port = process.env.PORT || 2000;
+  const host = process.env.HOST || 'localhost';
+  await app.listen(port, host, () => {
+    console.log('Listening at http://' + host + ':' + port + '/' + globalPrefix);
   });
 }
 

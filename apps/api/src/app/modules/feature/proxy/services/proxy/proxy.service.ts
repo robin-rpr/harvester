@@ -29,6 +29,20 @@ export class ProxyService {
                     }
                     break;
                 }
+                case 'tempo': {
+                    website = {
+                        domain: 'www.tempo.io',
+                        secure: true
+                    }
+                    break;
+                }
+                case 'wwatlassian': {
+                    website = {
+                        domain: 'webworker.atlassian.net',
+                        secure: true
+                    }
+                    break;
+                }
                 default: {
                     reject({
                         status: 404,

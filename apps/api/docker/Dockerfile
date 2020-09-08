@@ -36,7 +36,7 @@ RUN echo '[supervisord]\n\
 nodaemon=true\n\
 [program:nodejs]\n\
 directory=/home/app\n\
-command=node main.js\n\
+command=HOST=0.0.0.0 node main.js\n\
 [program:nginx]\n\
 command=/usr/sbin/nginx -c /etc/nginx/nginx.conf\n\
 [program:rsyslog]\n\
