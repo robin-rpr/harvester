@@ -34,9 +34,12 @@ RUN add-apt-repository ppa:nginx/stable && apt-get update \
 # Supply Config file
 RUN echo '[supervisord]\n\
 nodaemon=true\n\
+childlogdir=/var/log/supervisord/\n\
+logfile=/tmp/supervisord.log\n\
 [program:nodejs]\n\
 directory=/home/app\n\
-command=HOST=0.0.0.0 node main.js\n\
+command=node main.js\n\
+environment=HOST=0.0.0.0\n\
 [program:nginx]\n\
 command=/usr/sbin/nginx -c /etc/nginx/nginx.conf\n\
 [program:rsyslog]\n\
