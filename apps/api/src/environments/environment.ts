@@ -1,8 +1,8 @@
 export const environment = {
   production: true,
   api: {
-    host: 'api.localhost',
-    proxy: 'proxy.localhost',
+    host: 'api.harvester.dev',
+    proxy: 'proxy.harvester.dev',
     secure: true
   },
 };
