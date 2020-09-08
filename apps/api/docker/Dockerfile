@@ -31,6 +31,10 @@ RUN add-apt-repository ppa:nginx/stable && apt-get update \
  && apt-get -y install nginx-full \
  && echo "daemon off;" >> /etc/nginx/nginx.conf
 
+# Create Supervisord Log
+RUN mkdir -p /var/log/supervisord
+RUN touch /tmp/supervisord.log
+
 # Supply Config file
 RUN echo '[supervisord]\n\
 nodaemon=true\n\
