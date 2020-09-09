@@ -111,7 +111,7 @@ spec:
       volumes:
         - name: mongodata
           persistentVolumeClaim:
-            claimName: mongodata
+            claimName: mongodata-claim
 ---
 apiVersion: v1
 kind: Service
