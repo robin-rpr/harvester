@@ -15,6 +15,7 @@ FROM robinrpr/nginx-nodejs:latest
 
 RUN mkdir -p /home/app
 WORKDIR /home/app
+ARG NGINX_CONFIG
 
 # Add Node.js app
 RUN mkdir -p /home/app
