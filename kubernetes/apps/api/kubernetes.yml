@@ -134,12 +134,14 @@ spec:
   - host: local.api.harvester.dev
     http:
       paths:
-      - backend:
+      - path: /.*
+        backend:
           serviceName: api-local-node-port
           servicePort: 3000
   - host: "*.proxy.harvester.dev"
     http:
       paths:
-      - backend:
+      - path: /.*
+        backend:
           serviceName: api-prod-node-port
           servicePort: 3000

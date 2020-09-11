@@ -71,6 +71,7 @@ spec:
   - host: staging.harvester.dev
     http:
       paths:
-      - backend:
+      - path: /.*
+        backend:
           serviceName: harvester-staging-node-port
           servicePort: 4000

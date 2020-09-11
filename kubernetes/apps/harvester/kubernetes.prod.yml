@@ -71,6 +71,7 @@ spec:
   - host: harvester.dev
     http:
       paths:
-      - backend:
+      - path: /.*
+        backend:
           serviceName: harvester-prod-node-port
           servicePort: 4000
