@@ -160,14 +160,14 @@ spec:
   - host: api.harvester.dev
     http:
       paths:
-      - path: /.*
+      - path: /
         backend:
           serviceName: api-prod-node-port
           servicePort: 3000
   - host: "*.proxy.harvester.dev"
     http:
       paths:
-      - path: /.*
+      - path: /
         backend:
           serviceName: api-prod-node-port
           servicePort: 3000
