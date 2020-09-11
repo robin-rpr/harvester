@@ -12,15 +12,18 @@ RUN if [ ! -d "node_modules" ]; then npm install; fi
 RUN npm run nx build api
 
 FROM robinrpr/nginx-nodejs:latest
+ARG NGINX_CONFIG
 
 RUN mkdir -p /home/app
 WORKDIR /home/app
-ARG NGINX_CONFIG
 
 # Add Node.js app
-RUN mkdir -p /home/app
+RUN mkdir -p /home/app/node_modules
 COPY --from=builder home/node/app/dist/apps/api/* /home/app/
 COPY --from=builder home/node/app/package.json /home/app/
+
+# (HACK) Copy node_modules
+COPY --from=builder home/node/app/node_modules /home/app/node_modules/
 
 # Update NGINX Config
 COPY --from=builder home/node/app/nginx/apps/api/${NGINX_CONFIG} /etc/nginx/conf.d/default.conf
