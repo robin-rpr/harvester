@@ -71,12 +71,12 @@ export class ProxyService {
 
                                         serializedDOM = serializedDOM.replace(
                                             regex,
-                                            `${environment.api.secure ? 'http':'https'}://${identification}.${environment.api.proxy}`
+                                            `${environment.api.secure ? 'https':'http'}://${identification}.${environment.api.proxy}`
                                         );
                                         
                                         serializedDOM = serializedDOM.replace(
                                             regexJSON,
-                                            `${environment.api.secure ? 'http':'https'}:\\\/\\\/${identification}.${environment.api.proxy}`
+                                            `${environment.api.secure ? 'https':'http'}:\\\/\\\/${identification}.${environment.api.proxy}`
                                         );
                                         
                                         return { ...res, data: serializedDOM }
