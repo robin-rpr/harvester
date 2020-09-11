@@ -32,7 +32,7 @@ jobs:
       - name: Build harvester/api
         run: npm run build api-${{ env.CONFIGURATION }}
 
-      - name: Push harvester/api to Docker Comtainer Registry
+      - name: Push harvester/api to GitHub Container Registry
         uses: actions-hub/docker@master
         with:
           args: push ${{ secrets.REGISTRY_HOST }}/${{ secrets.REGISTRY_USERNAME }}/api-${{ env.CONFIGURATION }}:latest
@@ -64,7 +64,7 @@ jobs:
       - name: Build harvester/harvester
         run: npm run build harvester-${{ env.CONFIGURATION }}
 
-      - name: Push harvester/harvester to Docker Comtainer Registry
+      - name: Push harvester/harvester to GitHub Container Registry
         uses: actions-hub/docker@master
         with:
           args: push ${{ secrets.REGISTRY_HOST }}/${{ secrets.REGISTRY_USERNAME }}/harvester-${{ env.CONFIGURATION }}:latest
