@@ -1,20 +1,12 @@
-# Harvester
+<div align="center">
 
-This project was generated using [Nx](https://nx.dev).
+<img src="https://github.com/robin-rpr/harvester/blob/master/assets/harvester-logo.svg" height="90">
 
-<p align="center"><img src="https://raw.githubusercontent.com/nrwl/nx/master/nx-logo.png" width="450"></p>
+### Web Data Extraction Tool 🚜✨
 
-🔎 **Nx is a set of Extensible Dev Tools for Monorepos.**
+<p align="center"><img src="https://github.com/robin-rpr/harvester/blob/master/assets/harvester-screen.png" height="592"></p>
 
-## Quick Start & Documentation
-
-[Nx Documentation](https://nx.dev/angular)
-
-[10-minute video showing all Nx features](https://nx.dev/angular/getting-started/what-is-nx)
-
-[Interactive Tutorial](https://nx.dev/angular/tutorial/01-create-application)
-
-## Adding capabilities to your workspace
+## Adding capabilities to Harvester Monorepo
 
 Nx supports many plugins which add capabilities for developing different types of applications and different tools.
 
