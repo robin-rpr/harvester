@@ -1,8 +1,8 @@
 <div align="center">
 
-<img src="https://github.com/robin-rpr/harvester/blob/master/assets/harvester-logo.svg" height="90">
+<img src="https://github.com/robin-rpr/harvester/blob/master/assets/harvester-logo.svg" height="80">
 
-### Web Data Extraction Tool 🚜✨
+### A Web Data Extraction Tool
 
 <p align="center"><img src="https://github.com/robin-rpr/harvester/blob/master/assets/harvester-screen.png" height="592"></p>
 
