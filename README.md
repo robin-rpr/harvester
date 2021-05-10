@@ -1,6 +1,6 @@
 <div align="center">
 
-
+<img src="https://github.com/robin-rpr/harvester/blob/master/assets/harvester-logo.svg" height="80">
 
 ### A Web Data Extraction Tool
 
